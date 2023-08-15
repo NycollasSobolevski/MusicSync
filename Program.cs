@@ -1,7 +1,20 @@
+using System.Net;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 DotNetEnv.Env.Load();
+
+WebProxy proxy = new WebProxy("http://rb-proxy-ca2.bosch.com:8080/");
+HttpClientHandler clientHandler = new HttpClientHandler(){
+    Proxy = proxy
+};
+builder.Services.AddTransient(p => 
+    new HttpClient(clientHandler)
+    {
+        BaseAddress = new Uri("https://accounts.spotify.com/api")
+    }
+);
 
 builder.Services.AddCors(options =>
 {
