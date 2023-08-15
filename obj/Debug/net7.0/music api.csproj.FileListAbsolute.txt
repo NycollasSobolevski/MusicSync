@@ -1,0 +1,73 @@
+C:\Users\disrct\Desktop\Nova pasta\music api\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\disrct\Desktop\Nova pasta\music api\bin\Debug\net7.0\appsettings.json
+C:\Users\disrct\Desktop\Nova pasta\music api\bin\Debug\net7.0\music api.exe
+C:\Users\disrct\Desktop\Nova pasta\music api\bin\Debug\net7.0\music api.deps.json
+C:\Users\disrct\Desktop\Nova pasta\music api\bin\Debug\net7.0\music api.runtimeconfig.json
+C:\Users\disrct\Desktop\Nova pasta\music api\bin\Debug\net7.0\music api.dll
+C:\Users\disrct\Desktop\Nova pasta\music api\bin\Debug\net7.0\music api.pdb
+C:\Users\disrct\Desktop\Nova pasta\music api\bin\Debug\net7.0\Microsoft.AspNetCore.OpenApi.dll
+C:\Users\disrct\Desktop\Nova pasta\music api\bin\Debug\net7.0\Microsoft.OpenApi.dll
+C:\Users\disrct\Desktop\Nova pasta\music api\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\disrct\Desktop\Nova pasta\music api\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\disrct\Desktop\Nova pasta\music api\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\music api.csproj.AssemblyReference.cache
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\music api.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\music api.AssemblyInfoInputs.cache
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\music api.AssemblyInfo.cs
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\music api.csproj.CoreCompileInputs.cache
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\music api.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\music api.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\staticwebassets\msbuild.music api.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\staticwebassets\msbuild.build.music api.props
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.music api.props
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.music api.props
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\scopedcss\bundle\music api.styles.css
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\music api.csproj.CopyComplete
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\music api.dll
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\refint\music api.dll
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\music api.pdb
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\music api.genruntimeconfig.cache
+C:\Users\disrct\Desktop\Nova pasta\music api\obj\Debug\net7.0\ref\music api.dll
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\music api.csproj.AssemblyReference.cache
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\music api.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\music api.AssemblyInfoInputs.cache
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\music api.AssemblyInfo.cs
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\music api.csproj.CoreCompileInputs.cache
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\music api.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\music api.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\music api.dll
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\refint\music api.dll
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\music api.pdb
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\appsettings.json
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\music api.exe
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\music api.deps.json
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\music api.runtimeconfig.json
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\music api.dll
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\music api.pdb
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\DotNetEnv.dll
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\EmbedIO.dll
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\Microsoft.AspNetCore.OpenApi.dll
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\Microsoft.OpenApi.dll
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\SpotifyAPI.Web.dll
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\SpotifyAPI.Web.Auth.dll
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\Sprache.dll
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\disrct\Desktop\Nycollas\music api\bin\Debug\net7.0\Swan.Lite.dll
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\staticwebassets\msbuild.music api.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\staticwebassets\msbuild.build.music api.props
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.music api.props
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.music api.props
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\scopedcss\bundle\music api.styles.css
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\music api.csproj.CopyComplete
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\music api.genruntimeconfig.cache
+C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\ref\music api.dll
