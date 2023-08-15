@@ -1,12 +1,15 @@
 
 namespace music_api.Controllers;
 
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using music_api;
 using music_api.Auxi;
 
 [ApiController]
 [Route("[controller]")]
+[EnableCors("MainPolicy")]
+
 public class SpotifyController : ControllerBase
 {
     private readonly string serverPort  = Environment.GetEnvironmentVariable("SERVER_PORT");
@@ -26,7 +29,7 @@ public class SpotifyController : ControllerBase
         string state = Rand.GetRandomString(16);
  
         string redirect = $"http://localhost:{this.serverPort}/callback";
-        string client_id = "";
+        string client_id = Environment.GetEnvironmentVariable("CLIENT_ID");
  
         Response.Redirect($"https://accounts.spotify.com/authorize?response_type=code&{client_id}&scope={scope}&redirect_uri={redirect}&state={state}");
     }
