@@ -15,4 +15,9 @@ public class SpotifyRequesAccessTokenBody
     public string GrantType { get; set; }
     public string Code { get; set; }
     public string RedirectUri { get; set; }
+
+    public string  toString()
+    {
+        return $"GrantType: {this.GrantType}\n Code: {this.Code}\n RedirectUri: {this.RedirectUri}";
+    }
 }

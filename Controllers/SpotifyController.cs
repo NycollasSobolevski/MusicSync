@@ -49,22 +49,23 @@ public class SpotifyController : ControllerBase
         dataClient = Convert.ToBase64String(Encoding.UTF8.GetBytes(dataClient));
         string authorization = $"Basic {dataClient}";
         string contentType = "application/x-www-form-urlencoded";
-        System.Console.WriteLine($"\n\n autorization: \n{authorization}");
-        var body = new SpotifyRequesAccessTokenBody(){
-            Code = code,
-            GrantType = "authorization_code",
-            RedirectUri = $"http://localhost:{this.serverPort}/Spotify/callback"
-        };
-
+               
         client.DefaultRequestHeaders.Add("Authorization", authorization);
         client.DefaultRequestHeaders.Add("ContentType", contentType);
 
-        var response = await client.PostAsJsonAsync("https://accounts.spotify.com/api/token", body);
+        var formData = new List<KeyValuePair<string, string>>();
+        formData.Add(new KeyValuePair<string, string>("code", $"{code}"));
+        formData.Add(new KeyValuePair<string, string>("grant_type", "authorization_code"));
+        formData.Add(new KeyValuePair<string, string>("redirect_uri", $"http://localhost:{this.serverPort}/Spotify/callback/"));
 
+        var body = new FormUrlEncodedContent(formData);
+
+        var response = await client.PostAsync("https://accounts.spotify.com/api/token", body);
+
+        // client.PostAsJsonAsync()
+        System.Console.WriteLine($"\n\nResponse : {response} ");
         var token = await response.Content.ReadFromJsonAsync<SpotifyToken>();
-
-        Console.WriteLine($"\n\n\n {token}");
-
+        System.Console.WriteLine($"\nToken: {token.AccesToken}");
         return;
     }
 }

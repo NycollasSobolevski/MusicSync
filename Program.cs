@@ -7,12 +7,7 @@ DotNetEnv.Env.Load();
 
 builder.Services.AddTransient(p =>
 {
-    WebProxy proxy = new WebProxy("http://disrct:etstech31415@rb-proxy-ca1.bosch.com:8080/");
-    HttpClientHandler clientHandler = new HttpClientHandler(){
-        Proxy = proxy
-    };
-
-    return new HttpClient(clientHandler)
+    return new HttpClient()
     {
         BaseAddress = new Uri("http://accounts.spotify.com/api")
     };

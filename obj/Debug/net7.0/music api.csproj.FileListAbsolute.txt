@@ -71,3 +71,43 @@ C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\scopedcss\bundle\mus
 C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\music api.csproj.CopyComplete
 C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\music api.genruntimeconfig.cache
 C:\Users\disrct\Desktop\Nycollas\music api\obj\Debug\net7.0\ref\music api.dll
+E:\MusicSync\bin\Debug\net7.0\appsettings.Development.json
+E:\MusicSync\bin\Debug\net7.0\appsettings.json
+E:\MusicSync\bin\Debug\net7.0\music api.exe
+E:\MusicSync\bin\Debug\net7.0\music api.deps.json
+E:\MusicSync\bin\Debug\net7.0\music api.runtimeconfig.json
+E:\MusicSync\bin\Debug\net7.0\music api.dll
+E:\MusicSync\bin\Debug\net7.0\music api.pdb
+E:\MusicSync\bin\Debug\net7.0\DotNetEnv.dll
+E:\MusicSync\bin\Debug\net7.0\EmbedIO.dll
+E:\MusicSync\bin\Debug\net7.0\Microsoft.AspNetCore.OpenApi.dll
+E:\MusicSync\bin\Debug\net7.0\Microsoft.OpenApi.dll
+E:\MusicSync\bin\Debug\net7.0\Newtonsoft.Json.dll
+E:\MusicSync\bin\Debug\net7.0\SpotifyAPI.Web.dll
+E:\MusicSync\bin\Debug\net7.0\SpotifyAPI.Web.Auth.dll
+E:\MusicSync\bin\Debug\net7.0\Sprache.dll
+E:\MusicSync\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
+E:\MusicSync\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+E:\MusicSync\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+E:\MusicSync\bin\Debug\net7.0\Swan.Lite.dll
+E:\MusicSync\obj\Debug\net7.0\music api.csproj.AssemblyReference.cache
+E:\MusicSync\obj\Debug\net7.0\music api.GeneratedMSBuildEditorConfig.editorconfig
+E:\MusicSync\obj\Debug\net7.0\music api.AssemblyInfoInputs.cache
+E:\MusicSync\obj\Debug\net7.0\music api.AssemblyInfo.cs
+E:\MusicSync\obj\Debug\net7.0\music api.csproj.CoreCompileInputs.cache
+E:\MusicSync\obj\Debug\net7.0\music api.MvcApplicationPartsAssemblyInfo.cs
+E:\MusicSync\obj\Debug\net7.0\music api.MvcApplicationPartsAssemblyInfo.cache
+E:\MusicSync\obj\Debug\net7.0\staticwebassets\msbuild.music api.Microsoft.AspNetCore.StaticWebAssets.props
+E:\MusicSync\obj\Debug\net7.0\staticwebassets\msbuild.build.music api.props
+E:\MusicSync\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.music api.props
+E:\MusicSync\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.music api.props
+E:\MusicSync\obj\Debug\net7.0\staticwebassets.pack.json
+E:\MusicSync\obj\Debug\net7.0\staticwebassets.build.json
+E:\MusicSync\obj\Debug\net7.0\staticwebassets.development.json
+E:\MusicSync\obj\Debug\net7.0\scopedcss\bundle\music api.styles.css
+E:\MusicSync\obj\Debug\net7.0\music api.csproj.CopyComplete
+E:\MusicSync\obj\Debug\net7.0\music api.dll
+E:\MusicSync\obj\Debug\net7.0\refint\music api.dll
+E:\MusicSync\obj\Debug\net7.0\music api.pdb
+E:\MusicSync\obj\Debug\net7.0\music api.genruntimeconfig.cache
+E:\MusicSync\obj\Debug\net7.0\ref\music api.dll
