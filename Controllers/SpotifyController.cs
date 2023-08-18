@@ -56,14 +56,14 @@ public class SpotifyController : ControllerBase
         var formData = new List<KeyValuePair<string, string>>();
         formData.Add(new KeyValuePair<string, string>("code", $"{code}"));
         formData.Add(new KeyValuePair<string, string>("grant_type", "authorization_code"));
-        formData.Add(new KeyValuePair<string, string>("redirect_uri", $"http://localhost:{this.serverPort}/Spotify/callback/"));
+        formData.Add(new KeyValuePair<string, string>("redirect_uri", $"http://localhost:{this.serverPort}/Spotify/callback"));
 
         var body = new FormUrlEncodedContent(formData);
 
         var response = await client.PostAsync("https://accounts.spotify.com/api/token", body);
 
         // client.PostAsJsonAsync()
-        System.Console.WriteLine($"\n\nResponse : {response} ");
+        System.Console.WriteLine($"\n\nResponse : { await response.Content.ReadAsStringAsync()} ");
         var token = await response.Content.ReadFromJsonAsync<SpotifyToken>();
         System.Console.WriteLine($"\nToken: {token.AccesToken}");
         return;
