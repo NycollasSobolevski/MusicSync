@@ -9,6 +9,10 @@ public class SpotifyToken
     public int ExpiresIn { get; set; }
     public string RefreshToken { get; set; }
 }
+public class StringReturn
+{
+    public string Data { get; set;}
+}
 
 public class SpotifyRequesAccessTokenBody
 {

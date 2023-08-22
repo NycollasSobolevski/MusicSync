@@ -15,7 +15,7 @@ public class SpotifyController : ControllerBase
     private readonly string serverPort  = Environment.GetEnvironmentVariable("SERVER_PORT");
 
     [HttpGet("GetSpotifyData")]
-    public void Get()
+    public StringReturn Get()
     {
         Random rand = new Random();
         var spotify = new MySpotify();
@@ -33,7 +33,10 @@ public class SpotifyController : ControllerBase
 
         var path = $"https://accounts.spotify.com/authorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={redirect}&state={state}";
         Console.WriteLine($"\n\n{path}");
-        Response.Redirect(path);
+        // Response.Redirect(path);
+        return new StringReturn{
+            Data = path
+        };
     }
 
     [HttpGet("callback")]

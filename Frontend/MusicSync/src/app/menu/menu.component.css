@@ -1,0 +1,13 @@
+main{
+    background-color: aqua;
+    height: calc(100vh - 60px);
+    width: 250px;
+}
+
+.menu-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+}
