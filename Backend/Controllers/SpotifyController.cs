@@ -40,10 +40,10 @@ public class SpotifyController : ControllerBase
     }
 
     [HttpGet("callback")]
-    public async Task Callback([FromServices]HttpClient client, string code, string state)
+    public async Task<SpotifyToken> Callback([FromServices]HttpClient client, string code, string state)
     {
-        Console.WriteLine($"\n\n{code}");
-        Console.WriteLine($"\n\n{state}");
+        // Console.WriteLine($"\n\n{code}");
+        // Console.WriteLine($"\n\n{state}");
 
         string clientId      = Environment.GetEnvironmentVariable("CLIENT_ID");
         string clientSecret  = Environment.GetEnvironmentVariable("CLIENT_SECRET");
@@ -62,13 +62,46 @@ public class SpotifyController : ControllerBase
         formData.Add(new KeyValuePair<string, string>("redirect_uri", $"http://localhost:{this.serverPort}/Spotify/callback"));
 
         var body = new FormUrlEncodedContent(formData);
-
         var response = await client.PostAsync("https://accounts.spotify.com/api/token", body);
 
-        // client.PostAsJsonAsync()
-        System.Console.WriteLine($"\n\nResponse : { await response.Content.ReadAsStringAsync()} ");
         var token = await response.Content.ReadFromJsonAsync<SpotifyToken>();
-        System.Console.WriteLine($"\nToken: {token.AccesToken}");
-        return;
+
+        return token;
+    }
+
+    [HttpPost("RefreshToken")]
+    public async Task<SpotifyToken> RefreshToken ([FromServices]HttpClient client, SpotifyToken token) 
+    {
+        string clientId      = Environment.GetEnvironmentVariable("CLIENT_ID");
+        string clientSecret  = Environment.GetEnvironmentVariable("CLIENT_SECRET");
+        string dataClient = $"{clientId}:{clientSecret}";
+        dataClient = Convert.ToBase64String(Encoding.UTF8.GetBytes(dataClient));
+        string authorization = $"Basic {dataClient}";
+        client.DefaultRequestHeaders.Add("Authorization", authorization);
+
+        var newForm = new List<KeyValuePair<string, string>>();
+        newForm.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
+        newForm.Add(new KeyValuePair<string, string>("refresh_token", $"{token.refresh_token}"));
+        
+        var newBody = new FormUrlEncodedContent(newForm);
+        var refreshToken = await client.PostAsync("https://accounts.spotify.com/api/token", newBody);
+
+        var result = await refreshToken.Content.ReadFromJsonAsync<SpotifyToken>();
+
+        return result;
+    }
+
+    [HttpPost("GetMusicData")]
+    public async Task GetMusicData ( 
+        [FromServices]HttpClient client, 
+        [FromBody]String accessToken 
+        ) 
+    {
+        string authorization = $"Bearer {accessToken}";
+        client.DefaultRequestHeaders.Add("Authorization", authorization);
+        var music = await client.GetAsync("https://api.spotify.com/v1/tracks/2TpxZ7JUBn3uw46aR7qd6V");
+        var content = await music.Content.ReadAsStringAsync();
+
+        System.Console.WriteLine(content);
     }
 }

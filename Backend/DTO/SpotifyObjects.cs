@@ -3,11 +3,11 @@ namespace music_api.DTO;
 
 public class SpotifyToken
 {
-    public string AccesToken { get; set; }
-    public string TokenType { get; set; }
-    public string Scope  { get; set; }
-    public int ExpiresIn { get; set; }
-    public string RefreshToken { get; set; }
+    public string access_token { get; set; }
+    public string token_type { get; set; }
+    public string scope  { get; set; }
+    public int expires_in { get; set; }
+    public string refresh_token { get; set; }
 }
 public class StringReturn
 {
@@ -19,9 +19,9 @@ public class SpotifyRequesAccessTokenBody
     public string GrantType { get; set; }
     public string Code { get; set; }
     public string RedirectUri { get; set; }
+}
 
-    public string  toString()
-    {
-        return $"GrantType: {this.GrantType}\n Code: {this.Code}\n RedirectUri: {this.RedirectUri}";
-    }
+public class SpotifyRequestRefreshTokenBody {
+    public string grant_type { get; set; }
+    public string refresh_token { get; set; }
 }
