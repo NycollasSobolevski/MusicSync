@@ -58,8 +58,9 @@ public class UserRepository : IRepository<User>
         throw new NotImplementedException();
     }
 
-    public User FirstOrDefaultAsync(Expression<Func<User, bool>> exp)
+    public async Task<User> FirstOrDefaultAsync(Expression<Func<User, bool>> exp)
     {
+        //TODO: 
         throw new NotImplementedException();
     }
 

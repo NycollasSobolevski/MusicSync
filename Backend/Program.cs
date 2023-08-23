@@ -1,6 +1,7 @@
 using System.Net;
 using music_api;
 using music_api.Model;
+using Security_jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,12 @@ builder.Services.AddTransient(p =>
 });
 
 builder.Services.AddTransient<IRepository<User>, UserRepository>();
+builder.Services.AddTransient<IJwtService>( p => 
+    new JwTService(new PasswordProvider(
+        Environment.GetEnvironmentVariable("PASSWORD_PROVIDER")
+        )
+    )
+);
 
 builder.Services.AddCors(options =>
 {

@@ -5,7 +5,7 @@ namespace music_api;
 public interface IRepository<T>
 {
     Task<List<T>> Filter(Expression<Func<T, bool>> exp);
-    T FirstOrDefaultAsync(Expression<Func<T, bool>> exp);
+    Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> exp);
     Task add(T obj);
     void Delete(T obj);
     void Update(T obj);
