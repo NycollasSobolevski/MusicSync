@@ -1,4 +1,6 @@
 using System.Net;
+using music_api;
+using music_api.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +13,9 @@ builder.Services.AddTransient(p =>
     {
         BaseAddress = new Uri("http://accounts.spotify.com/api")
     };
-}
-);
+});
+
+builder.Services.AddTransient<IRepository<User>, UserRepository>();
 
 builder.Services.AddCors(options =>
 {
