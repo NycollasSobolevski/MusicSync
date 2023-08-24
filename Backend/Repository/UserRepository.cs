@@ -14,7 +14,7 @@ using music_api.Model;
 public class UserRepository : IRepository<User>
 {
     private DataBase dataBase;
-    private IMongoCollection<BsonDocument> context;
+    private IMongoCollection<User> context;
     public UserRepository () 
     {
         string connString   = Environment.GetEnvironmentVariable("MONGODB_CONNECTION_STRING");
@@ -24,18 +24,12 @@ public class UserRepository : IRepository<User>
         this.dataBase.SetDatabase("User");
         this.context = dataBase.mongoClient
             .GetDatabase(databaseName)
-            .GetCollection<BsonDocument>("User");
+            .GetCollection<User>("User");
     }
 
     public async Task add(User obj)
     {
-        await this.context.InsertOneAsync(new BsonDocument{
-            {"Name", obj.Name},
-            {"Birth", obj.Birth},
-            {"Email", obj.Email},
-            {"Password", obj.Password},
-            {"Salt", obj.Salt}
-        });
+        await this.context.InsertOneAsync(obj);
     }
 
     public int Count(Expression<Func<User, bool>> exp)
@@ -60,8 +54,9 @@ public class UserRepository : IRepository<User>
 
     public async Task<User> FirstOrDefaultAsync(Expression<Func<User, bool>> exp)
     {
-        //TODO: 
-        throw new NotImplementedException();
+        var bsonUser = await context.FindAsync(exp);
+        var list = bsonUser.ToList();
+        return list.FirstOrDefault();
     }
 
     public Task<User> Last(User obj)

@@ -21,7 +21,7 @@ public class UserController : ControllerBase
     {
         User peopleIfExists = await repository
             .FirstOrDefaultAsync( x => 
-                x.Name  == data.Name ||
+                x.Name == data.Name ||
                 x.Email == data.Email
         );
 
