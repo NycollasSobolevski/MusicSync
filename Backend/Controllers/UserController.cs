@@ -16,7 +16,7 @@ public class UserController : ControllerBase
     [HttpPost("CreateAccount")]
     public async Task<ActionResult> RegisterUser (
         [FromBody] User data,
-        [FromServices] UserRepository repository
+        [FromServices] IRepository<User> repository
     ) 
     {
         User peopleIfExists = await repository
@@ -53,7 +53,7 @@ public class UserController : ControllerBase
     [HttpGet("Login")]
     public async Task<ActionResult> LoginUser (
         [FromBody] LoginData data,
-        [FromServices] UserRepository repository,
+        [FromServices] IRepository<User> repository,
         [FromServices] IJwtService jwt
     )
     {
