@@ -7,6 +7,9 @@ import { SpotifyCardComponent } from './spotify-card/spotify-card.component';
 import { NavComponent } from './nav/nav.component';
 import { MenuComponent } from './menu/menu.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { LoginComponent } from './login/login.component';
+import { SubscribeComponent } from './subscribe/subscribe.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,10 @@ import { HomePageComponent } from './home-page/home-page.component';
     SpotifyCardComponent,
     NavComponent,
     MenuComponent,
-    HomePageComponent
+    HomePageComponent,
+    LoginPageComponent,
+    LoginComponent,
+    SubscribeComponent
   ],
   imports: [
     BrowserModule,
