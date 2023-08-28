@@ -19,6 +19,7 @@ public class UserController : ControllerBase
         [FromServices] IRepository<User> repository
     ) 
     {
+
         User peopleIfExists = await repository
             .FirstOrDefaultAsync( x => 
                 x.Name == data.Name ||
@@ -33,15 +34,23 @@ public class UserController : ControllerBase
                 return BadRequest("This email already exists");
         }
 
-        data.Salt = PasswordConfig.GenerateStringSalt(12);
+        data.Salt     = PasswordConfig.GenerateStringSalt(12);
         data.Password = PasswordConfig.GetHash(
             data.Password,
             data.Salt
         );
 
+        User user = new () {
+            Name = data.Name,
+            Birth = data.Birth,
+            Email = data.Email,
+            Password = data.Password,
+            Salt = data.Salt
+        };
+
         try
         {
-            await repository.add(data);
+            await repository.add(user);
             return Ok("Subscription successfull");
         }
         catch (System.Exception exp)
@@ -50,7 +59,7 @@ public class UserController : ControllerBase
         }
     }
 
-    [HttpGet("Login")]
+    [HttpPost("Login")]
     public async Task<ActionResult> LoginUser (
         [FromBody] LoginData data,
         [FromServices] IRepository<User> repository,
@@ -76,5 +85,28 @@ public class UserController : ControllerBase
         string returnJwt = jwt.GetToken(returnUser);
 
         return Ok(new JWT() { Value = returnJwt });
+    }
+
+    [HttpPost("DeleteUser")]
+    public async Task<ActionResult> DeleteUser (
+        [FromBody]JWT data,
+        [FromServices] IRepository<User> repository,
+        [FromServices] IJwtService jwt
+    )
+    {
+
+        var jwtResult = jwt.Validate<ReturnLoginData>(data.Value);
+
+        var user = await repository.FirstOrDefaultAsync( u => 
+            u.Name == jwtResult.Name  || 
+            u.Email == jwtResult.Email
+        );
+        try {
+            await repository.Delete(user);
+            return Ok("User deleted");
+        }
+        catch (System.Exception exp) {
+            return BadRequest(exp);
+        }
     }
 }

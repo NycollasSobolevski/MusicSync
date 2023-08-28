@@ -3,15 +3,16 @@ using MongoDB.Bson;
 
 namespace music_api.Model;
 
-public class DataBase
+public static class DataBase
 {
-    private string stringConnection { get; set; } = "";
-    public MongoClient mongoClient { get; private set; }
-    public void SetConnection ( string newStringConnection) 
+    private static string stringConnection { get; set; } = "";
+    public static MongoClient mongoClient { get; private set; }
+
+    public static void SetConnection ( string newStringConnection) 
     {
         stringConnection = newStringConnection;
     }
-    public void Connect () 
+    public static void Connect () 
     {
         var settings = MongoClientSettings.FromConnectionString(stringConnection);
 
@@ -24,7 +25,7 @@ public class DataBase
         System.Console.WriteLine("Database Connected");
     }
     
-    public void SetDatabase ( string database ) 
+    public static void SetDatabase ( string database ) 
     {
         mongoClient.GetDatabase(database);
     }

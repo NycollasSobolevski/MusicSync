@@ -13,16 +13,16 @@ using music_api.Model;
 
 public class UserRepository : IRepository<User>
 {
-    private DataBase dataBase;
+    // private DataBase dataBase;
     private IMongoCollection<User> context;
     public UserRepository () 
     {
         string connString   = Environment.GetEnvironmentVariable("MONGODB_CONNECTION_STRING");
         string databaseName = Environment.GetEnvironmentVariable("DATABASE_NAME");
-        this.dataBase.SetConnection(connString);
-        this.dataBase.Connect();
-        this.dataBase.SetDatabase("User");
-        this.context = dataBase.mongoClient
+        DataBase.SetConnection(connString);
+        DataBase.Connect();
+        DataBase.mongoClient.GetDatabase("User");
+        this.context = DataBase.mongoClient
             .GetDatabase(databaseName)
             .GetCollection<User>("User");
     }
@@ -37,9 +37,10 @@ public class UserRepository : IRepository<User>
         throw new NotImplementedException();
     }
 
-    public void Delete(User obj)
+    public async Task Delete(User obj)
     {
-        throw new NotImplementedException();
+        System.Console.WriteLine(obj.ToString());
+        await this.context.FindOneAndDeleteAsync<User>(obj.Name);
     }
 
     public Task<bool> exists(User obj)
