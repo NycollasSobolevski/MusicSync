@@ -2,6 +2,7 @@ main{
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
     flex-direction: column;
 }
 .container{
@@ -27,9 +28,10 @@ main{
 input{
     width: 250px;
     height: 3vw;
-    background-color: aquamarine;
+    background-color: var(--input-colorA);
     padding-left: 5%;
     border-radius: 15px;
+    color: var(--text-colorB);
 }
 .buttons{
     display: flex;
@@ -39,6 +41,6 @@ input{
 button {
     width: 5vw;
     height: 5vh;
-    background-color: black;
+    background-color: var(--qua-color);
     border-radius: 5px;
 }

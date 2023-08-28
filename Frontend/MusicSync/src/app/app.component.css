@@ -1,0 +1,6 @@
+main{
+    background-color: var(--back-colorB);    --back-color: #14281D;
+
+    width: 100vw;
+    height: 100vh;
+}

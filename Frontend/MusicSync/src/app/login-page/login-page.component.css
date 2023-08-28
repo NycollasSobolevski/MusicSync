@@ -1,4 +1,35 @@
 main{
     top:60px;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 60px);
+    width: 100vw;
+}
+.container {
+    background-color: var(--back-colorC);
+    height: 55vh;
+    width: 50vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 20px;
+}
+.wall {
+    position: absolute;
+    height: 55vh;
+    width: calc(50vw / 2);
+    background-color: var(--back-colorC);
+    top: calc(50vh - (55 / 2));
+    left: calc(50vw - (50vw / 2 ));
+    z-index: 2;
+    border-radius: 20px;
+    transition: all 1s;
+}
+.wall .content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }

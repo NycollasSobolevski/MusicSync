@@ -1,5 +1,16 @@
 <main>
-    <p>login-page works!</p>
-    <app-login></app-login>
-    <app-subscribe></app-subscribe>
+    <div class="container">
+        <div class="wall" [ngStyle]="{'left' : ( isLogin ? 'calc(50vw )' : 'calc(50vw - (50vw / 2 ))' )}">
+            <div class="content">
+                <h2>Music Sync Logo</h2>
+            </div>
+        </div>
+        <app-login 
+            (siginClickEvent)="changeToSigin()"  
+            class="component"></app-login>
+        <app-subscribe 
+            
+            (loginClickEvent)="changeToSigin()" 
+            class="component"></app-subscribe>
+    </div>
 </main>

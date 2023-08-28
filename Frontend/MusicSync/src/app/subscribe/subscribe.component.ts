@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-subscribe',
@@ -6,9 +6,8 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./subscribe.component.css']
 })
 export class SubscribeComponent {
-
-  loginClicked () 
-  {
-    
+  @Output() loginClickEvent = new EventEmitter();
+  loginClicked ( ) {
+    this.loginClickEvent.emit();
   }
 }
