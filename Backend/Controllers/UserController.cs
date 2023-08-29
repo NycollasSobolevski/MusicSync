@@ -15,7 +15,7 @@ public class UserController : ControllerBase
 {
     [HttpPost("CreateAccount")]
     public async Task<ActionResult> RegisterUser (
-        [FromBody] User data,
+        [FromBody] SigninData data,
         [FromServices] IRepository<User> repository
     ) 
     {
@@ -34,23 +34,22 @@ public class UserController : ControllerBase
                 return BadRequest("This email already exists");
         }
 
-        data.Salt     = PasswordConfig.GenerateStringSalt(12);
-        data.Password = PasswordConfig.GetHash(
-            data.Password,
-            data.Salt
-        );
-
-        User user = new () {
+        User newUserData = new() {
             Name = data.Name,
-            Birth = data.Birth,
             Email = data.Email,
             Password = data.Password,
-            Salt = data.Salt
+            Birth = data.Birth,
+            Salt = PasswordConfig.GenerateStringSalt(12)
         };
+
+        newUserData.Password = PasswordConfig.GetHash(
+            newUserData.Password,
+            newUserData.Salt
+        );
 
         try
         {
-            await repository.add(user);
+            await repository.add(newUserData);
             return Ok("Subscription successfull");
         }
         catch (System.Exception exp)

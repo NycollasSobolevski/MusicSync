@@ -47,6 +47,22 @@ button {
     border-radius: 5px;
 }
 
+.alert {
+    position: absolute;
+    top: 40px;
+    left: 0; right: 0;
+    margin: auto;
+    min-height: 50px;
+    width: 250px;
+    background-color: var(--yellow-alert-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    border-radius: 15px;
+}
+
 @media screen and (max-width: 450px ) {
     .buttons {
         flex-direction: colucolummn;

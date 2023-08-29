@@ -4,15 +4,18 @@
     </header>
     <div class="container">
         <div class="content">
-            <input type="text" name="subs-name" id="subs-name" placeholder="Name">
-            <input type="email" name="subs-email" id="subs-email" placeholder="Email">
-            <input type="date" name="subs-birth" id="subs-birth" placeholder="Birth">
-            <input type="password" name="subs-pass" id="subs-pass" placeholder="Password">
-            <input type="password" name="subs-repass" id="subs-repass" placeholder="Password">
+            <input required type="text" [(ngModel)]="userData.name" name="subs-name" id="subs-name" placeholder="Name">
+            <input required type="email" [(ngModel)]="userData.email" name="subs-email" id="subs-email" placeholder="Email">
+            <input required type="date" [(ngModel)]="userData.birth" name="subs-birth" id="subs-birth" placeholder="Birth">
+            <input required type="password" [(ngModel)]="userData.password" name="subs-pass" id="subs-pass" placeholder="Password">
+            <input required type="password" [(ngModel)]="repassword" name="subs-repass" id="subs-repass" placeholder="Password">
             <div class="buttons">
-                <button>Send</button>
+                <button (click)="signInClicked()">Send</button>
                 <button (click)="loginClicked()">Login</button>
             </div>
         </div>
+    </div>
+    <div class="alert" *ngIf="isAlert">
+        <h4>{{alertContent}}</h4>
     </div>
 </main>

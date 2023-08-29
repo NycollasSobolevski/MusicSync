@@ -12,6 +12,6 @@ export class UserServices {
         return this.http.post<jwtReturn>( `http://localhost:${this.port}/User/Login`, data )
     };
     Register ( data : userRegisterData ) {
-        return this.http.post<jwtReturn>( `http://localhost:${this.port}/User/Login`, data  )
+        return this.http.post<jwtReturn>( `http://localhost:${this.port}/User/CreateAccount`, data  )
     };   
 }

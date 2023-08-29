@@ -10,7 +10,7 @@ import { LoginPageComponent } from '../login-page/login-page.component';
 export class HomePageComponent {
   jwt = sessionStorage.getItem("jwt") ?? undefined;
 
-    constructor ( private router : Router ) {}
+  constructor ( private router : Router ) {}
 
   ngOnInit () {
     if (this.jwt === undefined) {

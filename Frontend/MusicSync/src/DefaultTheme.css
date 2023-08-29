@@ -1,0 +1,15 @@
+:root {
+    --pri-color : #7CFFC4;
+    --sec-color : #355834;
+    --ter-color : #2A4494;
+    --qua-color : #F19953;
+    --back-colorA: #14281D;
+    --back-colorB: #060b0f;
+    --back-colorC: #06004a;
+    --text-colorA: Black;
+    --text-colorB: AliceBlue;
+    --input-colorA: rgba(4, 44, 155, 0.2);
+    --semitransparent-background: rgb(0,0,0,0.2);
+    --red-alert-color: #f35858c0 ;
+    --yellow-alert-color: #f3d758c0;
+}

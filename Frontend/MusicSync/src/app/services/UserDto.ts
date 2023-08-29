@@ -6,12 +6,10 @@ interface userLoginData {
     password : string
 }
 interface userRegisterData {
-    id: string,
     name: string,
-    birth: string,
+    birth: Date,
     email: string,
     password: string,
-    salt: string
 }
 
 export { jwtReturn, userLoginData, userRegisterData }
