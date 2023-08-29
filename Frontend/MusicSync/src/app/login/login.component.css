@@ -26,7 +26,7 @@ main{
 }
 
 input{
-    width: 250px;
+    width: 20vw;
     height: 3vw;
     background-color: var(--input-colorA);
     padding-left: 5%;
@@ -39,8 +39,16 @@ input{
     gap: 10px;
 }
 button {
+    min-width: 50px;
+    min-height: 10px;
     width: 5vw;
     height: 5vh;
     background-color: var(--qua-color);
     border-radius: 5px;
+}
+
+@media screen and (max-width: 450px ) {
+    .buttons {
+        flex-direction: colucolummn;
+    }
 }

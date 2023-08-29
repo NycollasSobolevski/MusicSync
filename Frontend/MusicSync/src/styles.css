@@ -9,6 +9,7 @@
     --text-colorA: Black;
     --text-colorB: AliceBlue;
     --input-colorA: rgba(4, 44, 155, 0.2);
+    --semitransparent-background: rgb(0,0,0,0.2);
 }
 *{
     margin: 0;

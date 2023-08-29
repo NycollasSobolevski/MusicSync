@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -7,4 +8,31 @@ import { Component } from '@angular/core';
 })
 export class NavComponent {
   title = 'MusicSync';
+
+  constructor ( private router : Router ) {}
+
+  ngOnInit(){
+    this.checkIfLogin();
+  }
+  isLoged = false;
+  viewConfigs = false
+  switchViewConfigs(){
+    this.viewConfigs = !this.viewConfigs;
+  }
+
+  checkIfLogin() {
+    let log = sessionStorage.getItem('jwt') ?? undefined
+    if(log === undefined)
+      this.isLoged = false;
+    else 
+      this.isLoged = true;
+  }
+
+  logout(){
+    sessionStorage.clear();
+    localStorage.clear();
+    this.router.navigate([""]);
+    window.location.reload();
+
+  }
 }
