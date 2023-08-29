@@ -66,9 +66,11 @@ public class UserController : ControllerBase
         [FromServices] IJwtService jwt
     )
     {
+        System.Console.WriteLine($"UserData: {data.Identify},{data.Password}");
+
         var user = await repository.FirstOrDefaultAsync( user => 
-            user.Email == data.Identitify ||
-            user.Name.Contains(data.Identitify)
+            user.Email == data.Identify ||
+            user.Name.Contains(data.Identify)
         );
 
         if(user == null)

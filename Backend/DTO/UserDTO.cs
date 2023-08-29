@@ -2,7 +2,7 @@ namespace music_api.DTO;
 
 public record LoginData
 {
-    public string Identitify { get; set; }
+    public string Identify { get; set; }
     public string Password { get; set; }
 }
 
