@@ -43,6 +43,9 @@ p {
   display: flex;
   align-items: center;
 }
+.title-init img{
+  margin-right: 10px;
+}
 
 /* Responsive Styles */
 @media screen and (max-width: 767px) {
