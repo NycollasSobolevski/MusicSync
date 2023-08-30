@@ -35,7 +35,7 @@ p {
   align-items: center;
   justify-content: space-between;
   padding: 0 10px 0 20px ;
-  background-color: #1976d2;
+  background-color: var(--input-colorA);
   color: white;
   font-weight: 600;
 }

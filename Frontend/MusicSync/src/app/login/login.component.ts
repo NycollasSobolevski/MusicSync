@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { UserServices } from '../services/UserServices';
 import { jwtReturn, userLoginData } from '../services/UserDto';
 import { Router } from '@angular/router';
+import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -39,5 +40,17 @@ export class LoginComponent {
           console.log(err);
         }
       })
+  }
+  login2 () {
+    
+    this.service
+      .Login(this.userData)
+      .pipe(
+        switchMap((res) => {
+          res.value;
+          return of(res)
+        } )
+      )
+
   }
 }

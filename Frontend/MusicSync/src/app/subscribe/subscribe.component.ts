@@ -38,6 +38,8 @@ export class SubscribeComponent {
         next: (next) => {
           this.router.navigate(['/login']);
           window.location.reload();
+          console.log("subscribed successfull");
+          
         },
         error: (err : HttpErrorResponse) => {
           switch(err.status){

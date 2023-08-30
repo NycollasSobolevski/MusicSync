@@ -17,6 +17,7 @@ builder.Services.AddTransient(p =>
 });
 
 builder.Services.AddTransient<IRepository<User>, UserRepository>();
+builder.Services.AddTransient<IRepository<Token>, TokenRepository>();
 builder.Services.AddTransient<IJwtService>( p => 
     new JwTService(new PasswordProvider(
         Environment.GetEnvironmentVariable("PASSWORD_PROVIDER")

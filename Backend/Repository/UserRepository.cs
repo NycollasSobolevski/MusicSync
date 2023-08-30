@@ -13,7 +13,6 @@ using music_api.Model;
 
 public class UserRepository : IRepository<User>
 {
-    // private DataBase dataBase;
     private IMongoCollection<User> context;
     public UserRepository () 
     {

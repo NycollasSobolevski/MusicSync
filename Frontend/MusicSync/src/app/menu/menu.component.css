@@ -1,7 +1,8 @@
 main{
-    background-color: aqua;
+    background-color: var(--input-colorA);
     height: calc(100vh - 60px);
     width: 250px;
+    border-radius: 0px 25px 25px 25px;
 }
 
 .menu-item{

@@ -11,6 +11,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { LoginComponent } from './login/login.component';
 import { SubscribeComponent } from './subscribe/subscribe.component';
 import { FormsModule } from '@angular/forms';
+import { CallbackPageComponent } from './callback-page/callback-page.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { FormsModule } from '@angular/forms';
     HomePageComponent,
     LoginPageComponent,
     LoginComponent,
-    SubscribeComponent
+    SubscribeComponent,
+    CallbackPageComponent
   ],
   imports: [
     BrowserModule,
