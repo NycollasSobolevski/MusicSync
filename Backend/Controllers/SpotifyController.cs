@@ -27,13 +27,13 @@ public class SpotifyController : ControllerBase
         var track = newSpotify.Tracks.Get("1s6ux0lNiTziSrd7iUAADH");
         System.Console.WriteLine(track);
 
-        string scope = "user-read-private%20user-read-email";
+        string scope = "user-read-private user-read-email";
         string state = Rand.GetRandomString(16);
  
-        string redirect = $"http://localhost:{this.frontPort}/callback";
+        string redirect = $"http://localhost:{this.serverPort}/Spotify/callback";
         string client_id = Environment.GetEnvironmentVariable("CLIENT_ID");
 
-        var path = $"https://accounts.spotify.com/autfrontPorthorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={redirect}&state={state}";
+        var path = $"https://accounts.spotify.com/authorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={redirect}&state={state}";
         Console.WriteLine($"\n\n{path}");
         // Response.Redirect(path);
         return new StringReturn{
@@ -42,7 +42,7 @@ public class SpotifyController : ControllerBase
     }
 
     [HttpGet("callback")]
-    public async Task<SpotifyToken> Callback(
+    public async Task<HttpResponseMessage > Callback(
         [FromServices]HttpClient client,
         string code, 
         string state
@@ -65,14 +65,14 @@ public class SpotifyController : ControllerBase
         var formData = new List<KeyValuePair<string, string>>();
         formData.Add(new KeyValuePair<string, string>("code", $"{code}"));
         formData.Add(new KeyValuePair<string, string>("grant_type", "authorization_code"));
-        formData.Add(new KeyValuePair<string, string>("redirect_uri", $"http://localhost:{this.frontPort}/callback"));
+        formData.Add(new KeyValuePair<string, string>("redirect_uri", $"http://localhost:{this.serverPort}/Spotify/callback"));
 
         var body = new FormUrlEncodedContent(formData);
         var response = await client.PostAsync("https://accounts.spotify.com/api/token", body);
 
         var token = await response.Content.ReadFromJsonAsync<SpotifyToken>();
 
-        return token;
+        return response;
     }
 
     [HttpPost("RefreshToken")]
