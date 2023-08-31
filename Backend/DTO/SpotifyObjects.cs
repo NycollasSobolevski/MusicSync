@@ -16,6 +16,7 @@ public class StringReturn
 
 public class CallbackData
 {
+    public string jwt { get; set; }
     public string code { get; set; }
     public string state { get; set; }
 }

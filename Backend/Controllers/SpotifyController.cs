@@ -46,14 +46,14 @@ public class SpotifyController : ControllerBase
     }
 
     [HttpPost("callback")]
-    public async Task<SpotifyToken> Callback(
+    public async Task<ActionResult> Callback(
         [FromServices]HttpClient client,
-        [FromBody] CallbackData data
+        [FromBody] CallbackData data,
+        [FromServices] IRepository<Token> tokenRepository,
+        [FromServices] IRepository<User> userRepository,
+        [FromServices] IJwtService jwt
     )
     {
-        Console.WriteLine($"\n\n{data.code}");
-        Console.WriteLine($"\n\n{data.state}");
-
         string clientId      = Environment.GetEnvironmentVariable("CLIENT_ID");
         string clientSecret  = Environment.GetEnvironmentVariable("CLIENT_SECRET");
 
@@ -73,11 +73,26 @@ public class SpotifyController : ControllerBase
         var body = new FormUrlEncodedContent(formData);
         var response = await client.PostAsync("https://accounts.spotify.com/api/token", body);
 
-        System.Console.WriteLine("\n\nResponse" + response + "\n\n");
+        var jwtUser = jwt.Validate<ReturnLoginData>(data.jwt);
+        var user = await userRepository.FirstOrDefaultAsync( user => 
+            user.Name == jwtUser.Name
+        );
+
 
         var token = await response.Content.ReadFromJsonAsync<SpotifyToken>();
-
-        return token;
+        try{
+            //TODO: terminar com tokens
+            await tokenRepository.add(new Token{
+                User = user.Name,
+                Streamer = "Spotify",
+                StreamerToken = "",
+                RefreshToken = ""
+            });
+            return Ok();
+        }
+        catch (Exception exp) {
+            return BadRequest("{exp}");
+        }
     }
 
     [HttpPost("RefreshToken")]
