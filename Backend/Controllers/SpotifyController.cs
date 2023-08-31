@@ -18,8 +18,8 @@ public class SpotifyController : ControllerBase
     private readonly string serverPort  = Environment.GetEnvironmentVariable("SERVER_PORT");
     private readonly string frontPort   = Environment.GetEnvironmentVariable("FRONTEND_PORT");
     
-    // private readonly string redirectCallback = $"http://localhost:{Environment.GetEnvironmentVariable("FRONTEND_PORT")}/spotifyCallback";
-    private readonly string redirectCallback = $"http://localhost:{Environment.GetEnvironmentVariable("SERVER_PORT")}/Spotify/callback";
+    private readonly string redirectCallback = $"http://localhost:{Environment.GetEnvironmentVariable("FRONTEND_PORT")}/spotifyCallback";
+    // private readonly string redirectCallback = $"http://localhost:{Environment.GetEnvironmentVariable("SERVER_PORT")}/Spotify/callback";
 
     [HttpGet("GetSpotifyData")]
     public StringReturn Get()
@@ -45,15 +45,14 @@ public class SpotifyController : ControllerBase
         };
     }
 
-    [HttpGet("callback")]
+    [HttpPost("callback")]
     public async Task<SpotifyToken> Callback(
         [FromServices]HttpClient client,
-        string code, 
-        string state
+        [FromBody] CallbackData data
     )
     {
-        // Console.WriteLine($"\n\n{code}");
-        // Console.WriteLine($"\n\n{state}");
+        Console.WriteLine($"\n\n{data.code}");
+        Console.WriteLine($"\n\n{data.state}");
 
         string clientId      = Environment.GetEnvironmentVariable("CLIENT_ID");
         string clientSecret  = Environment.GetEnvironmentVariable("CLIENT_SECRET");
@@ -67,12 +66,14 @@ public class SpotifyController : ControllerBase
         client.DefaultRequestHeaders.Add("ContentType", contentType);
 
         var formData = new List<KeyValuePair<string, string>>();
-        formData.Add(new KeyValuePair<string, string>("code", $"{code}"));
+        formData.Add(new KeyValuePair<string, string>("code", $"{data.code}"));
         formData.Add(new KeyValuePair<string, string>("grant_type", "authorization_code"));
         formData.Add(new KeyValuePair<string, string>("redirect_uri", this.redirectCallback));
 
         var body = new FormUrlEncodedContent(formData);
         var response = await client.PostAsync("https://accounts.spotify.com/api/token", body);
+
+        System.Console.WriteLine("\n\nResponse" + response + "\n\n");
 
         var token = await response.Content.ReadFromJsonAsync<SpotifyToken>();
 
