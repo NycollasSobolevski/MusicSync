@@ -1,8 +1,10 @@
 
 namespace music_api.Controllers;
 
+using Amazon.SecurityToken.Model;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using music_api;
 using music_api.Auxi;
 using music_api.DTO;
@@ -15,6 +17,9 @@ public class SpotifyController : ControllerBase
 {
     private readonly string serverPort  = Environment.GetEnvironmentVariable("SERVER_PORT");
     private readonly string frontPort   = Environment.GetEnvironmentVariable("FRONTEND_PORT");
+    
+    // private readonly string redirectCallback = $"http://localhost:{Environment.GetEnvironmentVariable("FRONTEND_PORT")}/spotifyCallback";
+    private readonly string redirectCallback = $"http://localhost:{Environment.GetEnvironmentVariable("SERVER_PORT")}/Spotify/callback";
 
     [HttpGet("GetSpotifyData")]
     public StringReturn Get()
@@ -29,11 +34,10 @@ public class SpotifyController : ControllerBase
 
         string scope = "user-read-private user-read-email";
         string state = Rand.GetRandomString(16);
- 
-        string redirect = $"http://localhost:{this.serverPort}/Spotify/callback";
+
         string client_id = Environment.GetEnvironmentVariable("CLIENT_ID");
 
-        var path = $"https://accounts.spotify.com/authorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={redirect}&state={state}";
+        var path = $"https://accounts.spotify.com/authorize?response_type=code&client_id={client_id}&scope={scope}&redirect_uri={this.redirectCallback}&state={state}";
         Console.WriteLine($"\n\n{path}");
         // Response.Redirect(path);
         return new StringReturn{
@@ -42,7 +46,7 @@ public class SpotifyController : ControllerBase
     }
 
     [HttpGet("callback")]
-    public async Task<HttpResponseMessage > Callback(
+    public async Task<SpotifyToken> Callback(
         [FromServices]HttpClient client,
         string code, 
         string state
@@ -65,14 +69,14 @@ public class SpotifyController : ControllerBase
         var formData = new List<KeyValuePair<string, string>>();
         formData.Add(new KeyValuePair<string, string>("code", $"{code}"));
         formData.Add(new KeyValuePair<string, string>("grant_type", "authorization_code"));
-        formData.Add(new KeyValuePair<string, string>("redirect_uri", $"http://localhost:{this.serverPort}/Spotify/callback"));
+        formData.Add(new KeyValuePair<string, string>("redirect_uri", this.redirectCallback));
 
         var body = new FormUrlEncodedContent(formData);
         var response = await client.PostAsync("https://accounts.spotify.com/api/token", body);
 
         var token = await response.Content.ReadFromJsonAsync<SpotifyToken>();
 
-        return response;
+        return token;
     }
 
     [HttpPost("RefreshToken")]
