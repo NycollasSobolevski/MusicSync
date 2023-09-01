@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { UserServices } from '../services/UserServices';
-import { jwtReturn, userLoginData } from '../services/UserDto';
+import { jwt, userLoginData } from '../services/UserDto';
 import { Router } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 
@@ -32,7 +32,7 @@ export class LoginComponent {
     this.service
       .Login(this.userData)
       .subscribe ({
-        next: (res : jwtReturn ) => {
+        next: (res : jwt ) => {
           sessionStorage.setItem('jwt', res.value);
           this.router.navigate(['/']);
         },

@@ -14,6 +14,13 @@ public class StringReturn
     public string Data { get; set;}
 }
 
+public class CallbackData
+{
+    public string jwt { get; set; }
+    public string code { get; set; }
+    public string state { get; set; }
+}
+
 public class SpotifyRequesAccessTokenBody
 {
     public string GrantType { get; set; }

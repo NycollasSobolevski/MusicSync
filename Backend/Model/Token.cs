@@ -13,5 +13,7 @@ public partial class Token
     public string Streamer { get; set; }
     [BsonElement("Token")]
     public string StreamerToken { get; set; }
+    [BsonElement("RefreshToken")]
+    public string RefreshToken { get; set; }
 
 }

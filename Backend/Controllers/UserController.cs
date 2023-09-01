@@ -78,7 +78,7 @@ public class UserController : ControllerBase
         if ( PasswordConfig.GetHash(data.Password, user.Salt) != user.Password )
             return Unauthorized("Username or email incorrects");
 
-        ReturnLoginData returnUser = new ReturnLoginData{
+        UserJwtData returnUser = new UserJwtData{
             Name  = user.Name,
             Email = user.Email
         };
@@ -96,7 +96,7 @@ public class UserController : ControllerBase
     )
     {
 
-        var jwtResult = jwt.Validate<ReturnLoginData>(data.Value);
+        var jwtResult = jwt.Validate<UserJwtData>(data.Value);
 
         var user = await repository.FirstOrDefaultAsync( u => 
             u.Name == jwtResult.Name  || 

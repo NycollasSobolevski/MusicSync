@@ -9,7 +9,7 @@ import { CallbackPageComponent } from './callback-page/callback-page.component';
 const routes: Routes = [
   { path: "", title: "Music Sync | Home", component: HomePageComponent},
   { path: "Login", title: "Music Sync | Login", component: LoginPageComponent},
-  { path: "callback/?:code&:state", title:"Music Sync | Callback", component: CallbackPageComponent}
+  { path: "spotifyCallback", title:"Music Sync | Callback", component: CallbackPageComponent}
 ];
 
 @NgModule({
