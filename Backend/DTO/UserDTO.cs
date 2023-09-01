@@ -6,7 +6,7 @@ public record LoginData
     public string Password { get; set; }
 }
 
-public record ReturnLoginData
+public record UserJwtData
 {
     public string Name { get; set; }
     public string Email { get; set; }

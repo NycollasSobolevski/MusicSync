@@ -46,9 +46,11 @@ public class TokenRepository : IRepository<Token>
         throw new NotImplementedException();
     }
 
-    public Task<Token> FirstOrDefaultAsync(Expression<Func<User, bool>> exp)
+    public async Task<Token> FirstOrDefaultAsync(Expression<Func<Token, bool>> exp)
     {
-        throw new NotImplementedException();
+        var token = await context.FindAsync(exp);
+        var list = token.ToList();
+        return list.FirstOrDefault();
     }
 
     public Task<Token> Last(Token obj)

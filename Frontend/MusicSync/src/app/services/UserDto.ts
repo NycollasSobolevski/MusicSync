@@ -1,4 +1,4 @@
-interface jwtReturn {
+interface jwt {
     value : string
 }
 interface userLoginData {
@@ -12,4 +12,4 @@ interface userRegisterData {
     password: string,
 }
 
-export { jwtReturn, userLoginData, userRegisterData }
+export { jwt, userLoginData, userRegisterData }
