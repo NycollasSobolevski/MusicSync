@@ -36,9 +36,11 @@ export class SubscribeComponent {
       .Register(this.userData)
       .subscribe({
         next: (next) => {
-          this.router.navigate(['/login']);
+          console.log(next);
+          
+          this.router.navigate(['/']);
           window.location.reload();
-          console.log("subscribed successfull");
+          console.log("Subscription successfull");
           
         },
         error: (err : HttpErrorResponse) => {

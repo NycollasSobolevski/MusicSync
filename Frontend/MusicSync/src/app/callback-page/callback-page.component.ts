@@ -29,15 +29,15 @@ export class CallbackPageComponent {
       console.log(this.data);
       
 
-      // this.service.Callback(this.data).subscribe({
-      //   next: (res) => {
-      //     console.log(res);
-      //   },
-      //   error: (err : HttpErrorResponse) => {
-      //     console.log(err.message);
+      this.service.Callback(this.data).subscribe({
+        next: (res) => {
+          console.log(res);
+        },
+        error: (err : HttpErrorResponse) => {
+          console.log(err.message);
           
-      //   }
-      // });
+        }
+      });
     })
   }
 }
