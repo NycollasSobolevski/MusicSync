@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SpotifyService } from '../services/SpotifyService';
 import { StringReturn } from '../services/SpotifyDto';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { jwt } from '../services/UserDto';
 
 @Component({
@@ -10,17 +10,22 @@ import { jwt } from '../services/UserDto';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
-  constructor(private service: SpotifyService, private router: Router) { }
-
+  spotifyCard = false;
+  
   private jwt : jwt = {
     value: sessionStorage.getItem('jwt') ?? ""
   }
-
+  
   link = ''
 
+  constructor(
+    private service: SpotifyService,
+    private router: Router,
+    private route : ActivatedRoute
+  ) { }
+  
   ngOnInit() {
-
-    if(this.jwt.value == "")
+    if(this.jwt.value == "" || this.jwt.value == undefined)
       return
     this.service
       .GetAccesUrl( this.jwt )
@@ -31,6 +36,30 @@ export class MenuComponent {
         error: (err) => {
           console.log("ERRO:\n" + err);
         }
-      })
+      }
+    );
+  }
+
+  update () {
+    this.route.queryParamMap.subscribe( qrr => {
+      //todo; switch case na querry com parametro TAB para selecionar o card de stream que o usuario está vendo
+      switch (qrr.get('tab')?.toLocaleLowerCase()) {
+        case "":
+          break;
+        case "spotify":
+          this.spotifyCard = true;
+          break;
+        default:
+          break;
+      }
+    })
+  }
+
+  openCard () {
+    this.spotifyCard = !this.spotifyCard;
+  }
+
+  closeAllCards (){
+    this.spotifyCard = false;
   }
 }

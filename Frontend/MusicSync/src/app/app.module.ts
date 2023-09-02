@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { SubscribeComponent } from './subscribe/subscribe.component';
 import { FormsModule } from '@angular/forms';
 import { CallbackPageComponent } from './callback-page/callback-page.component';
+import { StreamerCardComponent } from './streamer-card/streamer-card.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { CallbackPageComponent } from './callback-page/callback-page.component';
     LoginPageComponent,
     LoginComponent,
     SubscribeComponent,
-    CallbackPageComponent
+    CallbackPageComponent,
+    StreamerCardComponent
   ],
   imports: [
     BrowserModule,

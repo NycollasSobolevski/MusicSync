@@ -1,7 +1,6 @@
 
 namespace music_api.Controllers;
 
-using Amazon.SecurityToken.Model;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
@@ -47,7 +46,7 @@ public class SpotifyController : ControllerBase
                 });
             }
 
-            string scope = "user-read-private user-read-email";
+            string scope = "user-read-private user-read-email playlist-read-private playlist-read-collaborative";
             string state = Rand.GetRandomString(16);
 
             string client_id = Environment.GetEnvironmentVariable("CLIENT_ID");
@@ -162,5 +161,28 @@ public class SpotifyController : ControllerBase
         var content = await music.Content.ReadAsStringAsync();
 
         System.Console.WriteLine(content);
+    }
+
+    [HttpPost("GetUserPlaylists")]
+    public async Task GetUserPlaylists (
+        [FromBody] JWT data,
+        [FromServices] IJwtService jwt,
+        [FromServices] IRepository<User> userRepository,
+        [FromServices] IRepository<Token> tokenRepository,
+        [FromServices] HttpClient client
+    ){
+        //Todo: pegar token do usuario
+        var userJwt = jwt.Validate<UserJwtData>(data.Value);
+        var user = await userRepository.FirstOrDefaultAsync(
+            u => u.Email == userJwt.Email
+        );
+        var spotifyToken = await tokenRepository.FirstOrDefaultAsync(token => 
+            token.User == user.Name &&
+            token.Streamer == "Spotify"
+        );
+        //Todo: fazer request para spotify:
+        //https://developer.spotify.com/documentation/web-api/reference/get-a-list-of-current-users-playlists
+        client.DefaultRequestHeaders.Add("Authorization", "lkjadslf");
+        var response = await client.GetAsync("https://api.spotify.com/v1/me/playlists");
     }
 }

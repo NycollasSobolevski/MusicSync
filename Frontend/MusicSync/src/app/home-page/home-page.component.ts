@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoginPageComponent } from '../login-page/login-page.component';
 
 @Component({
@@ -10,7 +10,9 @@ import { LoginPageComponent } from '../login-page/login-page.component';
 export class HomePageComponent {
   jwt = sessionStorage.getItem("jwt") ?? undefined;
 
-  constructor ( private router : Router ) {}
+  constructor ( 
+    private router : Router,
+  ) {}
 
   ngOnInit () {
     if (this.jwt === undefined) {
