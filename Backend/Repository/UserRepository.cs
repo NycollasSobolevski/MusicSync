@@ -64,7 +64,7 @@ public class UserRepository : IRepository<User>
         throw new NotImplementedException();
     }
 
-    public void Update(User obj)
+    public Task Update(User obj)
     {
         throw new NotImplementedException();
     }

@@ -1,4 +1,5 @@
 
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace music_api.Model;
@@ -6,7 +7,7 @@ namespace music_api.Model;
 public partial class Token
 {
     [BsonId]
-    public string Id { get; set; }
+    public ObjectId Id { get; set; }
     [BsonElement("User")]
     public string User { get; set; }
     [BsonElement("Streamer")]

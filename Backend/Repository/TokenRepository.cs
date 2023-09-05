@@ -22,6 +22,7 @@ public class TokenRepository : IRepository<Token>
 
     public async Task add(Token obj)
     {
+        System.Console.WriteLine("Add token");
         await this.context.InsertOneAsync(obj);
     }
 
@@ -33,7 +34,7 @@ public class TokenRepository : IRepository<Token>
     public async Task Delete(Token obj)
     {
         System.Console.WriteLine(obj.ToString());
-        await this.context.FindOneAndDeleteAsync<Token>(obj.Id);
+        await this.context.FindOneAndDeleteAsync<Token>(obj.Id.ToString());
     }
 
     public Task<bool> exists(Token obj)
@@ -58,14 +59,14 @@ public class TokenRepository : IRepository<Token>
         throw new NotImplementedException();
     }
 
-    public async void Update(Token obj)
+    public async Task Update(Token obj)
     {
         await this.context
             .UpdateOneAsync<Token>( 
                 t => t.Id == obj.Id,
-                Builders<Token>.Update.Set( 
-                    t => t, obj
-                )  
+                Builders<Token>.Update
+                    .Set(t => t.StreamerToken, obj.StreamerToken)
+                    .Set(t => t.RefreshToken, obj.RefreshToken)
             );
     }
 }
