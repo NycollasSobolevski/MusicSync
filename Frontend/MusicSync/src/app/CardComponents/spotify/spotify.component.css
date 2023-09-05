@@ -1,0 +1,10 @@
+.spotify-card{
+    top: 0; bottom: 0; right: 0; left: 0;
+    margin: auto;
+    position: absolute;
+    width: 60vw;
+    height: 90vh;
+    background-color: rgba(91, 91, 91, 0.546);
+    border-radius: 40px ;
+    z-index: 20;
+}

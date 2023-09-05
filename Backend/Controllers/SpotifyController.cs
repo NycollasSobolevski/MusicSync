@@ -17,6 +17,9 @@ public class SpotifyController : ControllerBase
     private readonly string serverPort = Environment.GetEnvironmentVariable("SERVER_PORT");
     private readonly string frontPort = Environment.GetEnvironmentVariable("FRONTEND_PORT");
 
+    private readonly string clientId = Environment.GetEnvironmentVariable("CLIENT_ID");
+    private readonly string clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
+
     private readonly string redirectCallback = $"http://localhost:{Environment.GetEnvironmentVariable("FRONTEND_PORT")}/spotifyCallback";
     // private readonly string redirectCallback = $"http://localhost:{Environment.GetEnvironmentVariable("SERVER_PORT")}/Spotify/callback";
 
@@ -42,11 +45,11 @@ public class SpotifyController : ControllerBase
             {
                 return Ok(new StringReturn
                 {
-                    Data = "https://www.spotify.com/br-pt/premium/?utm_source=br-pt_brand_contextual-desktop_text&utm_medium=paidsearch&utm_campaign=alwayson_latam_br_premiumbusiness_core_brand+contextual-desktop+text+exact+br-pt+google&gad=1&gclid=Cj0KCQjw9MCnBhCYARIsAB1WQVXjK5l9TqUfhCh5QIvAUqGxe7z3PFbgTkdhTGqxKpytS49Ph_NfW6gaApksEALw_wcB&gclsrc=aw.ds"
+                    Data = "http://localhost:4200/?tab=Spotify"
                 });
             }
 
-            string scope = "user-read-private user-read-email playlist-read-private playlist-read-collaborative";
+            string scope = "user-read-private user-read-email playlist-read-private playlist-read-collaborative playlist-read-private";
             string state = Rand.GetRandomString(16);
 
             string client_id = Environment.GetEnvironmentVariable("CLIENT_ID");
@@ -59,7 +62,6 @@ public class SpotifyController : ControllerBase
         }
         catch (Exception exp)
         {
-            System.Console.WriteLine($"erooooooooooooooooooooooooooooooooooooooooooo\n {exp}");
             return BadRequest($"{exp}");
         }
     }
@@ -124,9 +126,14 @@ public class SpotifyController : ControllerBase
         [FromServices] HttpClient client,
         [FromServices] IRepository<Token> tokenRepository,
         [FromServices] IRepository<User> userRepository,
-        SpotifyToken token
+        [FromServices] IJwtService jwtService,
+        [FromBody] JWT jwt
     )
     {
+        var jwtUser = jwtService.Validate<UserJwtData>(jwt.Value);
+        var user  = await userRepository.FirstOrDefaultAsync(user => user.Email == jwtUser.Email);
+        var token = await tokenRepository.FirstOrDefaultAsync(token => token.User == user.Name);
+
         string clientId = Environment.GetEnvironmentVariable("CLIENT_ID");
         string clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
 
@@ -137,14 +144,13 @@ public class SpotifyController : ControllerBase
 
         var newForm = new List<KeyValuePair<string, string>>();
         newForm.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
-        newForm.Add(new KeyValuePair<string, string>("refresh_token", $"{token.refresh_token}"));
+        newForm.Add(new KeyValuePair<string, string>("refresh_token", $"{token.RefreshToken}"));
+
 
         var newBody = new FormUrlEncodedContent(newForm);
         var refreshToken = await client.PostAsync("https://accounts.spotify.com/api/token", newBody);
 
         var result = await refreshToken.Content.ReadFromJsonAsync<SpotifyToken>();
-
-
 
         return result;
     }
@@ -164,13 +170,14 @@ public class SpotifyController : ControllerBase
     }
 
     [HttpPost("GetUserPlaylists")]
-    public async Task GetUserPlaylists (
+    public async Task<ActionResult> GetUserPlaylists (
         [FromBody] JWT data,
         [FromServices] IJwtService jwt,
         [FromServices] IRepository<User> userRepository,
         [FromServices] IRepository<Token> tokenRepository,
         [FromServices] HttpClient client
     ){
+        System.Console.WriteLine("so falta get");
         //Todo: pegar token do usuario
         var userJwt = jwt.Validate<UserJwtData>(data.Value);
         var user = await userRepository.FirstOrDefaultAsync(
@@ -180,9 +187,13 @@ public class SpotifyController : ControllerBase
             token.User == user.Name &&
             token.Streamer == "Spotify"
         );
-        //Todo: fazer request para spotify:
-        //https://developer.spotify.com/documentation/web-api/reference/get-a-list-of-current-users-playlists
-        client.DefaultRequestHeaders.Add("Authorization", "lkjadslf");
+        // //Todo: fazer request para spotify:
+        string dataClient = $"{clientId}:{clientSecret}";
+        
+        string authorization = $"Bearer {dataClient}";
+        client.DefaultRequestHeaders.Add("Authorization", authorization);
         var response = await client.GetAsync("https://api.spotify.com/v1/me/playlists");
+
+        return Ok(response);
     }
 }

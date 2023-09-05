@@ -7,3 +7,7 @@
         <h3>Spotify</h3>
     </a>
 </main>
+
+<div class="bg" *ngIf="cardOn" (click)="closeAllCards()"></div>
+
+<app-spotify *ngIf="spotifyCard"></app-spotify>

@@ -16,4 +16,7 @@ export class SpotifyService {
     Callback ( data : CallbackData ) {
         return this.http.post(`http://localhost:${this.port}/Spotify/callback`, data);
     };
+    GetPlaylists ( data : jwt ) {
+        return this.http.post(`http://localhost:${this.port}/Spotify/GetUserPlaylists`, data)
+    }
 }

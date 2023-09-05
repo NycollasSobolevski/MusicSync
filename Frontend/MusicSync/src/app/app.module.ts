@@ -13,6 +13,7 @@ import { SubscribeComponent } from './subscribe/subscribe.component';
 import { FormsModule } from '@angular/forms';
 import { CallbackPageComponent } from './callback-page/callback-page.component';
 import { StreamerCardComponent } from './streamer-card/streamer-card.component';
+import { SpotifyComponent } from './CardComponents/spotify/spotify.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { StreamerCardComponent } from './streamer-card/streamer-card.component';
     LoginComponent,
     SubscribeComponent,
     CallbackPageComponent,
-    StreamerCardComponent
+    StreamerCardComponent,
+    SpotifyComponent
   ],
   imports: [
     BrowserModule,

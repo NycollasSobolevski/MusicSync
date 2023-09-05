@@ -17,6 +17,7 @@ export class MenuComponent {
   }
   
   link = ''
+  cardOn= false;
 
   constructor(
     private service: SpotifyService,
@@ -25,6 +26,7 @@ export class MenuComponent {
   ) { }
   
   ngOnInit() {
+    this.update();
     if(this.jwt.value == "" || this.jwt.value == undefined)
       return
     this.service
@@ -48,6 +50,7 @@ export class MenuComponent {
           break;
         case "spotify":
           this.spotifyCard = true;
+          this.cardOn = true;
           break;
         default:
           break;
@@ -61,5 +64,8 @@ export class MenuComponent {
 
   closeAllCards (){
     this.spotifyCard = false;
+    this.router.navigate(['/']);
+    console.log('red');
+    this.cardOn = false;
   }
 }
