@@ -122,7 +122,7 @@ public class SpotifyController : ControllerBase
     }
 
     [HttpPost("RefreshToken")]
-    public async Task<SpotifyToken> RefreshToken(
+    public async Task<ActionResult> RefreshToken(
         [FromServices] HttpClient client,
         [FromServices] IRepository<Token> tokenRepository,
         [FromServices] IRepository<User> userRepository,
@@ -148,16 +148,21 @@ public class SpotifyController : ControllerBase
         newForm.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
         newForm.Add(new KeyValuePair<string, string>("refresh_token", $"{token.RefreshToken}"));
 
+        try{
 
-        var newBody = new FormUrlEncodedContent(newForm);
-        var refreshToken = await client.PostAsync("https://accounts.spotify.com/api/token", newBody);
+            var newBody = new FormUrlEncodedContent(newForm);
+            var refreshToken = await client.PostAsync("https://accounts.spotify.com/api/token", newBody);
 
-        var result = await refreshToken.Content.ReadFromJsonAsync<SpotifyToken>();
+            var result = await refreshToken.Content.ReadFromJsonAsync<SpotifyToken>();
 
-        token.StreamerToken = result.access_token;
-        await tokenRepository.Update( token );
+            token.StreamerToken = result.access_token;
+            await tokenRepository.Update( token );
 
-        return result;
+            return Ok();
+        }
+        catch(Exception exp){
+            return BadRequest($"{exp}");
+        }
     }
 
     [HttpPost("GetMusicData")]
@@ -195,8 +200,8 @@ public class SpotifyController : ControllerBase
         
         var userSpotifyReturn = this.getUserSpotify( client, spotifyToken.StreamerToken );
 
-        string authorization = $"Bearer {spotifyToken.StreamerToken}";
-        client.DefaultRequestHeaders.Add("Authorization", authorization);
+        // string authorization = $"Bearer {spotifyToken.StreamerToken}";
+        // client.DefaultRequestHeaders.Add("Authorization", authorization);
         //!Parei aqui
         var response = await client.GetAsync($"https://api.spotify.com/v1/{ userSpotifyReturn.Id }/playlists");
 

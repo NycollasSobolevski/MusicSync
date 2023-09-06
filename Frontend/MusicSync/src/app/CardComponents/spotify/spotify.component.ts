@@ -1,3 +1,4 @@
+import { HttpResponse, HttpResponseBase } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { SpotifyService } from 'src/app/services/SpotifyService';
 import { jwt } from 'src/app/services/UserDto';
@@ -16,7 +17,14 @@ export class SpotifyComponent {
   
   ngOnInit() {
     if (this.jwt.value != "") {
-      // this.service.GetPlaylists(this.jwt);
+      this.service.GetPlaylists(this.jwt).subscribe({
+        next: ( data ) => {
+          //! se a resposta for nao autorizada, ja pedir redirecionamento para refreshToken
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      });
     }
   }
 }
