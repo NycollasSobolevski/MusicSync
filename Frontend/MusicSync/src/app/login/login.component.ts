@@ -33,6 +33,8 @@ export class LoginComponent {
       .Login(this.userData)
       .subscribe ({
         next: (res : jwt ) => {
+          console.log('carregando');
+          
           sessionStorage.setItem('jwt', res.value);
           this.router.navigate(['/']);
         },

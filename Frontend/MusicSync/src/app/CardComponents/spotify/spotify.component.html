@@ -1,3 +1,12 @@
 <div class="spotify-card">
-    
+    <div class="header">
+        <a href="{{playlists.href}}">Playlists</a>
+    </div>
+    <div class="playlists-item" *ngFor="let playlist of playlists.items">
+        <img src="{{playlist.images[0].url}}" alt="Playlist Image">
+        <section>
+            <h3>{{playlist.name}}</h3>
+            <p>{{playlist.owner.display_name}}</p>
+        </section>
+    </div>
 </div>

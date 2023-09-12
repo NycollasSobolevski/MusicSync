@@ -5,11 +5,13 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { FormsModule } from '@angular/forms';
 import { CallbackPageComponent } from './callback-page/callback-page.component';
+import { UserConfigPageComponent } from './user-config-page/user-config-page.component';
 
 const routes: Routes = [
   { path: "", title: "Music Sync | Home", component: HomePageComponent},
   { path: "Login", title: "Music Sync | Login", component: LoginPageComponent},
-  { path: "spotifyCallback", title:"Music Sync | Callback", component: CallbackPageComponent}
+  { path: "spotifyCallback", title:"Music Sync | Callback", component: CallbackPageComponent},
+  { path: "settings", title: "Music Sync | Settings", component: UserConfigPageComponent}
 ];
 
 @NgModule({

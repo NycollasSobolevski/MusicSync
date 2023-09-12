@@ -19,4 +19,7 @@ export class SpotifyService {
     GetPlaylists ( data : jwt ) {
         return this.http.post(`http://localhost:${this.port}/Spotify/GetUserPlaylists`, data)
     }
+    RefreshToken ( data : jwt ) {
+        return this.http.post(`http://localhost:${this.port}/Spotify/RefreshToken`, data)
+    }
 }

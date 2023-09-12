@@ -1,6 +1,7 @@
 
 namespace music_api.Controllers;
 
+using System.Net;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
@@ -142,7 +143,8 @@ public class SpotifyController : ControllerBase
         string authorization = $"Basic {dataClient}";
         client.DefaultRequestHeaders.Add("Authorization", authorization);
  
-        System.Console.WriteLine($"Refresh Token: {token.RefreshToken} ");
+        // System.Console.WriteLine($"Refresh Token: {token.RefreshToken} ");
+        // System.Console.WriteLine($"Streamer Token: {token.StreamerToken} ");
 
         var newForm = new List<KeyValuePair<string, string>>();
         newForm.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
@@ -187,25 +189,33 @@ public class SpotifyController : ControllerBase
         [FromServices] IRepository<Token> tokenRepository,
         [FromServices] HttpClient client
     ){
-        System.Console.WriteLine("so falta get");
-        //Todo: pegar token do usuario
         var userJwt = jwt.Validate<UserJwtData>(data.Value);
-        var user = await userRepository.FirstOrDefaultAsync(
-            u => u.Email == userJwt.Email
-        );
-        var spotifyToken = await tokenRepository.FirstOrDefaultAsync(token => 
-            token.User == user.Name &&
-            token.Streamer == "Spotify"
-        );
-        
-        var userSpotifyReturn = this.getUserSpotify( client, spotifyToken.StreamerToken );
+        try{
+            var user = await userRepository.FirstOrDefaultAsync(
+                u => u.Email == userJwt.Email
+            );
 
-        // string authorization = $"Bearer {spotifyToken.StreamerToken}";
-        // client.DefaultRequestHeaders.Add("Authorization", authorization);
-        //!Parei aqui
-        var response = await client.GetAsync($"https://api.spotify.com/v1/{ userSpotifyReturn.Id }/playlists");
+            var spotifyToken = await tokenRepository.FirstOrDefaultAsync(token => 
+                token.User == user.Name &&
+                token.Streamer == "Spotify"
+            );
+            var userSpotifyReturn = await this.getUserSpotify( client, spotifyToken.StreamerToken );
+            
+            var response = await client.GetAsync($"https://api.spotify.com/v1/me/playlists");
+            var result = response.Content.ReadFromJsonAsync<SpotifyUserPlaylists>();
+            System.Console.WriteLine(await response.Content.ReadAsStringAsync());
+            if(response.StatusCode == HttpStatusCode.Unauthorized){
+                return Unauthorized(await response.Content.ReadAsStringAsync());
+            }
+            if(response.StatusCode != HttpStatusCode.OK){
+                return BadRequest(await response.Content.ReadAsStringAsync());
+            }
 
-        return Ok(response);
+            return Ok(result);
+        }
+        catch{
+            return BadRequest("User not found");
+        }
     }
 
 
@@ -214,11 +224,35 @@ public class SpotifyController : ControllerBase
         string token
     )
     {
+        // string authorization = $"Bearer {token}";
         string authorization = $"Bearer {token}";
         client.DefaultRequestHeaders.Add("Authorization", authorization);
-        var response = await client.GetAsync("https://api.spotify.com/v1/me");
-        var content = await response.Content.ReadFromJsonAsync<SpotifyUserData>();
+        try{
+            var response = await client.GetAsync("https://api.spotify.com/v1/me");
+            var content = await response.Content.ReadFromJsonAsync<SpotifyUserData>();
+            System.Console.WriteLine(content);
+            return content;
+        }
+        catch(Exception exp){
+            System.Console.WriteLine(exp);
+            return null;
+        }
+    }
 
-        return content;
+    private async Task refreshToken (
+        string username,
+        [FromServices] HttpClient client,
+        [FromServices] IRepository<Token> tokenRepository
+    )
+    {
+        var token = await tokenRepository.FirstOrDefaultAsync(token => token.User == username);
+
+        string clientId = Environment.GetEnvironmentVariable("CLIENT_ID");
+        string clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
+
+        string dataClient = $"{clientId}:{clientSecret}";
+        dataClient = Convert.ToBase64String(Encoding.UTF8.GetBytes(dataClient));
+        string authorization = $"Basic {dataClient}";
+        client.DefaultRequestHeaders.Add("Authorization", authorization);
     }
 }

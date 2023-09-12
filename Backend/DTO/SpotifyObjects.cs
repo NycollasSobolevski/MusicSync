@@ -49,7 +49,6 @@ public class SpotifyUserData {
   public string type { get; set; }
   public string uri { get; set; }
 }
-
 public class explicit_content {
   public bool filter_enabled { get; set; }
   public bool filter_locked { get; set; }
@@ -65,4 +64,47 @@ public class images {
   public string url { get; set; }
   public int height { get; set; }
   public int width { get; set; }
+}
+
+
+public class SpotifyUserPlaylists
+{
+    public string href { get; set; }
+    public int limit { get; set; }
+    public string next { get; set; }
+    public int offset { get; set; }
+    public string previous { get; set; }
+    public int total { get; set; }
+    public SpotifyUserPlaylistItems[] items { get; set; }
+}
+public class SpotifyUserPlaylistItems
+{
+  public bool collaborative { get; set; }
+  public string description { get; set; }
+  public external_urls external_urls { get; set; }
+  public string href { get; set; }
+  public string id { get; set; }
+  public images[] images { get; set; }
+  public string name { get; set; }
+  public SpotifyUserPlaylistOwner owner { get; set; }
+  public bool @public { get; set; }
+  public string snapshot_id { get; set; }
+  public SpotifyUserPlaylistTracks tracks { get; set; }
+  public string type { get; set; }
+  public string uri { get; set; }
+}
+public class SpotifyUserPlaylistOwner
+{
+  public external_urls external_urls { get; set; }
+  public followers followers { get; set; }
+  public string href { get; set; }
+  public string id { get; set; }
+  public string type { get; set; }
+  public string uri { get; set; }
+  public string display_name { get; set; }
+}
+public class SpotifyUserPlaylistTracks
+{
+  public string href { get; set; }
+  public int total { get; set; }
 }

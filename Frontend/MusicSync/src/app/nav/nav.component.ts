@@ -27,6 +27,9 @@ export class NavComponent {
     else 
       this.isLoged = true;
   }
+  settings(){
+    this.router.navigate(["settings"]);
+  }
 
   logout(){
     sessionStorage.clear();

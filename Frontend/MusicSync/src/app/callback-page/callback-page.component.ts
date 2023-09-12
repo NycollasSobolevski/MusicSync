@@ -18,7 +18,8 @@ export class CallbackPageComponent {
   
   constructor ( 
     private route : ActivatedRoute,
-    private service : SpotifyService
+    private service : SpotifyService,
+    private router : Router
   ) {}
 
   ngOnInit ( ) {
@@ -32,6 +33,7 @@ export class CallbackPageComponent {
       this.service.Callback(this.data).subscribe({
         next: (res) => {
           console.log(res);
+          this.router.navigate(['/']);
         },
         error: (err : HttpErrorResponse) => {
           console.log(err.message);

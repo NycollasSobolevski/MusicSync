@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SpotifyCardComponent } from './spotify-card/spotify-card.component';
 import { NavComponent } from './nav/nav.component';
 import { MenuComponent } from './menu/menu.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -12,13 +11,15 @@ import { LoginComponent } from './login/login.component';
 import { SubscribeComponent } from './subscribe/subscribe.component';
 import { FormsModule } from '@angular/forms';
 import { CallbackPageComponent } from './callback-page/callback-page.component';
-import { StreamerCardComponent } from './streamer-card/streamer-card.component';
 import { SpotifyComponent } from './CardComponents/spotify/spotify.component';
+import { DeezerComponent } from './CardComponents/deezer/deezer.component';
+import { UserConfigPageComponent } from './user-config-page/user-config-page.component';
+import { ConfigMenuComponent } from './userConfigComponents/config-menu/config-menu.component';
+import { StreamersConfigComponent } from './userConfigComponents/streamers-config/streamers-config.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SpotifyCardComponent,
     NavComponent,
     MenuComponent,
     HomePageComponent,
@@ -26,8 +27,11 @@ import { SpotifyComponent } from './CardComponents/spotify/spotify.component';
     LoginComponent,
     SubscribeComponent,
     CallbackPageComponent,
-    StreamerCardComponent,
-    SpotifyComponent
+    SpotifyComponent,
+    DeezerComponent,
+    UserConfigPageComponent,
+    ConfigMenuComponent,
+    StreamersConfigComponent
   ],
   imports: [
     BrowserModule,

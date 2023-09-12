@@ -2,9 +2,36 @@
     top: 0; bottom: 0; right: 0; left: 0;
     margin: auto;
     position: absolute;
-    width: 60vw;
-    height: 90vh;
+    width: calc(60vw - 40px );
+    height: calc(90vh - 40px);
     background-color: rgba(91, 91, 91, 0.546);
     border-radius: 40px ;
     z-index: 20;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    overflow-y: scroll;
+}
+.spotify-card::-webkit-scrollbar{
+    display: none;
+}
+
+.playlists-item{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    background-color: var(--semitransparent-background);
+    height: 12%;
+    width: 65%;
+    border-radius: 20px;
+    padding-left: 5px;
+}
+.playlists-item img{
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
 }

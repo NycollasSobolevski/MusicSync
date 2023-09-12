@@ -1,0 +1,14 @@
+
+*::-webkit-scrollbar{
+    display: none;
+}
+main{
+    max-width: calc(100vw - 5px);
+    max-height: calc(100vh - 60px);
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    overflow: scroll;
+    top: 60px;
+    position: relative;
+}

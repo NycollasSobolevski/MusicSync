@@ -1,0 +1,15 @@
+main{
+    width: 30vh;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button{
+    width: 90%;
+    height: 50px;
+    background-color: var(--semitransparent-background);
+    border-radius: 20px;
+    color: var(--text-colorB);
+}
