@@ -12,4 +12,10 @@ interface userRegisterData {
     password: string,
 }
 
-export { jwt, userLoginData, userRegisterData }
+interface JWTWithGetPlaylistData {
+    jwt : jwt,
+    offset : number,
+    limit : number
+}
+
+export { jwt, userLoginData, userRegisterData, JWTWithGetPlaylistData }

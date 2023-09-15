@@ -1,6 +1,13 @@
 
 namespace music_api.DTO;
 
+public record JWTWithGetPlaylistData
+{
+    public JWT Jwt { get; set; }
+    public int Offset { get; set; }
+    public int Limit { get; set; }    
+}
+
 public class SpotifyToken
 {
     public string access_token { get; set; }

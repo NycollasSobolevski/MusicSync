@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./user-config-page.component.css']
 })
 export class UserConfigPageComponent {
-  tab = "";
+  tab = "streamers";
 
 
   selectTab(event : string){

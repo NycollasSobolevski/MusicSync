@@ -16,6 +16,8 @@ import { DeezerComponent } from './CardComponents/deezer/deezer.component';
 import { UserConfigPageComponent } from './user-config-page/user-config-page.component';
 import { ConfigMenuComponent } from './userConfigComponents/config-menu/config-menu.component';
 import { StreamersConfigComponent } from './userConfigComponents/streamers-config/streamers-config.component';
+import { MusicPageComponent } from './CardComponents/music-page/music-page.component';
+import { PlaylistPageComponent } from './CardComponents/playlist-page/playlist-page.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { StreamersConfigComponent } from './userConfigComponents/streamers-confi
     DeezerComponent,
     UserConfigPageComponent,
     ConfigMenuComponent,
-    StreamersConfigComponent
+    StreamersConfigComponent,
+    MusicPageComponent,
+    PlaylistPageComponent
   ],
   imports: [
     BrowserModule,

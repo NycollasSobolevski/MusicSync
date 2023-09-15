@@ -4,3 +4,4 @@ public record JWT
 {
     public string Value { get; set; }
 }
+

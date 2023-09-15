@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { SpotifyService } from 'src/app/services/SpotifyService';
+import { jwt } from 'src/app/services/UserDto';
+import { Alert } from 'src/app/services/Funcionalities';
 
 @Component({
   selector: 'app-streamers-config',
@@ -6,5 +9,78 @@ import { Component } from '@angular/core';
   styleUrls: ['./streamers-config.component.css']
 })
 export class StreamersConfigComponent {
+  constructor( 
+    private spotifyService : SpotifyService
+  ){
+    
+  }
 
+
+  public Jwt : jwt = {
+    value : "",
+  }
+
+  ngOnInit() {
+    this.Jwt.value = sessionStorage.getItem("jwt") ?? "";
+    console.log(this.Jwt);
+
+    if(this.Jwt.value == ""){
+      window.location.href = "/login";
+    }
+  }
+
+  alert : Alert = {
+    isAlert : false,
+    message : '',
+    title : '',
+    functionToCall: undefined,
+  }
+
+  logoffTogle( streamer : string ){
+    switch (streamer) {
+      case "Spotify":
+        this.alertShow("Are you shure","You will be logged out of Spotify", () => this.logoffSpotify());
+        break;
+    
+      default:
+        break;
+    }
+  }
+
+  alertShow (title : string, message : string, functionToCall? : Function) {
+    this.alert.isAlert = true;
+    this.alert.message = message;
+    this.alert.title = title;
+    this.alert.functionToCall = functionToCall;
+  }
+  setAlertFunction () {
+    
+  }
+  closeAlert(){
+    this.alert.isAlert = false;
+    this.alert.message = "";
+    this.alert.title = "";
+    this.alert.functionToCall = undefined;
+  }
+
+  //! transform in class to others streamers use!!!
+  logoffSpotify(){
+    var jwtValue = sessionStorage.getItem("jwt") ?? "";
+    var jwtt: jwt ={
+      value: jwtValue,
+    };
+
+    if(jwtt.value == "")
+      window.location.href = "/login";
+    console.log(this.spotifyService)
+    this.spotifyService.LogOff(jwtt).subscribe({
+      next: data => {
+        window.location.reload();
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
+  }
 }
+

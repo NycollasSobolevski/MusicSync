@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpResponse, HttpResponseBase } from '@angular/comm
 import { Component } from '@angular/core';
 import { Playlist, itemsOfPlaylist } from 'src/app/services/SpotifyDto';
 import { SpotifyService } from 'src/app/services/SpotifyService';
-import { jwt } from 'src/app/services/UserDto';
+import { JWTWithGetPlaylistData, jwt } from 'src/app/services/UserDto';
 
 @Component({
   selector: 'app-spotify',
@@ -16,14 +16,19 @@ export class SpotifyComponent {
 
   playlists : Playlist = {};
 
-  private jwt : jwt = {value: sessionStorage.getItem('jwt') ?? ""}
+
+  private jwt : JWTWithGetPlaylistData = {
+    jwt:{
+      value: sessionStorage.getItem('jwt') ?? ""
+    },
+    offset: 0,
+    limit: 20
+  }
   
-  refreshed = false;
-  refreshToken(){
-    this.service.RefreshToken(this.jwt).subscribe({
+  async refreshToken(){
+    this.service.RefreshToken(this.jwt.jwt).subscribe({
       next: ( data ) => {
         console.log("Refreshed token");
-        this.refreshed = true;
       },
       error: error => {
         console.error('There was an error!', error);
@@ -31,17 +36,28 @@ export class SpotifyComponent {
       }
     });
   }
-  getPlaylist(){
+  async getPlaylist(){
+    
+    await this.refreshToken();
+
     this.service.GetPlaylists(this.jwt).subscribe({
       next: ( data : any ) => {
-        console.log(data.result);
-        this.playlists = data.result;
+        if(this.playlists.items == null)
+          this.playlists = data;
+        else{
+          this.playlists.items?.push(...data.items);
+        }
+        
+        if(this.playlists != null)
+          sessionStorage.setItem('SpotifyPlaylists', JSON.stringify(this.playlists));
+        return data.result;
       },
       error: error => {
         if (error.status == 401) {
           console.log("Refreshing token");
-          this.service.RefreshToken(this.jwt).subscribe({
+          this.service.RefreshToken(this.jwt.jwt).subscribe({
             next: ( data ) => {
+              console.log("Refreshed token");
               location.reload();
             },
             error: error => {
@@ -57,13 +73,29 @@ export class SpotifyComponent {
   );
   }
 
-  ngOnInit() {
-    let res;
-
-    if (this.jwt.value == "") 
+  async ngOnInit() {
+    if (this.jwt.jwt.value == "") 
       return;
 
-    this.refreshToken();
-    this.getPlaylist();    
+    var sessionPlaylists = sessionStorage.getItem('SpotifyPlaylists') ?? "";
+    console.log(sessionPlaylists);
+    
+
+    if(sessionPlaylists != ""){
+      this.playlists = JSON.parse(sessionStorage.getItem('SpotifyPlaylists') ?? "");
+      return;
+    }
+    console.log("Getting playlists");
+    
+    await this.getPlaylist();
+  }
+
+  checkPlaylists(){
+    this.playlists.items?.length == 0 ? true : false;
+  }
+
+  morePlaylists(){
+    this.jwt.offset += 20;
+    this.getPlaylist();
   }
 }

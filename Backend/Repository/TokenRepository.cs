@@ -34,8 +34,11 @@ public class TokenRepository : IRepository<Token>
     public async Task Delete(Token obj)
     {
         System.Console.WriteLine(obj.ToString());
-        await this.context.FindOneAndDeleteAsync<Token>(obj.Id.ToString());
+        await this.context.FindOneAndDeleteAsync<Token>(t => 
+            t.Id == obj.Id
+        );
     }
+    
 
     public Task<bool> exists(Token obj)
     {

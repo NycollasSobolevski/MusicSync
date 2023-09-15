@@ -1,13 +1,14 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { CallbackData, StringReturn } from "./SpotifyDto";
-import { jwt } from "./UserDto";
+import { JWTWithGetPlaylistData, jwt } from "./UserDto";
+import {  IStreamerService } from "./StreamerService";
 
 @Injectable({
     providedIn: 'root'
 })
 export class SpotifyService {
-    constructor ( private http : HttpClient ) {  }
+    constructor (private http : HttpClient) {  }
     private port = '5179'
     
     GetAccesUrl ( data : jwt ) {
@@ -16,10 +17,16 @@ export class SpotifyService {
     Callback ( data : CallbackData ) {
         return this.http.post(`http://localhost:${this.port}/Spotify/callback`, data);
     };
-    GetPlaylists ( data : jwt ) {
+    GetPlaylists ( data : JWTWithGetPlaylistData ) {
         return this.http.post(`http://localhost:${this.port}/Spotify/GetUserPlaylists`, data)
+    };
+    GetPlaylistData( data : jwt, playlistId : string ) {
+        return this.http.post(`http://localhost:${this.port}/Spotify/GetPlaylist/${playlistId}`, data)
     }
     RefreshToken ( data : jwt ) {
         return this.http.post(`http://localhost:${this.port}/Spotify/RefreshToken`, data)
-    }
+    };
+    LogOff ( data : jwt ) {
+        return this.http.post(`http://localhost:${this.port}/Spotify/LogOff`, data)
+    };
 }

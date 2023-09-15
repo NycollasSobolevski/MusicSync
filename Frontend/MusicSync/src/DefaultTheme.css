@@ -13,3 +13,7 @@
     --red-alert-color: #f35858c0 ;
     --yellow-alert-color: #f3d758c0;
 }
+
+*{
+    font-family: 'Poppins', sans-serif;;
+}

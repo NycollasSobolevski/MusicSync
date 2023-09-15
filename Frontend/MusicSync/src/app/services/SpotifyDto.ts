@@ -18,10 +18,10 @@ interface Playlist {
     items? :itemsOfPlaylist[]
 }
 interface itemsOfPlaylist {
-    collaborative: boolean,
-    description: string,
-    external_urls: {
-        spotify: string
+    collaborative?: boolean,
+    description?: string,
+    external_urls?: {
+        spotify?: string
     },
     href: string,
     id: string,
