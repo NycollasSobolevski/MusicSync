@@ -2,11 +2,11 @@
     <div class="header">
         <a href="{{playlists.href}}">Playlists</a>
     </div>
-    <button class="playlists-item" *ngFor="let playlist of playlists.items">
+    <button class="playlists-item" (click)="getPlaylistTracks(playlist)" *ngFor="let playlist of playlists.items">
         <img src="${{playlist.images[0].url}}" alt="Playlist Image">
         <section>
             <h5>{{playlist.name}}</h5>
-            <p>{{playlist.owner?.display_name}}</p>
+            <p>{{playlist.owner.display_name}}</p>
         </section>
     </button>
     <button (click)="morePlaylists()">More</button>

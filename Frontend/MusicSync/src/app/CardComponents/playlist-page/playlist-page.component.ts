@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { itemsOfPlaylist } from 'src/app/services/SpotifyDto';
 import { SpotifyService } from 'src/app/services/SpotifyService';
 import { IStreamerService } from 'src/app/services/StreamerService';
@@ -11,7 +11,7 @@ import { jwt } from 'src/app/services/UserDto';
   styleUrls: ['./playlist-page.component.css']
 })
 export class PlaylistPageComponent {
-  @Input() PlaylisData : itemsOfPlaylist = {
+  protected PlaylisData : itemsOfPlaylist = {
     href: '',
     id: '',
     images: [],
@@ -44,16 +44,30 @@ export class PlaylistPageComponent {
     value: sessionStorage.getItem('jwt') || '',
   }
 
-  constructor( private service : SpotifyService ){  }
+  constructor( private service : SpotifyService,
+    private router : ActivatedRoute  
+  ){  }
 
   ngOnInit(){
-    console.log(this.PlaylisData);
-    this.service.GetPlaylistData(this.jwt, this.PlaylisData.id).subscribe({
-      next: (data) => {
-        console.log(data);
-      },
-      error: (error) => {console.log(error);
-      }
+    var id ;
+    var streamer ;
+    
+    this.router.queryParams.subscribe(params => {
+      id       = params['id'];
+      streamer = params['streamer'];      
     });
+    console.log(id);
+    
+    this.getData(id ?? '');
+  }
+
+  getData(id : string) {
+    console.log(id);
+    
+    this.service.GetPlaylistData(this.jwt, id).subscribe({
+      next: ( data : any ) => {
+        this.PlaylisData = data;
+      }
+    })
   }
 }

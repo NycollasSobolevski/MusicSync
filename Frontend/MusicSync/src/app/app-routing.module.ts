@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: "Login", title: "Music Sync | Login", component: LoginPageComponent},
   { path: "spotifyCallback", title:"Music Sync | Callback", component: CallbackPageComponent},
   { path: "settings", title: "Music Sync | Settings", component: UserConfigPageComponent},
-  { path: "Playlist", title: "Music Sync | Playlist", component: PlaylistPageComponent},
+  { path: "playlist", title: "Music Sync | Playlist", component: PlaylistPageComponent},
 ];
 
 @NgModule({

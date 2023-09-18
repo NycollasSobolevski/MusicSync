@@ -1,5 +1,7 @@
 import { HttpErrorResponse, HttpResponse, HttpResponseBase } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { Playlist, itemsOfPlaylist } from 'src/app/services/SpotifyDto';
 import { SpotifyService } from 'src/app/services/SpotifyService';
 import { JWTWithGetPlaylistData, jwt } from 'src/app/services/UserDto';
@@ -11,10 +13,11 @@ import { JWTWithGetPlaylistData, jwt } from 'src/app/services/UserDto';
 })
 export class SpotifyComponent {
   constructor (
-    private service : SpotifyService
+    private service : SpotifyService,
+    private sanitizer : DomSanitizer,
+    private router : Router
   ) {}
 
-  playlists : Playlist = {};
 
 
   private jwt : JWTWithGetPlaylistData = {
@@ -88,6 +91,12 @@ export class SpotifyComponent {
     console.log("Getting playlists");
     
     await this.getPlaylist();
+
+    console.log(this.playlists.items[0].images[0].url)
+  }
+
+  sanitizerUrl(urlImage : string){
+    return this.sanitizer.bypassSecurityTrustUrl(urlImage);
   }
 
   checkPlaylists(){
@@ -98,4 +107,13 @@ export class SpotifyComponent {
     this.jwt.offset += 20;
     this.getPlaylist();
   }
+
+  getPlaylistTracks(playlist : itemsOfPlaylist){
+    this.router.navigate(['/playlist'], { queryParams: { id: playlist.id, streamer: "spotify" } });
+  }
+
+  playlists : Playlist = {
+    items: []
+  };
+
 }

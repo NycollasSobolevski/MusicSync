@@ -15,7 +15,7 @@ interface Playlist {
     offset?: number,
     previous?: string,
     total?: number,
-    items? :itemsOfPlaylist[]
+    items :itemsOfPlaylist[]
 }
 interface itemsOfPlaylist {
     collaborative?: boolean,
