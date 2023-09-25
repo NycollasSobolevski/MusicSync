@@ -14,6 +14,10 @@
     --yellow-alert-color: #f3d758c0;
 }
 
+:root{
+    --menu-background-color: var(--sec-color) ; 
+}
+
 *{
     font-family: 'Poppins', sans-serif;;
 }

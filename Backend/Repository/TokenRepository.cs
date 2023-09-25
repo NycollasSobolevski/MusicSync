@@ -11,13 +11,20 @@ public class TokenRepository : IRepository<Token>
     {
         string connString   = Environment.GetEnvironmentVariable("MONGODB_CONNECTION_STRING");
         string databaseName = Environment.GetEnvironmentVariable("DATABASE_NAME");
-        
-        DataBase.SetConnection(connString);
-        DataBase.Connect();
-        DataBase.mongoClient.GetDatabase("Token");
-        this.context = DataBase.mongoClient
-            .GetDatabase(databaseName)
-            .GetCollection<Token>("Token");
+        try
+        {
+            
+            DataBase.SetConnection(connString);
+            DataBase.Connect();
+            DataBase.mongoClient.GetDatabase("Token");
+            this.context = DataBase.mongoClient
+                .GetDatabase(databaseName)
+                .GetCollection<Token>("Token");
+        }
+        catch (Exception exp)
+        {
+            System.Console.WriteLine(exp);
+        }
     }
 
     public async Task add(Token obj)

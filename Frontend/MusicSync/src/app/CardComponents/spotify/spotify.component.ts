@@ -79,7 +79,7 @@ export class SpotifyComponent {
   async ngOnInit() {
     if (this.jwt.jwt.value == "") 
       return;
-
+    
     var sessionPlaylists = sessionStorage.getItem('SpotifyPlaylists') ?? "";
     console.log(sessionPlaylists);
     
@@ -92,7 +92,7 @@ export class SpotifyComponent {
     
     await this.getPlaylist();
 
-    console.log(this.playlists.items[0].images[0].url)
+    // console.log(this.playlists.items[0].images[0].url)
   }
 
   sanitizerUrl(urlImage : string){
