@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { SpotifyService } from '../services/SpotifyService';
-import { StringReturn } from '../services/SpotifyDto';
+import { SpotifyService } from '../../services/SpotifyService';
+import { StringReturn } from '../../services/SpotifyDto';
 import { ActivatedRoute, Router } from '@angular/router';
-import { jwt } from '../services/UserDto';
+import { jwt } from '../../services/UserDto';
 
 @Component({
   selector: 'app-menu',

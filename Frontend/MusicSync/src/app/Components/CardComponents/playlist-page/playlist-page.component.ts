@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { itemsOfPlaylist } from 'src/app/services/SpotifyDto';
-import { SpotifyService } from 'src/app/services/SpotifyService';
-import { IStreamerService } from 'src/app/services/StreamerService';
-import { jwt } from 'src/app/services/UserDto';
+
+import { itemsOfPlaylist } from '../../../services/SpotifyDto';
+import { SpotifyService } from '../../../services/SpotifyService';
+import { IStreamerService } from '../../../services/StreamerService';
+import { jwt } from '../../../services/UserDto';
 
 @Component({
   selector: 'app-playlist-page',

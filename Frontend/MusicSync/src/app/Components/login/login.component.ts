@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { UserServices } from '../services/UserServices';
-import { jwt, userLoginData } from '../services/UserDto';
+import { UserServices } from '../../services/UserServices';
+import { jwt, userLoginData } from '../../services/UserDto';
 import { Router } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 
