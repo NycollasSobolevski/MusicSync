@@ -11,7 +11,8 @@ import { jwt } from 'src/app/services/UserDto';
   styleUrls: ['./playlist-page.component.css']
 })
 export class PlaylistPageComponent {
-  protected PlaylisData : itemsOfPlaylist = {
+  @Input() plyalistDataInput : any;
+  PlaylisData : itemsOfPlaylist = {
     href: '',
     id: '',
     images: [],
@@ -39,6 +40,7 @@ export class PlaylistPageComponent {
     type: '',
     uri: ''
   };
+  protected Playlist :any;
 
   private jwt : jwt = {
     value: sessionStorage.getItem('jwt') || '',
@@ -66,7 +68,11 @@ export class PlaylistPageComponent {
     
     this.service.GetPlaylistData(this.jwt, id).subscribe({
       next: ( data : any ) => {
-        this.PlaylisData = data;
+        
+        this.Playlist = data;
+        console.log(data);
+        
+        console.log(this.PlaylisData);
       }
     })
   }

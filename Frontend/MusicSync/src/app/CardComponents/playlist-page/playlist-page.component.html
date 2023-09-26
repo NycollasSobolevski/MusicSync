@@ -1,1 +1,7 @@
-<p>playlist-page works!</p>
+<main>
+    <a href="{{this.PlaylisData.href}}" target="_blank">{{this.PlaylisData.name}} xalalal</a>
+    <div *ngFor="let music of Playlist.items">
+        {{music.track.name}}
+        <p *ngFor="let artist on music.track.artists">{{artist.name}}</p>
+    </div>
+</main>

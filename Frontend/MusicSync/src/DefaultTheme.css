@@ -1,8 +1,10 @@
 :root {
-    --pri-color : #7CFFC4;
-    --sec-color : #355834;
-    --ter-color : #2A4494;
-    --qua-color : #F19953;
+    --pri-color : #2190EB;
+    --sec-color : #2F506B;
+    --ter-color : #1A71B8;
+    --qua-color : #69B2EE;
+    --qui-color : #0F426B;
+    --ms-blue-50 :#1a6eb3;
     --back-colorA: #14281D;
     --back-colorB: #060b0f;
     --back-colorC: #06004a;
@@ -15,7 +17,10 @@
 }
 
 :root{
-    --menu-background-color: var(--sec-color) ; 
+    --default-background-color: var(--sec-color) ;
+    --menu-background-color: var(--ms-blue-50) ;
+    --default-box-shadow-color: black;
+    --seccondary-box-shadow-color: #4d92b9;
 }
 
 *{

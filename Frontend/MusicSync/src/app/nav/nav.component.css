@@ -27,17 +27,16 @@ p {
 
 .toolbar {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
+  top: 0; left: 0; right: 0; height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 10px 0 20px ;
-  background-color: var(--input-colorA);
+  background-color: var(--menu-background-color);
   color: white;
   font-weight: 600;
+  box-shadow: 0 0 10px black;
+  z-index: 3;
 }
 .title-init{
   display: flex;

@@ -251,32 +251,33 @@ public class SpotifyController : ControllerBase
         }
     }
 
-    [HttpPost("GetPlaylistTracks/{id}")]
+    [HttpPost("GetPlaylistTracks/")]
     public async Task<ActionResult> GetPlaylist (
-        string id,
+        [FromQuery(Name = "id")] string id,
+        [FromQuery(Name = "streamer")] string streamer,
         [FromBody] JWT body ,
         [FromServices] IJwtService jwt,
         [FromServices] IRepository<Token> tokenRepository,
         [FromServices] HttpClient client
     ){
-        return Ok("irienu");
-        // var userJwt = jwt.Validate<UserJwtData>(body.Value);
-        // try{
-        //     var user = await tokenRepository.FirstOrDefaultAsync(token => 
-        //         token.User == userJwt.Name &&
-        //         token.Streamer == "Spotify"
-        //     );
-        //     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {user.StreamerToken}");
-        //     var response = await client.GetAsync($"https://api.spotify.com/v1/playlists/{id}/tracks");
 
-        //     if(response.StatusCode != HttpStatusCode.OK)
-        //         return BadRequest(await response.Content.ReadAsStringAsync());
+        var userJwt = jwt.Validate<UserJwtData>(body.Value);
+        try{
+            var user = await tokenRepository.FirstOrDefaultAsync(token => 
+                token.User == userJwt.Name &&
+                token.Streamer == "Spotify"
+            );
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {user.StreamerToken}");
+            var response = await client.GetAsync($"https://api.spotify.com/v1/playlists/{id}/tracks");
+
+            if(response.StatusCode != HttpStatusCode.OK)
+                return BadRequest(await response.Content.ReadAsStringAsync());
             
-        //     return Ok(await response.Content.ReadAsStringAsync());
-        // }
-        // catch(Exception exp){
-        //     return BadRequest(exp);
-        // }
+            return Ok(await response.Content.ReadAsStringAsync());
+        }
+        catch(Exception exp){
+            return BadRequest(exp);
+        }
     }
 
 

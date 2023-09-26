@@ -21,7 +21,7 @@ export class SpotifyService {
         return this.http.post(`http://localhost:${this.port}/Spotify/GetUserPlaylists`, data)
     };
     GetPlaylistData( data : jwt, playlistId : string ) {
-        return this.http.post(`http://localhost:${this.port}/Spotify/GetPlaylistTracks/${playlistId}`, data)
+        return this.http.post(`http://localhost:${this.port}/Spotify/GetPlaylistTracks?id=${playlistId}&streamer=spotify`, data)
     }
     RefreshToken ( data : jwt ) {
         return this.http.post(`http://localhost:${this.port}/Spotify/RefreshToken`, data)

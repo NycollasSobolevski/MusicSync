@@ -1,5 +1,5 @@
 main{
-    background-color: var(--back-colorB);    --back-color: #14281D;
+    background-color: var(--default-background-color);  
 
     width: 100vw;
     height: 100vh;
