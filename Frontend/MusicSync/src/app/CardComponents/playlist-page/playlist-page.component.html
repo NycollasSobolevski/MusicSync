@@ -1,7 +1,17 @@
 <main>
-    <a href="{{this.PlaylisData.href}}" target="_blank">{{this.PlaylisData.name}} xalalal</a>
-    <div *ngFor="let music of Playlist.items">
-        {{music.track.name}}
-        <p *ngFor="let artist on music.track.artists">{{artist.name}}</p>
+    <div class="container">
+        <a href="{{this.PlaylisData.href}}" target="_blank">{{this.PlaylisData.name}} xalalal</a>
+        <button *ngFor="let music of Playlist.items" class="music-item">
+            <div class="music-index"><p>{{Playlist.items.indexOf(music)}}</p></div>
+            <div class="music-identify">
+                <div class="music-name">{{music.track.name}}</div>
+                <div class="artists-music-session">
+                    <p *ngFor="let artist of music.track.artists">
+                        {{music.track.artists.indexOf(artist) >= 1 ? ",  ":"" }}
+                        {{artist.name}}
+                    </p>
+                </div>
+            </div>
+        </button>
     </div>
 </main>

@@ -23,7 +23,23 @@
 .spotify-card::-webkit-scrollbar{
     display: none;
 }
+.header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
+}
+.close svg{
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke-width:2px;
+    stroke-linecap:round ;
+    stroke-linejoin:round;
+    stroke: var(--text-colorB);
+    cursor: pointer;
+}
 .playlists-item{
     display: flex;
     align-items: center;

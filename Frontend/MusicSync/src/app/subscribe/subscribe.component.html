@@ -4,11 +4,26 @@
     </header>
     <div class="container">
         <div class="content">
-            <input required type="text" [(ngModel)]="userData.name" name="subs-name" id="subs-name" placeholder="Name">
-            <input required type="email" [(ngModel)]="userData.email" name="subs-email" id="subs-email" placeholder="Email">
-            <input required type="date" [(ngModel)]="userData.birth" name="subs-birth" id="subs-birth" placeholder="Birth">
-            <input required type="password" [(ngModel)]="userData.password" name="subs-pass" id="subs-pass" placeholder="Password">
-            <input required type="password" [(ngModel)]="repassword" name="subs-repass" id="subs-repass" placeholder="Password">
+            <div class="input-container">
+                <input required type="text" [(ngModel)]="userData.name" name="subs-name" id="subs-name" placeholder="Name">
+                <span></span>
+            </div>
+            <div class="input-container">
+                <input required type="email" [(ngModel)]="userData.email" name="subs-email" id="subs-email" placeholder="Email">
+                <span></span>
+            </div>
+            <div class="input-container">
+                <input required type="date" [(ngModel)]="userData.birth" name="subs-birth" id="subs-birth" placeholder="Birth">
+                <span></span>
+            </div>
+            <div class="input-container">
+                <input required type="password" [(ngModel)]="userData.password" name="subs-pass" id="subs-pass" placeholder="Password">
+                <span></span>
+            </div>
+            <div class="input-container">
+                <input required type="password" [(ngModel)]="repassword" name="subs-repass" id="subs-repass" placeholder="Password">
+                <span></span>
+            </div>
             <div class="buttons">
                 <button (click)="signInClicked()">Send</button>
                 <button (click)="loginClicked()">Login</button>

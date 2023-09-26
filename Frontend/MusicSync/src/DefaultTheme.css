@@ -11,16 +11,22 @@
     --text-colorA: Black;
     --text-colorB: AliceBlue;
     --input-colorA: rgba(4, 44, 155, 0.2);
-    --semitransparent-background: rgb(0,0,0,0.2);
     --red-alert-color: #f35858c0 ;
     --yellow-alert-color: #f3d758c0;
 }
 
 :root{
+    --semitransparent-background: rgb(0,0,0,0.2);
     --default-background-color: var(--sec-color) ;
     --menu-background-color: var(--ms-blue-50) ;
     --default-box-shadow-color: black;
     --seccondary-box-shadow-color: #4d92b9;
+    --background-mesher-blur-image:
+        radial-gradient(at 2% 40%, hsla(207,74%,40%,1) 0px, transparent 50%),
+        radial-gradient(at 29% 73%, hsla(206,75%,41%,1) 0px, transparent 50%),
+        radial-gradient(at 90% 81%, hsla(207,38%,30%,1) 0px, transparent 50%),
+        radial-gradient(at 67% 44%, hsla(207,83%,52%,1) 0px, transparent 50%);
+    ;
 }
 
 *{

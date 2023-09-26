@@ -34,4 +34,4 @@
 
 <div class="bg" *ngIf="cardOn" (click)="closeAllCards()"></div>
 
-<app-spotify *ngIf="spotifyCard"></app-spotify>
+<app-spotify *ngIf="spotifyCard" (closeCardEvent)="closeAllCards()"></app-spotify>

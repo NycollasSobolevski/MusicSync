@@ -29,6 +29,11 @@ export class NavComponent {
   }
   settings(){
     this.router.navigate(["settings"]);
+    this.switchViewConfigs()
+  }
+  toHome(){
+    this.router.navigate(["/"]);
+    this.switchViewConfigs()
   }
 
   logout(){

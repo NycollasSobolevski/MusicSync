@@ -1,16 +1,15 @@
 <main>
     <div class="container">
-        <div class="wall" [ngStyle]="{'left' : ( isLogin ? 'calc(50vw )' : 'calc(50vw - (50vw / 2 ))' )}">
+        <div class="wall" [ngStyle]="{'left' : ( isLogin ? 'calc(25vw )' : 'calc(25vw - (50vw / 2 ))' )}">
             <div class="content">
                 <h2>Music Sync</h2>
                 <img src="../../assets/transparent logo with border.png" height="200px" alt="">
             </div>
         </div>
-        <app-login 
+        <app-login class="{{ isLogin ? '' : ' hidden' }}"
             (siginClickEvent)="changeToSigin()"  
             class="component"></app-login>
-        <app-subscribe 
-            
+        <app-subscribe class="{{ !isLogin ? '' : ' hidden' }}"
             (loginClickEvent)="changeToSigin()" 
             class="component"></app-subscribe>
     </div>

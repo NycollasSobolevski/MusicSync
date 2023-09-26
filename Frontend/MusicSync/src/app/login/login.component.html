@@ -4,8 +4,14 @@
     </header>
     <div class="container">
         <div class="content">
-            <input type="text" [(ngModel)]="userData.identify" name="identification-login" id="identification-login" placeholder="Login / Email">
-            <input type="password" [(ngModel)]="userData.password" name="password-login" id="password-login" placeholder="Password">
+            <div class="input-container">
+                <input type="text" [(ngModel)]="userData.identify" name="identification-login" id="identification-login" placeholder="Login / Email">
+                <span></span>
+            </div>
+            <div class="input-container">
+                <input type="password" [(ngModel)]="userData.password" name="password-login" id="password-login" placeholder="Password">
+                <span></span>
+            </div>
             <div class="buttons">
                 <button (click)="login()">Login</button>
                 <button (click)="siginClicked()">Sign In</button>

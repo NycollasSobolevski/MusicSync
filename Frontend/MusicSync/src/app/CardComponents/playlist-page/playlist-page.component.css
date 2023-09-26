@@ -1,4 +1,43 @@
 main{
-    position: absolute;
-    top: 50px;
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container::-webkit-scrollbar{
+    display: none;
+}
+.container{
+    width: 90vw;
+    height: 90vh;
+    overflow-y: scroll;
+}
+
+.music-item{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+.music-item:hover{
+    background-color: var(--semitransparent-background);
+}
+.artists-music-session{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.music-index{
+    margin: 1rem;
+}
+.music-name{
+    display: flex;
+    justify-content: start;
+}
+.artists-music-session p{
+    display: flex;
+
+    gap: 10px;
+    font-size: x-small;
 }

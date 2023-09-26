@@ -65,7 +65,6 @@ export class MenuComponent {
   closeAllCards (){
     this.spotifyCard = false;
     this.router.navigate(['/']);
-    console.log('red');
     this.cardOn = false;
   }
 }

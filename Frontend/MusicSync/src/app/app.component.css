@@ -2,5 +2,6 @@ main{
     background-color: var(--default-background-color);  
 
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 60px); /* 60px is nav height */
+    overflow: hidden;
 }

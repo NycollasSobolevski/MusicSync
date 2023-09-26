@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpResponse, HttpResponseBase } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Playlist, itemsOfPlaylist } from 'src/app/services/SpotifyDto';
@@ -17,7 +17,8 @@ export class SpotifyComponent {
     private sanitizer : DomSanitizer,
     private router : Router
   ) {}
-
+  // !TODO: Implementar o closeCard
+    @Output() closeCardEvent = new EventEmitter()
 
 
   private jwt : JWTWithGetPlaylistData = {
@@ -116,4 +117,8 @@ export class SpotifyComponent {
     items: []
   };
 
+
+  closeCard(){
+    this.closeCardEvent.emit();
+  }
 }
