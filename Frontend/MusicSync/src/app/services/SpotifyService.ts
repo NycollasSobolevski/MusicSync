@@ -3,30 +3,35 @@ import { HttpClient } from "@angular/common/http";
 import { CallbackData, StringReturn } from "./SpotifyDto";
 import { JWTWithGetPlaylistData, jwt } from "./UserDto";
 import {  IStreamerService } from "./StreamerService";
+import { environment } from "../Environments/Environment.prod";
 
 @Injectable({
     providedIn: 'root'
 })
 export class SpotifyService {
-    constructor (private http : HttpClient) {  }
-    private port = '5179'
+    private url: string | undefined;
+    private endpoint = 'Spotify'
     
+    constructor (private http : HttpClient) { 
+        this.url = environment.BACKEND_URL + "/" +this.endpoint;
+    }
+
     GetAccesUrl ( data : jwt ) {
-        return this.http.post<StringReturn>( `http://localhost:${this.port}/Spotify/GetSpotifyData`, data )
+        return this.http.post<StringReturn>( `${this.url}/GetSpotifyData`, data )
     };
     Callback ( data : CallbackData ) {
-        return this.http.post(`http://localhost:${this.port}/Spotify/callback`, data);
+        return this.http.post(`${this.url}/callback`, data);
     };
     GetPlaylists ( data : JWTWithGetPlaylistData ) {
-        return this.http.post(`http://localhost:${this.port}/Spotify/GetUserPlaylists`, data)
+        return this.http.post(`${this.url}/GetUserPlaylists`, data)
     };
     GetPlaylistData( data : jwt, playlistId : string ) {
-        return this.http.post(`http://localhost:${this.port}/Spotify/GetPlaylistTracks?id=${playlistId}&streamer=spotify`, data)
+        return this.http.post(`${this.url}/GetPlaylistTracks?id=${playlistId}&streamer=spotify`, data)
     }
     RefreshToken ( data : jwt ) {
-        return this.http.post(`http://localhost:${this.port}/Spotify/RefreshToken`, data)
+        return this.http.post(`${this.url}/RefreshToken`, data)
     };
     LogOff ( data : jwt ) {
-        return this.http.post(`http://localhost:${this.port}/Spotify/LogOff`, data)
+        return this.http.post(`${this.url}/LogOff`, data)
     };
 }

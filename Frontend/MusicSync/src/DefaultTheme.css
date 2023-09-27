@@ -16,6 +16,8 @@
 }
 
 :root{
+
+    --loader-background-color: #00000083;
     --semitransparent-background: rgb(0,0,0,0.2);
     --default-background-color: var(--sec-color) ;
     --menu-background-color: var(--ms-blue-50) ;

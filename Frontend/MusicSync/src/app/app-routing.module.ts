@@ -7,7 +7,7 @@ import { HomePageComponent } from './Pages/home-page/home-page.component';
 import { LoginPageComponent } from './Pages/login-page/login-page.component';
 import { CallbackPageComponent } from './Pages/callback-page/callback-page.component';
 import { UserConfigPageComponent } from './Pages/user-config-page/user-config-page.component';
-import { PlaylistPageComponent } from './Components/CardComponents/playlist-page/playlist-page.component';
+import { PlaylistPageComponent } from './Pages/playlist-page/playlist-page.component';
 
 const routes: Routes = [
   { path: "", title: "Music Sync | Home", component: HomePageComponent},

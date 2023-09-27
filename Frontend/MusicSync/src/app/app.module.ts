@@ -16,33 +16,46 @@ import { DeezerComponent } from './Components/CardComponents/deezer/deezer.compo
 import { UserConfigPageComponent } from './Pages/user-config-page/user-config-page.component';
 import { ConfigMenuComponent } from './Components/userConfigComponents/config-menu/config-menu.component';
 import { StreamersConfigComponent } from './Components/userConfigComponents/streamers-config/streamers-config.component';
-import { MusicPageComponent } from './Components/CardComponents/music-page/music-page.component';
-import { PlaylistPageComponent } from './Components/CardComponents/playlist-page/playlist-page.component';
+import { MusicPageComponent } from './Pages/music-page/music-page.component';
+import { PlaylistPageComponent } from './Pages/playlist-page/playlist-page.component';
+import { LoaderComponent } from './Components/loader/loader.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
 
+
+const COMPONENTS = [
+  AppComponent,
+  NavComponent,
+  MenuComponent,
+  HomePageComponent,
+  LoginPageComponent,
+  LoginComponent,
+  SubscribeComponent,
+  CallbackPageComponent,
+  SpotifyComponent,
+  DeezerComponent,
+  UserConfigPageComponent,
+  ConfigMenuComponent,
+  StreamersConfigComponent,
+  MusicPageComponent,
+  PlaylistPageComponent,
+  LoaderComponent
+]
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavComponent,
-    MenuComponent,
-    HomePageComponent,
-    LoginPageComponent,
-    LoginComponent,
-    SubscribeComponent,
-    CallbackPageComponent,
-    SpotifyComponent,
-    DeezerComponent,
-    UserConfigPageComponent,
-    ConfigMenuComponent,
-    StreamersConfigComponent,
-    MusicPageComponent,
-    PlaylistPageComponent
-  ],
+  declarations: [COMPONENTS],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  exports: [COMPONENTS],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
