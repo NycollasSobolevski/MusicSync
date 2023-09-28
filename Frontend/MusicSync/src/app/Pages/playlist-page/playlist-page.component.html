@@ -1,17 +1,26 @@
 <main>
     <div class="container">
         <a href="{{this.PlaylisData.href}}" target="_blank">{{this.PlaylisData.name}} xalalal</a>
-        <button *ngFor="let music of Playlist.items" class="music-item">
-            <div class="music-index"><p>{{Playlist.items.indexOf(music)}}</p></div>
-            <div class="music-identify">
-                <div class="music-name">{{music.track.name}}</div>
-                <div class="artists-music-session">
-                    <p *ngFor="let artist of music.track.artists">
-                        {{music.track.artists.indexOf(artist) >= 1 ? ",  ":"" }}
-                        {{artist.name}}
-                    </p>
-                </div>
-            </div>
-        </button>
+        <table>
+            <tr *ngFor="let music of Playlist.items">
+                <button class="music-item">
+                    <td class="music-index"><p>{{Playlist.items.indexOf(music)}}</p></td>
+                    <td class="album-image-container">
+                        <img src="{{music.track.album.images[2].url}}" alt="album-image" />
+                    </td>
+                    <td class="music-identify">
+                        <div class="music-name">{{music.track.name}}</div>
+                        <div class="artists-music-session">
+                            <p *ngFor="let artist of music.track.artists">
+                                {{music.track.artists.indexOf(artist) >= 1 ? ",  ":"" }}
+                                {{artist.name}}
+                            </p>
+                        </div>
+                    </td>
+                </button>
+            </tr>
+
+        </table>
+
     </div>
 </main>

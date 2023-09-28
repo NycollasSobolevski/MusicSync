@@ -18,8 +18,8 @@ interface Playlist {
     items :itemsOfPlaylist[]
 }
 interface itemsOfPlaylist {
-    collaborative?: boolean,
-    description?: string,
+    collaborative?: boolean, //!-----------------------------
+    description?: string, 
     external_urls?: {
         spotify?: string
     },
@@ -35,7 +35,7 @@ interface itemsOfPlaylist {
         external_urls: {
             spotify: string
         },
-        followers: {
+        followers?: {        //!-----------------------------
             href: string,
             total: number
         },
@@ -47,7 +47,7 @@ interface itemsOfPlaylist {
     },
     public: boolean,
     snapshot_id: string,
-    tracks: {
+    tracks?: {
         href: string,
         total: number
     },

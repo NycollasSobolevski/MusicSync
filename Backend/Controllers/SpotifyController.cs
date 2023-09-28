@@ -220,7 +220,6 @@ public class SpotifyController : ControllerBase
         [FromServices] HttpClient client
     ){
         var userJwt = jwt.Validate<UserJwtData>(data.Jwt.Value);
-        System.Console.WriteLine(userJwt.Name);
         try{
             var user = await userRepository.FirstOrDefaultAsync(
                 u => u.Email == userJwt.Email
@@ -233,9 +232,7 @@ public class SpotifyController : ControllerBase
             var userSpotifyReturn = await this.getUserSpotify( client, spotifyToken.StreamerToken );
             
             var response = await client.GetAsync($"https://api.spotify.com/v1/me/playlists?offset={data.Offset}&limit={data.Limit}");
-            System.Console.WriteLine("Response: "+response);
             var result = await response.Content.ReadAsStringAsync();
-            System.Console.WriteLine(result);
             
             if(response.StatusCode == HttpStatusCode.Unauthorized){
                 return Unauthorized(await response.Content.ReadAsStringAsync());
@@ -269,10 +266,11 @@ public class SpotifyController : ControllerBase
             );
             client.DefaultRequestHeaders.Add("Authorization", $"Bearer {user.StreamerToken}");
             var response = await client.GetAsync($"https://api.spotify.com/v1/playlists/{id}/tracks");
-
+            
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+                return Unauthorized(response);
             if(response.StatusCode != HttpStatusCode.OK)
                 return BadRequest(await response.Content.ReadAsStringAsync());
-            
             return Ok(await response.Content.ReadAsStringAsync());
         }
         catch(Exception exp){

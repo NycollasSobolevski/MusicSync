@@ -13,7 +13,10 @@ main{
     height: 90vh;
     overflow-y: scroll;
 }
-
+table{
+    width: 100%;
+    height: 100%;
+}
 .music-item{
     display: flex;
     justify-content: flex-start;
@@ -22,6 +25,11 @@ main{
 }
 .music-item:hover{
     background-color: var(--semitransparent-background);
+}
+.album-image-container img{
+    height: 3rem;
+    border-radius: 5px;
+    margin: 0 1rem ;
 }
 .artists-music-session{
     display: flex;
