@@ -1,6 +1,15 @@
 <main>
     <div class="container">
-        <a href="{{this.PlaylisData.href}}" target="_blank">{{this.PlaylisData.name}} xalalal</a>
+        <div class="header-container">
+            <a href="{{this.PlaylisData?.external_urls?.spotify}}" target="_blank" class="playlist-header">
+                        <img *ngIf="this.PlaylisData" src="{{this.PlaylisData.images[0].url ?? ''}}" alt="Playlist folde">
+                <div class="data">
+                    <p class="playlist-streamer">Spotify Playlist</p>
+                    <h3>{{this.PlaylisData?.name}}</h3>
+                    <p class="playlist-description">{{this.PlaylisData?.description}}</p>
+                </div>
+            </a>
+        </div>
         <table>
             <tr *ngFor="let music of Playlist.items">
                 <button class="music-item">

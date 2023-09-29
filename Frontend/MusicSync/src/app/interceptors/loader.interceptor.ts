@@ -17,8 +17,6 @@ export class LoaderInterceptor implements HttpInterceptor {
     
     if(this.activeRequests === 0){
       this.loaderService.show();
-      console.log('show');
-
     }
 
     this.activeRequests++;
@@ -27,6 +25,7 @@ export class LoaderInterceptor implements HttpInterceptor {
     return next.handle(request)
       .pipe(
         finalize(() => {
+          
           this.activeRequests--;
           if (this.activeRequests === 0) 
             this.loaderService.hide();

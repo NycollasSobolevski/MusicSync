@@ -25,6 +25,9 @@ export class SpotifyService {
     GetPlaylists ( data : JWTWithGetPlaylistData ) {
         return this.http.post(`${this.url}/GetUserPlaylists`, data)
     };
+    GetPlaylist (data: jwt, playlistId : string) {
+        return this.http.post(`${this.url}/GetPlaylist?id=${playlistId}`, data)
+    };
     GetPlaylistTracks( data : jwt, playlistId : string ) {
         return this.http.post(`${this.url}/GetPlaylistTracks?id=${playlistId}&streamer=spotify`, data)
     }

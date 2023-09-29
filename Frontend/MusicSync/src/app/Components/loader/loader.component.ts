@@ -7,8 +7,5 @@ import { LoaderService } from 'src/app/services/loader.service';
   styleUrls: ['./loader.component.css']
 })
 export class LoaderComponent {
-  constructor( public loaderService: LoaderService ){
-    console.log("xalalal"+ loaderService.loading$);
-    
-  }
+  constructor( public loaderService: LoaderService ){}
 }

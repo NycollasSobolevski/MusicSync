@@ -13,7 +13,6 @@ export class UserServices {
     
     private port = '5179'
     Login ( data : userLoginData ) {
-        this.loaderService.show();
         return this.http
             .post<jwt>( `http://localhost:${this.port}/User/Login`, data )
             .pipe();

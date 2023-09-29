@@ -13,35 +13,8 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./playlist-page.component.css']
 })
 export class PlaylistPageComponent {
-  @Input() plyalistDataInput : any;
-  PlaylisData : itemsOfPlaylist = {
-    href: '',
-    id: '',
-    images: [],
-    name: '',
-    owner: {
-      external_urls: {
-        spotify: ''
-      },
-      followers: {
-        href: '',
-        total: 0
-      },
-      href: '',
-      id: '',
-      type: '',
-      uri: '',
-      display_name: ''
-    },
-    public: false,
-    snapshot_id: '',
-    tracks: {
-      href: '',
-      total: 0
-    },
-    type: '',
-    uri: ''
-  };
+  
+  protected PlaylisData? : itemsOfPlaylist;
   protected Playlist :any;
 
   private jwt : jwt = {
@@ -62,8 +35,11 @@ export class PlaylistPageComponent {
       streamer = params['streamer'];      
     });
     
-    if(!this.playlistInSession(id))
-      this.getData(id ?? '');
+    this.getPlaylistData(id);
+    
+    if(!this.playlistInSession(id)){
+      this.getTracks(id ?? '');
+    }
   }
 
   playlistInSession(id : string){
@@ -85,18 +61,14 @@ export class PlaylistPageComponent {
     return true;
   }
 
-  getData(id : string) {
+  getTracks(id : string) {
     if(!id || id == "")
       return;
 
     this.service.GetPlaylistTracks(this.jwt, id).subscribe({
       next: ( data : any ) => {
-        
         this.Playlist = data;
-        console.log(data);
         sessionStorage.setItem('lastPlaylistOpened', JSON.stringify(data));
-        
-        // console.log(this.PlaylisData);
       },
       error: ( error : HttpErrorResponse) => {
         switch (error.status) {
@@ -119,4 +91,34 @@ export class PlaylistPageComponent {
       }
     })
   }
+
+  getPlaylistData(id : string){
+    this.service.GetPlaylist(this.jwt, id).subscribe({
+      next:(data: any) => {
+        this.PlaylisData = data;
+        console.log(data);
+        
+      },
+      error: (error : HttpErrorResponse) => {
+        switch (error.status) {
+          case 401:
+            this.service.RefreshToken(this.jwt).subscribe({
+              next: () => {
+                console.log('token refreshed');
+                window.location.reload();
+              },
+              error: (error : HttpErrorResponse) => {
+                console.log(`Refresh Token Error: \n ${error}`);
+              }
+            })
+            break;
+        
+          default:
+            console.log(error);
+            break;
+        }
+      }
+    })
+  }
+
 }

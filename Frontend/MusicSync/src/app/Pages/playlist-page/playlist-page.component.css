@@ -1,3 +1,7 @@
+a{
+    text-decoration: none;
+}
+
 main{
     width: 100vw;
     height: 100%;
@@ -13,10 +17,44 @@ main{
     height: 90vh;
     overflow-y: scroll;
 }
-table{
-    width: 100%;
-    height: 100%;
+.playlist-streamer{
+    font-size: xx-small;
 }
+.header-container{
+    width: 100%;
+    padding: 1.5rem;
+    margin: 2rem 0 ;
+    background-color: var(--menu-header-background);
+    backdrop-filter: blur(5px) opacity(.5);
+}
+.playlist-header{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+    width: 90%;
+
+    @media screen and (max-width: 600px) {
+        flex-direction: column;
+        margin: .5rem;
+        gap: 1rem;
+    }
+}
+.data{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: .25rem;
+}
+.playlist-header img{
+    height: 10rem;
+}
+.playlist-header .playlist-description{
+    font-size: small;
+    text-align: justify;
+}
+
 .music-item{
     display: flex;
     justify-content: flex-start;
