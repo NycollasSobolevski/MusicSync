@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { itemsOfPlaylist } from '../../services/SpotifyDto';
 import { SpotifyService } from '../../services/SpotifyService';
 import { IStreamerService } from '../../services/StreamerService';
-import { jwt } from '../../services/UserDto';
+import { JwtWithData, jwt } from '../../services/UserDto';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -121,4 +121,26 @@ export class PlaylistPageComponent {
     })
   }
 
+  getMoreTrack(){
+    console.log(this.Playlist.next);
+    
+
+    const body : JwtWithData= {
+      jwt: this.jwt,
+      data: this.Playlist.next
+    }
+
+    this.service.GetMoreTracks(body).subscribe({
+      next:(data: any) => {
+        console.log(data.items);
+        // ! AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        // this.Playlist.tracks.items.push(data.items);
+        // this.Playlist.tracks.next = data.next ?? "";
+      },
+      error: (error : HttpErrorResponse) => {
+        console.log(error);
+        
+      }
+    })
+  }
 }
