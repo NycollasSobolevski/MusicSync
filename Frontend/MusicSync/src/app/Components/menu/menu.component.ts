@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SpotifyService } from '../../services/SpotifyService';
+import { SpotifyService } from '../../services/Spotify.Service';
 import { StringReturn } from '../../services/SpotifyDto';
 import { ActivatedRoute, Router } from '@angular/router';
 import { jwt } from '../../services/UserDto';

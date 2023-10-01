@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserServices } from '../../services/UserServices';
+import { UserServices } from '../../services/User.Service';
 import { userRegisterData } from '../../services/UserDto';
 import { EMPTY } from 'rxjs';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SpotifyService } from 'src/app/services/SpotifyService';
+import { SpotifyService } from 'src/app/services/Spotify.Service';
 import { jwt } from 'src/app/services/UserDto';
 import { Alert } from 'src/app/services/Funcionalities';
 

@@ -12,7 +12,7 @@
         </div>
         <table>
             <tr *ngFor="let music of Playlist.items">
-                <button class="music-item">
+                <button class="music-item" (click)="getMusicPage(music)">
                     <td class="music-index"><p>{{Playlist.items.indexOf(music)}}</p></td>
                     <td class="album-image-container">
                         <img src="{{music.track.album.images[2].url}}" alt="album-image" />
