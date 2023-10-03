@@ -2,8 +2,8 @@ import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { itemsOfPlaylist } from '../../services/SpotifyDto';
-import { SpotifyService } from '../../services/SpotifyService';
-import { IStreamerService } from '../../services/StreamerService';
+import { SpotifyService } from '../../services/Spotify.Service';
+import { IStreamerService } from '../../services/Streamer.Service';
 import { JwtWithData, jwt } from '../../services/UserDto';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -22,7 +22,8 @@ export class PlaylistPageComponent {
   }
 
   constructor( private service : SpotifyService,
-    private router : ActivatedRoute  
+    private activatedRoute : ActivatedRoute ,
+    private router : Router
   ){  }
 
   ngOnInit(){
@@ -30,7 +31,7 @@ export class PlaylistPageComponent {
     var streamer ;
 
     
-    this.router.queryParams.subscribe(params => {
+    this.activatedRoute.queryParams.subscribe(params => {
       id       = params['id'];
       streamer = params['streamer'];      
     });
@@ -165,5 +166,9 @@ export class PlaylistPageComponent {
         
       }
     })
+  }
+
+  getMusicPage(music: any){
+    this.router.navigate(['/music'], { queryParams: { id: music.track.id, streamer : "spotify" } });
   }
 }

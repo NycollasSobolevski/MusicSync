@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { SpotifyService } from '../../services/SpotifyService';
+import { SpotifyService } from '../../services/Spotify.Service';
 import { CallbackData } from '../../services/SpotifyDto';
 import { HttpErrorResponse } from '@angular/common/http';
 

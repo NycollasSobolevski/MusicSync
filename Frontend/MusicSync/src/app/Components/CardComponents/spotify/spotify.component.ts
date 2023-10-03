@@ -3,7 +3,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Playlist, itemsOfPlaylist } from 'src/app/services/SpotifyDto';
-import { SpotifyService } from 'src/app/services/SpotifyService';
+import { SpotifyService } from 'src/app/services/Spotify.Service';
 import { JWTWithGetPlaylistData, jwt } from 'src/app/services/UserDto';
 
 @Component({
