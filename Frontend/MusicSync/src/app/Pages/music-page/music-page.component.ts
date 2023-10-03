@@ -12,13 +12,13 @@ import { IStreamerService } from 'src/app/services/Streamer.Service';
 export class MusicPageComponent {
   private id : string = "";
   private streamer : string = "";
-  private streamerService: IStreamerService;
+  // private streamerService: IStreamerService;
 
   constructor ( 
     private activatedRoute : ActivatedRoute,
   ){
     //! modular conforme o streamer 
-    this.streamerService = new SpotifyService()
+    // this.streamerService = new SpotifyService()
   }
 
   ngOnInit(){

@@ -10,10 +10,10 @@ public partial class Token
     public ObjectId Id { get; set; }
     [BsonElement("User")]
     public string User { get; set; }
-    [BsonElement("Streamer")]
-    public string Streamer { get; set; }
+    [BsonElement("Service")]
+    public string Service { get; set; }
     [BsonElement("Token")]
-    public string StreamerToken { get; set; }
+    public string ServiceToken { get; set; }
     [BsonElement("RefreshToken")]
     public string RefreshToken { get; set; }
 

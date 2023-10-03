@@ -40,7 +40,7 @@ public class SpotifyController : ControllerBase
                 user.Name == userJwt.Name
             );
             var token = await tokenRepository.FirstOrDefaultAsync(token =>
-                token.User == user.Name && token.Streamer == "Spotify"
+                token.User == user.Name && token.Service == "Spotify"
             );
             if (token != null)
             {
@@ -81,7 +81,7 @@ public class SpotifyController : ControllerBase
                 user.Name == userJwt.Name
             );
             var token = await tokenRepository.FirstOrDefaultAsync(token =>
-                token.User == user.Name && token.Streamer == "Spotify"
+                token.User == user.Name && token.Service == "Spotify"
             );
             System.Console.WriteLine(token + " " + user.Name);
             if (token != null)
@@ -138,8 +138,8 @@ public class SpotifyController : ControllerBase
             Token _token = new()
             {
                 User = user.Name,
-                Streamer = "Spotify",
-                StreamerToken = token.access_token,
+                Service = "Spotify",
+                ServiceToken = token.access_token,
                 RefreshToken = token.refresh_token,
             };
             await tokenRepository.add(_token);
@@ -174,7 +174,7 @@ public class SpotifyController : ControllerBase
         client.DefaultRequestHeaders.Add("Authorization", authorization);
  
         // System.Console.WriteLine($"Refresh Token: {token.RefreshToken} ");
-        // System.Console.WriteLine($"Streamer Token: {token.StreamerToken} ");
+        // System.Console.WriteLine($"Streamer Token: {token.ServiceToken} ");
 
         var newForm = new List<KeyValuePair<string, string>>();
         newForm.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
@@ -187,7 +187,7 @@ public class SpotifyController : ControllerBase
 
             var result = await refreshToken.Content.ReadFromJsonAsync<SpotifyToken>();
 
-            token.StreamerToken = result.access_token;
+            token.ServiceToken = result.access_token;
             await tokenRepository.Update( token );
 
             return Ok();
@@ -228,9 +228,9 @@ public class SpotifyController : ControllerBase
 
             var spotifyToken = await tokenRepository.FirstOrDefaultAsync(token => 
                 token.User == user.Name &&
-                token.Streamer == "Spotify"
+                token.Service == "Spotify"
             );
-            var userSpotifyReturn = await this.getUserSpotify( client, spotifyToken.StreamerToken );
+            var userSpotifyReturn = await this.getUserSpotify( client, spotifyToken.Service );
             
             var response = await client.GetAsync($"https://api.spotify.com/v1/me/playlists?offset={data.Offset}&limit={data.Limit}");
             var result = await response.Content.ReadAsStringAsync();
@@ -260,11 +260,11 @@ public class SpotifyController : ControllerBase
     {
         var userJwt = jwt.Validate<UserJwtData>(body.Value);
         try{
-            var user = await tokenRepository.FirstOrDefaultAsync(token => 
+            var token = await tokenRepository.FirstOrDefaultAsync(token => 
                 token.User == userJwt.Name &&
-                token.Streamer == "Spotify"
+                token.Service == "Spotify"
             );
-            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {user.StreamerToken}");
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token.ServiceToken}");
             var response = await client.GetAsync($"https://api.spotify.com/v1/playlists/{id}");
             
             if (response.StatusCode == HttpStatusCode.Unauthorized)
@@ -291,11 +291,11 @@ public class SpotifyController : ControllerBase
 
         var userJwt = jwt.Validate<UserJwtData>(body.Value);
         try{
-            var user = await tokenRepository.FirstOrDefaultAsync(token => 
+            var token = await tokenRepository.FirstOrDefaultAsync(token => 
                 token.User == userJwt.Name &&
-                token.Streamer == "Spotify"
+                token.Service == "Spotify"
             );
-            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {user.StreamerToken}");
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token.ServiceToken}");
             var response = await client.GetAsync($"https://api.spotify.com/v1/playlists/{id}/tracks");
             
             if (response.StatusCode == HttpStatusCode.Unauthorized)
@@ -319,11 +319,11 @@ public class SpotifyController : ControllerBase
         var userJwt = jwt.Validate<UserJwtData>(body.Jwt.Value);
         try{
 
-            var user = await tokenRepository.FirstOrDefaultAsync(token => 
+            var token = await tokenRepository.FirstOrDefaultAsync(token => 
                 token.User == userJwt.Name &&
-                token.Streamer == "Spotify"
+                token.Service == "Spotify"
             );
-            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {user.StreamerToken}");
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token.ServiceToken}");
             var response = await client.GetAsync($"{body.Data}");
             
             if (response.StatusCode == HttpStatusCode.Unauthorized)

@@ -17,4 +17,5 @@ public partial class User
     public string Password { get; set; }
     [BsonElement("Salt")]
     public string Salt { get; set; }
+    
 }

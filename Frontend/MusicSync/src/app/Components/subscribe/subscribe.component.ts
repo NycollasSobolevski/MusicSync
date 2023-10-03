@@ -46,7 +46,15 @@ export class SubscribeComponent {
         error: (err : HttpErrorResponse) => {
           switch(err.status){
             case 401:
-              this.Alert(err.message)
+              this.Alert(err.message);
+              break;
+            case 400:
+              this.Alert(err.message);
+              break;
+            default:
+              console.log(err);
+              break;
+              
           }
         }
       });
