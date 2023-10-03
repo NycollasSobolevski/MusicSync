@@ -2,7 +2,7 @@
     <div class="container">
         <div class="header-container">
             <a href="{{this.PlaylisData?.external_urls?.spotify}}" target="_blank" class="playlist-header">
-                        <img *ngIf="this.PlaylisData" src="{{this.PlaylisData.images[0].url ?? ''}}" alt="Playlist folde">
+                        <img *ngIf="this.PlaylisData" src="{{this.PlaylisData.images[0].url}}" alt="Playlist folde">
                 <div class="data">
                     <p class="playlist-streamer">Spotify Playlist</p>
                     <h3>{{this.PlaylisData?.name}}</h3>

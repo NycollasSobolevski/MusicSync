@@ -43,7 +43,7 @@ export class PlaylistPageComponent {
     }
   }
 
-  playlistInSession(id : string){
+  private playlistInSession(id : string){
     var lastPlaylistOpened = sessionStorage.getItem('lastPlaylistOpened') || "";
     
     if(id == "")
@@ -76,7 +76,6 @@ export class PlaylistPageComponent {
           case 401:
             this.service.RefreshToken(this.jwt).subscribe({
               next: () => {
-                console.log('token refreshed');
                 window.location.reload();
               },
               error: (error : HttpErrorResponse) => {
@@ -92,13 +91,22 @@ export class PlaylistPageComponent {
       }
     })
   }
-
+  
   getPlaylistData(id : string){
+    var lastData = sessionStorage.getItem('lastPlaylistData') || "";
+    if(lastData != ""){
+      var data = JSON.parse(lastData);
+      if(data.id == id){
+        this.PlaylisData = data;
+        return;
+      }
+    }
+
+
     this.service.GetPlaylist(this.jwt, id).subscribe({
       next:(data: any) => {
         this.PlaylisData = data;
-        console.log(data);
-        
+        sessionStorage.setItem('lastPlaylistData', JSON.stringify(data));
       },
       error: (error : HttpErrorResponse) => {
         switch (error.status) {

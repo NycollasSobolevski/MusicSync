@@ -21,6 +21,7 @@
     }
 
     @media (max-width: 500px) {
+        max-width: 100vw;
         height: 4rem; 
         width:100vw;
         position:fixed;
