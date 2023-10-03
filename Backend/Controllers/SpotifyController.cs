@@ -201,7 +201,7 @@ public class SpotifyController : ControllerBase
     public async Task GetMusicData(
         [FromServices] HttpClient client,
         [FromBody] String accessToken
-        )
+    )
     {
         string authorization = $"Bearer {accessToken}";
         client.DefaultRequestHeaders.Add("Authorization", authorization);
@@ -218,7 +218,8 @@ public class SpotifyController : ControllerBase
         [FromServices] IRepository<User> userRepository,
         [FromServices] IRepository<Token> tokenRepository,
         [FromServices] HttpClient client
-    ){
+    )
+    {
         var userJwt = jwt.Validate<UserJwtData>(data.Jwt.Value);
         try{
             var user = await userRepository.FirstOrDefaultAsync(
@@ -255,7 +256,8 @@ public class SpotifyController : ControllerBase
         [FromServices] IJwtService jwt,
         [FromServices] IRepository<Token> tokenRepository,
         [FromServices] HttpClient client
-    ){
+    )
+    {
         var userJwt = jwt.Validate<UserJwtData>(body.Value);
         try{
             var user = await tokenRepository.FirstOrDefaultAsync(token => 
@@ -284,7 +286,8 @@ public class SpotifyController : ControllerBase
         [FromServices] IJwtService jwt,
         [FromServices] IRepository<Token> tokenRepository,
         [FromServices] HttpClient client
-    ){
+    )
+    {
 
         var userJwt = jwt.Validate<UserJwtData>(body.Value);
         try{
@@ -311,7 +314,8 @@ public class SpotifyController : ControllerBase
         [FromServices] IJwtService jwt,
         [FromServices] IRepository<Token> tokenRepository,
         [FromServices] HttpClient client
-    ){
+    )
+    {
         var userJwt = jwt.Validate<UserJwtData>(body.Jwt.Value);
         try{
 

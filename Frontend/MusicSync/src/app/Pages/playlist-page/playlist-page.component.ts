@@ -60,37 +60,11 @@ export class PlaylistPageComponent {
     this.Playlist = JSON.parse(sessionStorage.getItem('lastPlaylistOpened') || "");
     return true;
   }
-
-  getTracks(id : string) {
-    if(!id || id == "")
-      return;
-
-    this.service.GetPlaylistTracks(this.jwt, id).subscribe({
-      next: ( data : any ) => {
-        this.Playlist = data;
-        sessionStorage.setItem('lastPlaylistOpened', JSON.stringify(data));
-      },
-      error: ( error : HttpErrorResponse) => {
-        switch (error.status) {
-          case 401:
-            this.service.RefreshToken(this.jwt).subscribe({
-              next: () => {
-                window.location.reload();
-              },
-              error: (error : HttpErrorResponse) => {
-                console.log(`Refresh Token Error: \n ${error}`);
-              }
-            })
-            break;
-        
-          default:
-            console.log(error);
-            break;
-        }
-      }
-    })
-  }
   
+  /**
+   * Get data of the playlist if it is not in the session storage
+   * @param id id of the playlist
+  */
   getPlaylistData(id : string){
     var lastData = sessionStorage.getItem('lastPlaylistData') || "";
     if(lastData != ""){
@@ -129,6 +103,43 @@ export class PlaylistPageComponent {
     })
   }
 
+  /**
+   * Get tracks of the playlist if it is not in the session storage
+   * @param id {string}
+  */
+  getTracks(id : string) {
+    if(!id || id == "")
+      return;
+
+    this.service.GetPlaylistTracks(this.jwt, id).subscribe({
+      next: ( data : any ) => {
+        this.Playlist = data;
+        sessionStorage.setItem('lastPlaylistOpened', JSON.stringify(data));
+      },
+      error: ( error : HttpErrorResponse) => {
+        switch (error.status) {
+          case 401:
+            this.service.RefreshToken(this.jwt).subscribe({
+              next: () => {
+                window.location.reload();
+              },
+              error: (error : HttpErrorResponse) => {
+                console.log(`Refresh Token Error: \n ${error}`);
+              }
+            })
+            break;
+        
+          default:
+            console.log(error);
+            break;
+        }
+      }
+    })
+  }
+  /**
+   * Get more tracks of the playlist and add to This.Playlist
+   * 
+  */
   getMoreTrack(){
     console.log(this.Playlist.next);
     
@@ -141,9 +152,13 @@ export class PlaylistPageComponent {
     this.service.GetMoreTracks(body).subscribe({
       next:(data: any) => {
         console.log(data.items);
+        console.log(this.Playlist.items);
+        
         // ! AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        // this.Playlist.tracks.items.push(data.items);
-        // this.Playlist.tracks.next = data.next ?? "";
+        this.Playlist.items.push(...data.items);
+        this.Playlist.next = data.next ?? "";
+        sessionStorage.setItem('lastPlaylistOpened', JSON.stringify(this.Playlist));
+        console.log(this.Playlist);
       },
       error: (error : HttpErrorResponse) => {
         console.log(error);
