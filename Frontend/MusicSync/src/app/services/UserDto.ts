@@ -20,5 +20,9 @@ interface JWTWithGetPlaylistData {
     offset : number,
     limit : number
 }
+interface jwtWithVerified {
+    jwt : jwt,
+    verified : boolean
+}
 
-export { jwt, userLoginData, userRegisterData, JWTWithGetPlaylistData, JwtWithData }
+export { jwt, userLoginData, userRegisterData, JWTWithGetPlaylistData, JwtWithData, jwtWithVerified }

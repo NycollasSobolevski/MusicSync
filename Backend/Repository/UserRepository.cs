@@ -26,9 +26,10 @@ public class UserRepository : IRepository<User>
             .GetCollection<User>("User");
     }
 
-    public async Task add(User obj)
+    public async Task<User> add(User obj)
     {
         await this.context.InsertOneAsync(obj);
+        return obj;
     }
 
     public int Count(Expression<Func<User, bool>> exp)

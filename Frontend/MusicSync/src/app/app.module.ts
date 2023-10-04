@@ -21,6 +21,7 @@ import { PlaylistPageComponent } from './Pages/playlist-page/playlist-page.compo
 import { LoaderComponent } from './Components/loader/loader.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
+import { VerifyEmailComponent } from './Components/verify-email/verify-email.component';
 
 
 const COMPONENTS = [
@@ -42,7 +43,7 @@ const COMPONENTS = [
   LoaderComponent
 ]
 @NgModule({
-  declarations: [COMPONENTS],
+  declarations: [COMPONENTS, VerifyEmailComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -1,3 +1,4 @@
 {
-    "dotnet.defaultSolution": "Backend/music api.sln"
+    "dotnet.defaultSolution": "Backend/music api.sln",
+    "liveServer.settings.port": 5501
 }

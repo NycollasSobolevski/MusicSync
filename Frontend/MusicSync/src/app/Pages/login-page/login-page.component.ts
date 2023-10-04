@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { jwt } from 'src/app/services/UserDto';
 
 @Component({
   selector: 'app-login-page',
@@ -11,6 +12,10 @@ export class LoginPageComponent {
     private router : Router,
     private route : ActivatedRoute
   ) {}
+  VerifyEmail= false;
+  protected jwt : jwt = {
+    value: ''
+  };
 
   protected isLogin = true;
   
@@ -19,5 +24,12 @@ export class LoginPageComponent {
   }
   changeToSigin () {
     this.isLogin = !this.isLogin;
+  }
+
+  changeToVerifyEmail (jwt : jwt) {
+    console.log(`in login page: ${jwt}`);
+    
+    this.VerifyEmail = !this.VerifyEmail;
+    this.jwt = jwt;
   }
 }

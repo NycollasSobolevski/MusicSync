@@ -27,10 +27,11 @@ public class TokenRepository : IRepository<Token>
         }
     }
 
-    public async Task add(Token obj)
+    public async Task<Token> add(Token obj)
     {
         System.Console.WriteLine("Add token");
         await this.context.InsertOneAsync(obj);
+        return obj;
     }
 
     public int Count(Expression<Func<Token, bool>> exp)
@@ -75,7 +76,7 @@ public class TokenRepository : IRepository<Token>
             .UpdateOneAsync<Token>( 
                 t => t.Id == obj.Id,
                 Builders<Token>.Update
-                    .Set(t => t.StreamerToken, obj.StreamerToken)
+                    .Set(t => t.ServiceToken, obj.ServiceToken)
                     .Set(t => t.RefreshToken, obj.RefreshToken)
             );
     }

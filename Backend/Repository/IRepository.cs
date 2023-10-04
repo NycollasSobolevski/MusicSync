@@ -7,7 +7,7 @@ public interface IRepository<T>
 {
     Task<List<T>> Filter(Expression<Func<T, bool>> exp);
     Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> exp);
-    Task add(T obj);
+    Task<T> add(T obj);
     Task Delete(T obj);
     Task Update(T obj);
     Task<T> Last(T obj);

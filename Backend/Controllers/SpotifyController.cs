@@ -172,9 +172,8 @@ public class SpotifyController : ControllerBase
         dataClient = Convert.ToBase64String(Encoding.UTF8.GetBytes(dataClient));
         string authorization = $"Basic {dataClient}";
         client.DefaultRequestHeaders.Add("Authorization", authorization);
- 
-        // System.Console.WriteLine($"Refresh Token: {token.RefreshToken} ");
-        // System.Console.WriteLine($"Streamer Token: {token.ServiceToken} ");
+        
+        
 
         var newForm = new List<KeyValuePair<string, string>>();
         newForm.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));

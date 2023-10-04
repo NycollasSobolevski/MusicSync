@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Identity;
+using music_api.Auxi;
 using music_api.DTO;
 using music_api.Model;
 using music_api.Password;
@@ -16,7 +17,8 @@ public class UserController : ControllerBase
     [HttpPost("CreateAccount")]
     public async Task<ActionResult> RegisterUser (
         [FromBody] SigninData data,
-        [FromServices] IRepository<User> repository
+        [FromServices] IRepository<User> repository,
+        [FromServices] IRepository<Token> tokenRepository
     ) 
     {
 
@@ -39,7 +41,8 @@ public class UserController : ControllerBase
             Email = data.Email,
             Password = data.Password,
             Birth = data.Birth,
-            Salt = PasswordConfig.GenerateStringSalt(12)
+            Salt = PasswordConfig.GenerateStringSalt(12),
+            EmailConfirmed = false
         };
 
         newUserData.Password = PasswordConfig.GetHash(
@@ -50,6 +53,15 @@ public class UserController : ControllerBase
         try
         {
             await repository.add(newUserData);
+
+            var token = await tokenRepository.add(new Token() {
+                User = newUserData.Name,
+                Service = "Email",
+                ServiceToken = Rand.GetRandomString(6),
+            });
+            
+            SendEmail.SendEmailValidation(newUserData.Email,newUserData.Name,token.ServiceToken );
+
             return Ok("Subscription successfull");
         }
         catch (System.Exception exp)
