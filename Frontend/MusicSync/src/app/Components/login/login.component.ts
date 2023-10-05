@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { UserServices } from '../../services/User.Service';
-import { jwt, jwtWithVerified, userLoginData } from '../../services/UserDto';
+import { JwtWithData, jwt, jwtWithVerified, userLoginData } from '../../services/UserDto';
 import { Router } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -34,9 +34,9 @@ export class LoginComponent {
     this.service
       .Login(this.userData)
       .subscribe ({
-        next: (res : jwtWithVerified ) => {
+        next: (res : JwtWithData<boolean> ) => {
           
-          if(!res.verified){
+          if(!res.data){
             console.log(res);
             
             this.sendToVerify.emit(res.jwt);
@@ -47,12 +47,14 @@ export class LoginComponent {
           this.router.navigate(['/']);
         },
         error: (err : HttpErrorResponse) => {
+          console.log(err);
           switch (err.status) {
             case 401:
-              this.sendAlert.emit(err.message);
+              
+              this.sendAlert.emit(err.error);
               break;
             case 404:
-              this.sendAlert.emit(err.message);
+              this.sendAlert.emit(err.error);
               break;
             default:
               console.log(err);

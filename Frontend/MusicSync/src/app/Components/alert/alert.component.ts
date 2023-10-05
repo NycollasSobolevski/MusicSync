@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class AlertComponent {
   @Input() alertContent = "";
-  @Input() alertLevel = 0;
+  @Input() alertType = "alert";
 }

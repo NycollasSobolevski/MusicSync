@@ -145,7 +145,7 @@ export class PlaylistPageComponent {
     console.log(this.Playlist.next);
     
 
-    const body : JwtWithData= {
+    const body : JwtWithData<string> = {
       jwt: this.jwt,
       data: this.Playlist.next
     }

@@ -11,9 +11,9 @@ interface userRegisterData {
     email: string,
     password: string,
 }
-interface JwtWithData {
+interface JwtWithData<T> {
     jwt : jwt,
-    data : any
+    data : T
 }
 interface JWTWithGetPlaylistData {
     jwt : jwt,

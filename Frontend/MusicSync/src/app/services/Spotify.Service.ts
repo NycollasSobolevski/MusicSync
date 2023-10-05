@@ -28,10 +28,10 @@ export class SpotifyService implements IStreamerService{
     GetPlaylist (data: jwt, playlistId : string) {
         return this.http.post(`${this.url}/GetPlaylist?id=${playlistId}`, data)
     };
-    GetMoreTracks( data : JwtWithData ){
+    GetMoreTracks( data : JwtWithData<string> ){
         return this.http.post(`${this.url}/GetMoreTracks`, data)
     }
-    GetTrackContent( data : JwtWithData ){
+    GetTrackContent( data : JwtWithData<string> ){
         return this.http.post(`${this.url}/GetTrackContent`, data)
     }
     GetPlaylistTracks( data : jwt, playlistId : string ) {

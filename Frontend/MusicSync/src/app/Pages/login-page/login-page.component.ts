@@ -39,8 +39,8 @@ export class LoginPageComponent {
   alert(message : string){
     this.alertContainer = true;
     this.alertMessage = message;
-    setTimeout(() => {
-      this.alertContainer = false;
-    }, 2000);
+    // setTimeout(() => {
+    //   this.alertContainer = false;
+    // }, 2000);
   }
 }

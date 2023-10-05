@@ -65,8 +65,11 @@ public class UserRepository : IRepository<User>
         throw new NotImplementedException();
     }
 
-    public Task Update(User obj)
+    public async Task Update(User obj)
     {
-        throw new NotImplementedException();
+        var updated = await context.ReplaceOneAsync(
+            Builders<User>.Filter.Eq(u => u.Id, obj.Id),
+            obj
+        );
     }
 }

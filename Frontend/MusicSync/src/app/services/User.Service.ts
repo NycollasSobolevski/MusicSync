@@ -14,7 +14,7 @@ export class UserServices {
     private port = '5179'
     Login ( data : userLoginData ) {
         return this.http
-            .post<jwtWithVerified>( `http://localhost:${this.port}/User/Login`, data )
+            .post<JwtWithData<boolean>>( `http://localhost:${this.port}/User/Login`, data )
             .pipe();
     };
     Register ( data : userRegisterData ) {
@@ -22,7 +22,7 @@ export class UserServices {
             .post<jwtWithVerified>( `http://localhost:${this.port}/User/CreateAccount`, data  )
             .pipe();
     };   
-    VerifyEmail ( body : JwtWithData ) {
+    VerifyEmail ( body : JwtWithData<string> ) {
         return this.http
             .post<jwt>( `http://localhost:${this.port}/User/VerifyEmail`, body )
             .pipe();

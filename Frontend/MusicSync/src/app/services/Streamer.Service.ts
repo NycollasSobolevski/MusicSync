@@ -9,8 +9,8 @@ interface IStreamerService {
     GetPlaylists ( data : JWTWithGetPlaylistData ) : Observable<Object>;
     GetPlaylist (data: jwt, playlistId : string) : Observable<Object>;
     GetPlaylistTracks( data : jwt, playlistId : string ) : Observable<Object>;
-    GetMoreTracks( data : JwtWithData ) : Observable<Object>;
-    GetTrackContent( data : JwtWithData ) : Observable<Object>;
+    GetMoreTracks( data : JwtWithData<string> ) : Observable<Object>;
+    GetTrackContent( data : JwtWithData<string> ) : Observable<Object>;
     RefreshToken ( data : jwt ) : Observable<Object>;
     LogOff ( data : jwt ) : Observable<Object>;
 

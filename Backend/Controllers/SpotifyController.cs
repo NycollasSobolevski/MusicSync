@@ -309,7 +309,7 @@ public class SpotifyController : ControllerBase
     }
     [HttpPost("GetMoreTracks")]
     public async Task<ActionResult> getMoreTracks (
-        [FromBody] JWTWithData body ,
+        [FromBody] JWTWithData<string> body ,
         [FromServices] IJwtService jwt,
         [FromServices] IRepository<Token> tokenRepository,
         [FromServices] HttpClient client

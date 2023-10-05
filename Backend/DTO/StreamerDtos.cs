@@ -61,7 +61,7 @@ interface IStreamerController
         [FromServices] HttpClient client
     );
     Task<ActionResult> getMoreTracks (
-        [FromBody] JWTWithData body ,
+        [FromBody] JWTWithData<String> body ,
         [FromServices] IJwtService jwt,
         [FromServices] IRepository<Token> tokenRepository,
         [FromServices] HttpClient client
@@ -78,8 +78,8 @@ interface IStreamerController
     
 }
 
-public record JWTWithData
+public record JWTWithData<T>
 {
     public JWT Jwt { get; set; }
-    public string Data { get; set; }
+    public T Data { get; set; }
 }

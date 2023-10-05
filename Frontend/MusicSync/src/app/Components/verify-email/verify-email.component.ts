@@ -21,7 +21,7 @@ export class VerifyEmailComponent {
   ) { }
 
   verify(){
-    var data : JwtWithData = {
+    var data : JwtWithData<string> = {
       jwt: this.jwt,
       data: this.codeInput
     };

@@ -95,9 +95,12 @@ public class UserController : ControllerBase
             Email = user.Email
         };
 
-        string returnJwt = jwt.GetToken(returnUser);
 
-        return Ok(new JWT() { Value = returnJwt });
+        var returnJwt = new JWT(){
+            Value = jwt.GetToken(returnUser)
+        };
+
+        return Ok(new JWTWithData<bool>() { Jwt = returnJwt, Data = user.EmailConfirmed });
     }
 
     [HttpPost("DeleteUser")]
@@ -121,5 +124,37 @@ public class UserController : ControllerBase
         catch (System.Exception exp) {
             return BadRequest(exp);
         }
+    }
+
+    [HttpPost("VerifyEmail")]
+    public async Task<ActionResult> VerifyEmail (
+        [FromBody]JWTWithData<string> data,
+        [FromServices] IRepository<User> userRepository,
+        [FromServices] IRepository<Token> tokenRepository,
+        [FromServices] IJwtService jwt
+    ){
+        try{
+            var jwtUser = jwt.Validate<UserJwtData>(data.Jwt.Value);
+            var user = await userRepository.FirstOrDefaultAsync( user => 
+                user.Name == jwtUser.Name &&
+                user.Email == jwtUser.Email
+            );
+            
+            var token = await tokenRepository.FirstOrDefaultAsync( t => 
+                t.User == user.Name &&
+                t.Service == "Email"
+            );
+
+            if (token.ServiceToken.ToLower() != data.Data.ToLower())
+                return Unauthorized("Invelid Token");
+            
+            user.EmailConfirmed = true;
+            await userRepository.Update(user);
+
+            return Ok("Token Validated");
+        }
+        catch (System.Exception exp) {
+            return BadRequest(exp);
+        };
     }
 }
