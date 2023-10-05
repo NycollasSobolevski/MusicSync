@@ -4,6 +4,7 @@ import { UserServices } from '../../services/User.Service';
 import { userRegisterData } from '../../services/UserDto';
 import { EMPTY } from 'rxjs';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-subscribe',
@@ -18,22 +19,42 @@ export class SubscribeComponent {
   @Output() sendAlert = new EventEmitter();
   @Output() loginClickEvent = new EventEmitter();
   repassword = '';
-  userData : userRegisterData = {
-    name: '',
-    birth: new Date,
-    email: '',
-    password: '',
+  
+  accountForm!: FormGroup;
+  ngOnInit(){
+    this.accountForm = new FormGroup({
+      name: new FormControl(""),
+      email: new FormControl(""),
+      birth: new FormControl(""),
+      password: new FormControl("")
+    });
+  }
+
+  get name (){
+    return this.accountForm.get('name')!;
+  }
+  get email (){
+    return this.accountForm.get('email')!;
+  }
+  get password (){
+    return this.accountForm.get('password')!;
   }
 
   signInClicked ( ) {
+    var userData : userRegisterData = {
+      name: '',
+      birth: new Date,
+      email: '',
+      password: '',
+    }
     if( !this.checkPassword() )
       return
-    if(!this.checkAttributes())
+    if (this.accountForm.invalid)
       return
-    console.log(this.userData);
+    console.log(userData);
     
     this.service
-      .Register(this.userData)
+      .Register(userData)
       .subscribe({
         next: (next) => {
           console.log(next);
@@ -60,37 +81,37 @@ export class SubscribeComponent {
   }
 
   checkPassword () {
-    if(this.userData.password.length < 8){
+    if(this.password.value.length < 8){
       this.Alert("Password must contain special characters and be longer than 8 characters ")
       return
     }
 
-    if (this.userData.password === this.repassword){
+    if (this.password.value.password === this.repassword){
       return true
     }
     this.Alert("Passwords not match")
     return false
   }
 
-  checkAttributes(){
-    if(this.userData.name == ''){
-      this.Alert("Usernam not inserted")
-      return false;
-    }
-    if(this.userData.email == ''){
-      this.Alert("Email not inserted")
-      return false;
-    }
-    if(this.userData.birth == new Date()){
-      this.Alert("Birth not inserted")
-      return false;
-    }
-    if(this.userData.password == ''){
-      this.Alert("Password not inserted")
-      return false;
-    }
-    return true
-  }
+  // checkAttributes(){
+  //   if(this.name == ''){
+  //     this.Alert("Usernam not inserted")
+  //     return false;
+  //   }
+  //   if(this.email == ''){
+  //     this.Alert("Email not inserted")
+  //     return false;
+  //   }
+  //   if(this.birth == new Date()){
+  //     this.Alert("Birth not inserted")
+  //     return false;
+  //   }
+  //   if(this.password == ''){
+  //     this.Alert("Password not inserted")
+  //     return false;
+  //   }
+  //   return true
+  // }
 
   Alert ( content : string ) {
     this.alertContent = content;

@@ -9,7 +9,7 @@ import { HomePageComponent } from './Pages/home-page/home-page.component';
 import { LoginPageComponent } from './Pages/login-page/login-page.component';
 import { LoginComponent } from './Components/login/login.component';
 import { SubscribeComponent } from './Components/subscribe/subscribe.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CallbackPageComponent } from './Pages/callback-page/callback-page.component';
 import { SpotifyComponent } from './Components/CardComponents/spotify/spotify.component';
 import { DeezerComponent } from './Components/CardComponents/deezer/deezer.component';
@@ -48,7 +48,8 @@ const COMPONENTS = [
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [COMPONENTS],
   providers: [

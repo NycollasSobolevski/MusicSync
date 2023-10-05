@@ -1,4 +1,4 @@
-main{
+.main-login-subscribe{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -46,6 +46,10 @@ input:focus{
     align-items: center;
     gap: 10px;
 }
+.error-input-validation p{
+    font-size: small;
+    color: red;
+}
 button {
     min-width: 50px;
     min-height: 10px;
@@ -54,9 +58,14 @@ button {
     background-color: var(--qua-color);
     border-radius: 5px;
 }
-
+@media (max-width: 760px) {
+    .input-container{
+        width: 190%;
+    }
+    
+}
 @media screen and (max-width: 450px ) {
     .buttons {
-        flex-direction: column;
+        /* flex-direction: column; */
     }
 }

@@ -1,21 +1,32 @@
-<main>
+<div class="main-login-subscribe">
     <header>
         <h3>Login</h3>
     </header>
     <div class="container">
-        <div class="content">
+        <form (ngSubmit)="login()" class="content" [formGroup]="userForm"
+            #formDir="ngForm">
             <div class="input-container">
-                <input type="text" [(ngModel)]="userData.identify" name="identification-login" id="identification-login" placeholder="Login / Email">
+                <input type="text"
+                    formControlName="identify"
+                    placeholder="Login / Email">
                 <span></span>
+                <div class="error-input-validation" *ngIf="identify.invalid && formDir.submitted" >
+                    <p *ngIf="identify.errors?.['required']" >Required input</p>
+                </div>
             </div>
             <div class="input-container">
-                <input type="password" [(ngModel)]="userData.password" name="password-login" id="password-login" placeholder="Password">
+                <input type="password" 
+                    formControlName="password"
+                    placeholder="Password">
                 <span></span>
+                <div class="error-input-validation" *ngIf="password.invalid && formDir.submitted">
+                    <p *ngIf="password.errors?.['required']" >Required input</p>
+                </div>
             </div>
             <div class="buttons">
-                <button (click)="login()">Login</button>
+                <button type="submit">Login</button>
                 <button (click)="siginClicked()">Sign In</button>
             </div>
-        </div>
+        </form>
     </div>
-</main>
+</div>

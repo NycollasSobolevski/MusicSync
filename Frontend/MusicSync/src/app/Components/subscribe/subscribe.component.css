@@ -1,4 +1,4 @@
-main{
+.main-login-subscribe{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -10,13 +10,6 @@ main{
     align-items: center;
     justify-content: center;
 }
-.content{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
 .content{
     display: flex;
     align-items: center;
@@ -61,25 +54,14 @@ button {
     background-color: var(--qua-color);
     border-radius: 5px;
 }
-
-.alert {
-    position: absolute;
-    top: 40px;
-    left: 0; right: 0;
-    margin: auto;
-    min-height: 50px;
-    width: 250px;
-    background-color: var(--yellow-alert-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 10px;
-    border-radius: 15px;
+@media (max-width: 760px) {
+    .input-container{
+        width: 190%;
+    }
+    
 }
-
 @media screen and (max-width: 450px ) {
     .buttons {
-        flex-direction: column;
+        /* flex-direction: column; */
     }
 }
