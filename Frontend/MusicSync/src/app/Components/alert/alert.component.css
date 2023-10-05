@@ -1,0 +1,16 @@
+.alert-container{
+  position: fixed;
+  background-color: aliceblue;
+  left: calc(50%); top: 5rem;
+  padding: .5rem 1rem ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+.hide {
+  display: none;
+}
+p{
+  color: black;
+}

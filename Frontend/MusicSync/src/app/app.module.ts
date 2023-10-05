@@ -22,6 +22,7 @@ import { LoaderComponent } from './Components/loader/loader.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { VerifyEmailComponent } from './Components/verify-email/verify-email.component';
+import { AlertComponent } from './Components/alert/alert.component';
 
 
 const COMPONENTS = [
@@ -43,7 +44,7 @@ const COMPONENTS = [
   LoaderComponent
 ]
 @NgModule({
-  declarations: [COMPONENTS, VerifyEmailComponent],
+  declarations: [COMPONENTS, VerifyEmailComponent, AlertComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

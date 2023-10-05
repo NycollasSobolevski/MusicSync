@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { jwt } from 'src/app/services/UserDto';
 
@@ -12,6 +12,9 @@ export class LoginPageComponent {
     private router : Router,
     private route : ActivatedRoute
   ) {}
+  @Output() sendAlertEvent = new EventEmitter<string>();
+  alertMessage = "";
+  alertContainer = false;
   VerifyEmail= false;
   protected jwt : jwt = {
     value: ''
@@ -31,5 +34,13 @@ export class LoginPageComponent {
     
     this.VerifyEmail = !this.VerifyEmail;
     this.jwt = jwt;
+  }
+
+  alert(message : string){
+    this.alertContainer = true;
+    this.alertMessage = message;
+    setTimeout(() => {
+      this.alertContainer = false;
+    }, 2000);
   }
 }

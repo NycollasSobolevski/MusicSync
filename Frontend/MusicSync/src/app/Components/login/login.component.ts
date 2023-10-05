@@ -3,6 +3,7 @@ import { UserServices } from '../../services/User.Service';
 import { jwt, jwtWithVerified, userLoginData } from '../../services/UserDto';
 import { Router } from '@angular/router';
 import { of, switchMap } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +11,7 @@ import { of, switchMap } from 'rxjs';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  @Output() sendAlert = new EventEmitter();
   @Output() siginClickEvent = new EventEmitter();
   @Output() sendToVerify = new EventEmitter<jwt>();
   constructor ( 
@@ -44,8 +46,18 @@ export class LoginComponent {
           sessionStorage.setItem('jwt', res.jwt.value);
           this.router.navigate(['/']);
         },
-        error: (err : any) => {
-          console.log(err);
+        error: (err : HttpErrorResponse) => {
+          switch (err.status) {
+            case 401:
+              this.sendAlert.emit(err.message);
+              break;
+            case 404:
+              this.sendAlert.emit(err.message);
+              break;
+            default:
+              console.log(err);
+              break;
+          }
         }
       })
   }

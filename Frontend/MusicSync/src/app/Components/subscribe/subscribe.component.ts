@@ -15,7 +15,7 @@ export class SubscribeComponent {
 
   isAlert = false;
   alertContent = ''
-
+  @Output() sendAlert = new EventEmitter();
   @Output() loginClickEvent = new EventEmitter();
   repassword = '';
   userData : userRegisterData = {
@@ -46,10 +46,10 @@ export class SubscribeComponent {
         error: (err : HttpErrorResponse) => {
           switch(err.status){
             case 401:
-              this.Alert(err.message);
+              this.sendAlert.emit(err.message);
               break;
             case 400:
-              this.Alert(err.message);
+              this.sendAlert.emit(err.message)
               break;
             default:
               console.log(err);

@@ -8,6 +8,7 @@
         </div>
         <app-login class="{{ isLogin ? '' : ' hidden' }}"
             (siginClickEvent)="changeToSigin()"  
+            (sendAlert)="alert($event)"
             (sendToVerify)="changeToVerifyEmail($event)"
             class="component"></app-login>
         <app-subscribe class="{{ !isLogin ? '' : ' hidden' }}"
@@ -17,4 +18,8 @@
     <div class="container" *ngIf="VerifyEmail">
         <app-verify-email [jwt]="this.jwt"></app-verify-email>
     </div>
+    <app-alert 
+        *ngIf="alertContainer"
+        [alertContent]="alertMessage"
+    />
 </main>
