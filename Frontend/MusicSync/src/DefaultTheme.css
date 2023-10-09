@@ -1,9 +1,9 @@
 :root {
     --pri-color : #2190EB;
-    --sec-color : #2F506B;
+    --sec-color : #3a5061;
     --ter-color : #1A71B8;
     --qua-color : #69B2EE;
-    --qui-color : #0F426B;
+    --qui-color : #061629;
     --ms-blue-50 :#1a6eb3;
     --back-colorA: #14281D;
     --back-colorB: #060b0f;
@@ -21,15 +21,10 @@
     --menu-header-background: #06004a9f;
     --semitransparent-background: rgb(0,0,0,0.2);
     --default-background-color: var(--sec-color) ;
-    --menu-background-color: var(--ms-blue-50) ;
+    --menu-background-color: var(--sec-color) ;
     --default-box-shadow-color: black;
     --seccondary-box-shadow-color: #4d92b9;
-    --background-mesher-blur-image:
-        radial-gradient(at 2% 40%, hsla(207,74%,40%,1) 0px, transparent 50%),
-        radial-gradient(at 29% 73%, hsla(206,75%,41%,1) 0px, transparent 50%),
-        radial-gradient(at 90% 81%, hsla(207,38%,30%,1) 0px, transparent 50%),
-        radial-gradient(at 67% 44%, hsla(207,83%,52%,1) 0px, transparent 50%);
-    ;
+    --background-mesher-blur-image: radial-gradient(at 2% 40%, hsla(207,74%,40%,1) 0px, transparent 50%),radial-gradient(at 29% 73%, hsla(206,75%,41%,1) 0px, transparent 50%),radial-gradient(at 90% 81%, hsla(207,38%,30%,1) 0px, transparent 50%),radial-gradient(at 67% 44%, hsla(207,83%,52%,1) 0px, transparent 50%);
 }
 
 *{
