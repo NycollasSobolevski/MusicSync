@@ -229,7 +229,7 @@ public class SpotifyController : ControllerBase
                 token.User == user.Name &&
                 token.Service == "Spotify"
             );
-            var userSpotifyReturn = await this.getUserSpotify( client, spotifyToken.Service );
+            var userSpotifyReturn = await this.GetUserSpotify( client, spotifyToken.Service );
             
             var response = await client.GetAsync($"https://api.spotify.com/v1/me/playlists?offset={data.Offset}&limit={data.Limit}");
             var result = await response.Content.ReadAsStringAsync();
@@ -308,7 +308,7 @@ public class SpotifyController : ControllerBase
         }
     }
     [HttpPost("GetMoreTracks")]
-    public async Task<ActionResult> getMoreTracks (
+    public async Task<ActionResult> GetMoreTracks (
         [FromBody] JWTWithData<string> body ,
         [FromServices] IJwtService jwt,
         [FromServices] IRepository<Token> tokenRepository,
@@ -336,7 +336,7 @@ public class SpotifyController : ControllerBase
         }
     }
 
-    private async Task<SpotifyUserData> getUserSpotify (
+    private async Task<SpotifyUserData> GetUserSpotify (
         [FromServices] HttpClient client,
         string token
     )
