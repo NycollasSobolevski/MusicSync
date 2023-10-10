@@ -163,8 +163,7 @@ public class SpotifyController : ControllerBase
     {
         var jwtUser = jwtService.Validate<UserJwtData>(jwt.Value);
         var user  = await userRepository.FirstOrDefaultAsync(user => user.Email == jwtUser.Email);
-        var token = await tokenRepository.FirstOrDefaultAsync(token => token.User == user.Name);
-
+        var token = await tokenRepository.FirstOrDefaultAsync(token => token.User == user.Name && token.Service == "Spotify");
         string clientId = Environment.GetEnvironmentVariable("CLIENT_ID");
         string clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
 
@@ -172,7 +171,6 @@ public class SpotifyController : ControllerBase
         dataClient = Convert.ToBase64String(Encoding.UTF8.GetBytes(dataClient));
         string authorization = $"Basic {dataClient}";
         client.DefaultRequestHeaders.Add("Authorization", authorization);
-        
         
 
         var newForm = new List<KeyValuePair<string, string>>();
@@ -183,13 +181,15 @@ public class SpotifyController : ControllerBase
 
             var newBody = new FormUrlEncodedContent(newForm);
             var refreshToken = await client.PostAsync("https://accounts.spotify.com/api/token", newBody);
+            
+            if(refreshToken.StatusCode != HttpStatusCode.OK)
+                return BadRequest("internal server error");
 
             var result = await refreshToken.Content.ReadFromJsonAsync<SpotifyToken>();
-
             token.ServiceToken = result.access_token;
             await tokenRepository.Update( token );
 
-            return Ok();
+            return Ok("Token Updated");
         }
         catch(Exception exp){
             return BadRequest($"{exp}");
@@ -229,8 +229,8 @@ public class SpotifyController : ControllerBase
                 token.User == user.Name &&
                 token.Service == "Spotify"
             );
-            var userSpotifyReturn = await this.GetUserSpotify( client, spotifyToken.Service );
-            
+            var userSpotifyReturn = await this.GetUserSpotify( client, spotifyToken.ServiceToken );
+            // client.DefaultRequestHeaders.Add("Authorization", $"Bearer {spotifyToken.ServiceToken}");
             var response = await client.GetAsync($"https://api.spotify.com/v1/me/playlists?offset={data.Offset}&limit={data.Limit}");
             var result = await response.Content.ReadAsStringAsync();
             

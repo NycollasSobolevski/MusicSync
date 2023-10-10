@@ -40,10 +40,8 @@ export class SpotifyComponent {
       }
     });
   }
+  
   async getPlaylist(){
-    
-    await this.refreshToken();
-
     this.service.GetPlaylists(this.jwt).subscribe({
       next: ( data : any ) => {
         if(this.playlists.items == null)
