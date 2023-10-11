@@ -115,3 +115,15 @@ public class SpotifyUserPlaylistTracks
   public string href { get; set; }
   public int total { get; set; }
 }
+
+public record CreatePlaylistData
+{
+  public string name { get; set; }
+  public string description { get; set; }
+  public bool publico { get; set; }
+}
+public record UserCreatePlaylistWithJwt
+{
+  public JWT Jwt { get; set; }
+  public CreatePlaylistData Data { get; set; }
+}

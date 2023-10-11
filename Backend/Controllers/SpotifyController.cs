@@ -2,9 +2,11 @@
 namespace music_api.Controllers;
 
 using System.Net;
+using System.Text.Json;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
+using MongoDB.Bson.IO;
 using music_api;
 using music_api.Auxi;
 using music_api.DTO;
@@ -15,6 +17,7 @@ using music_api.Model;
 [EnableCors("MainPolicy")]
 public class SpotifyController : ControllerBase
 {
+    private readonly string clientUrl = Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_URL");
     private readonly string serverPort = Environment.GetEnvironmentVariable("SERVER_PORT");
     private readonly string frontPort = Environment.GetEnvironmentVariable("FRONTEND_PORT");
 
@@ -50,7 +53,17 @@ public class SpotifyController : ControllerBase
                 });
             }
 
-            string scope = "user-read-private user-read-email playlist-read-private playlist-read-collaborative playlist-read-private user-read-private user-read-email";
+            string scope = """
+                user-read-private 
+                user-read-email 
+                playlist-read-private 
+                playlist-read-collaborative 
+                playlist-read-private 
+                user-read-private 
+                user-read-email 
+                playlist-modify-public 
+                playlist-modify-private
+            """;
             string state = Rand.GetRandomString(16);
 
             string client_id = Environment.GetEnvironmentVariable("CLIENT_ID");
@@ -336,6 +349,56 @@ public class SpotifyController : ControllerBase
         }
     }
 
+    [HttpPost("CreatePlaylist")]
+    public async Task<ActionResult> CreatePlaylist (
+        [FromBody] UserCreatePlaylistWithJwt data,
+        [FromServices] IJwtService jwt,
+        [FromServices] IRepository<Token> tokenRepository,
+        [FromServices] IRepository<User> userRepository,
+        [FromServices] HttpClient client
+    ){
+        var userJwt = jwt.Validate<UserJwtData>(data.Jwt.Value);
+        try{
+            var user = await userRepository.FirstOrDefaultAsync(user => 
+                user.Email == userJwt.Email ||
+                user.Name == userJwt.Name
+            );
+            var token = await tokenRepository.FirstOrDefaultAsync(token => 
+                token.User == user.Name &&
+                token.Service == "Spotify"
+            );
+
+            var userSpotify = await this.GetUserSpotify(client, token.ServiceToken);
+
+            // var newForm = new List<KeyValuePair<string, string>>();
+            // newForm.Add(new KeyValuePair<string, string>("name", $"{data.Data.Name}"));
+            // newForm.Add(new KeyValuePair<string, string>("description", $"{data.Data.Description}"));
+            // newForm.Add(new KeyValuePair<string, string>("public", $"{data.Data.Public}"));
+            // var newBody = new FormUrlEncodedContent(newForm);
+            //! var bodyData = new {
+            //!     name = data.Data.name,
+            //!     description = data.Data.description,
+            //!     publi = data.Data.publico
+            //! };
+
+            // string json = JsonSerializer.Serialize(bodyData);
+            // StringContent httpContent = new (json, System.Text.Encoding.UTF8, "application/json");
+        // System.Console.WriteLine(json);
+            // var createResponse = await client.PostAsync($"{this.clientUrl}/users/{userSpotify.id}/playlists", httpContent);
+            
+            // System.Console.WriteLine(await createResponse.Content.ReadAsStringAsync());
+
+            // if(createResponse.StatusCode == HttpStatusCode.OK)
+                // return Ok($"Playlist {data.Data.Name} created");
+            
+            return BadRequest("Internal server error");
+                
+        } catch (Exception exp){
+            return BadRequest(exp);
+        }
+    }
+
+    //* Private Methods
     private async Task<SpotifyUserData> GetUserSpotify (
         [FromServices] HttpClient client,
         string token
