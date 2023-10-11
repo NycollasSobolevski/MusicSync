@@ -370,26 +370,23 @@ public class SpotifyController : ControllerBase
 
             var userSpotify = await this.GetUserSpotify(client, token.ServiceToken);
 
-            // var newForm = new List<KeyValuePair<string, string>>();
-            // newForm.Add(new KeyValuePair<string, string>("name", $"{data.Data.Name}"));
-            // newForm.Add(new KeyValuePair<string, string>("description", $"{data.Data.Description}"));
-            // newForm.Add(new KeyValuePair<string, string>("public", $"{data.Data.Public}"));
-            // var newBody = new FormUrlEncodedContent(newForm);
-            //! var bodyData = new {
-            //!     name = data.Data.name,
-            //!     description = data.Data.description,
-            //!     publi = data.Data.publico
-            //! };
-
-            // string json = JsonSerializer.Serialize(bodyData);
-            // StringContent httpContent = new (json, System.Text.Encoding.UTF8, "application/json");
-        // System.Console.WriteLine(json);
-            // var createResponse = await client.PostAsync($"{this.clientUrl}/users/{userSpotify.id}/playlists", httpContent);
+            System.Console.WriteLine(data.Data.name + data.Data.description + data.Data.@public);
             
-            // System.Console.WriteLine(await createResponse.Content.ReadAsStringAsync());
+            CreatePlaylistData bodyData = new () {
+                name = data.Data.name,
+                description = data.Data.description,
+                @public = data.Data.@public
+            };
 
-            // if(createResponse.StatusCode == HttpStatusCode.OK)
-                // return Ok($"Playlist {data.Data.Name} created");
+            string json = JsonSerializer.Serialize(bodyData);
+            StringContent httpContent = new (json, System.Text.Encoding.UTF8, "application/json");
+            System.Console.WriteLine(json);
+            var createResponse = await client.PostAsync($"{this.clientUrl}/users/{userSpotify.id}/playlists", httpContent);
+            
+            System.Console.WriteLine(createResponse.StatusCode);
+
+            if(createResponse.StatusCode == HttpStatusCode.OK)
+                return Ok($"Playlist {data.Data.name} created");
             
             return BadRequest("Internal server error");
                 

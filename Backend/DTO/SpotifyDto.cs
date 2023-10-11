@@ -120,7 +120,7 @@ public record CreatePlaylistData
 {
   public string name { get; set; }
   public string description { get; set; }
-  public bool publico { get; set; }
+  public bool @public { get; set; }
 }
 public record UserCreatePlaylistWithJwt
 {

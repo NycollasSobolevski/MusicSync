@@ -18,7 +18,6 @@ export class SubscribeComponent {
   alertContent = ''
   @Output() sendAlert = new EventEmitter();
   @Output() loginClickEvent = new EventEmitter();
-  repassword = '';
   
   accountForm!: FormGroup;
   ngOnInit(){
@@ -26,7 +25,8 @@ export class SubscribeComponent {
       name: new FormControl(""),
       email: new FormControl(""),
       birth: new FormControl(""),
-      password: new FormControl("")
+      password: new FormControl(""),
+      repassword: new FormControl("")
     });
   }
 
@@ -36,21 +36,28 @@ export class SubscribeComponent {
   get email (){
     return this.accountForm.get('email')!;
   }
+  get birth () {
+    return this.accountForm.get('birth')!;
+  }
   get password (){
     return this.accountForm.get('password')!;
   }
+  get repassword () {
+    return this.accountForm.get('repassword')!;
+  }
 
   signInClicked ( ) {
-    var userData : userRegisterData = {
-      name: '',
-      birth: new Date,
-      email: '',
-      password: '',
-    }
     if( !this.checkPassword() )
-      return
+    return
     if (this.accountForm.invalid)
-      return
+    return
+    
+    var userData : userRegisterData = {
+      name: this.name.value,
+      birth: this.birth.value,
+      email: this.email.value,
+      password: this.password.value,
+    }
     console.log(userData);
     
     this.service
@@ -81,14 +88,17 @@ export class SubscribeComponent {
   }
 
   checkPassword () {
-    if(this.password.value.length < 8){
+    if(this.password.value.length <= 8){
       this.Alert("Password must contain special characters and be longer than 8 characters ")
       return
     }
 
-    if (this.password.value.password === this.repassword){
+    if (this.password.value == this.repassword.value){
       return true
     }
+    console.log(this.password.value);
+    console.log(this.repassword.value);
+    
     this.Alert("Passwords not match")
     return false
   }
