@@ -1,0 +1,129 @@
+// {
+//     "tracks": {
+//       "href": string,
+//       "limit": 1,
+//       "next": "https://api.spotify.com/v1/search?query=remaster%2520track%3Ahistoria%2520viva%2520artist%3Aveigh&type=track&locale=en-US%2Cen%3Bq%3D0.9%2Cpt%3Bq%3D0.8&offset=1&limit=1",
+//       "offset": 0,
+//       "previous": null,
+//       "total": 800,
+//       "items": [
+//         {
+//           "album": {
+//             "album_type": "album",
+//             "total_tracks": 9,
+//             "available_markets": ["AR", "AU", "AT", "BE", "BO", "BR", "BG", "CA", "CL", "CO", "CR", "CY", "CZ", "DK", "DO", "DE", "EC", "EE", "SV", "FI", "FR", "GR", "GT", "HN", "HK", "HU", "IS", "IE", "IT", "LV", "LT", "LU", "MY", "MT", "MX", "NL", "NZ", "NI", "NO", "PA", "PY", "PE", "PH", "PL", "PT", "SG", "SK", "ES", "SE", "CH", "TW", "TR", "UY", "US", "GB", "AD", "LI", "MC", "ID", "JP", "TH", "VN", "RO", "IL", "ZA", "SA", "AE", "BH", "QA", "OM", "KW", "EG", "MA", "DZ", "TN", "LB", "JO", "PS", "IN", "BY", "KZ", "MD", "UA", "AL", "BA", "HR", "ME", "MK", "RS", "SI", "KR", "BD", "PK", "LK", "GH", "KE", "NG", "TZ", "UG", "AG", "AM", "BS", "BB", "BZ", "BT", "BW", "BF", "CV", "CW", "DM", "FJ", "GM", "GE", "GD", "GW", "GY", "HT", "JM", "KI", "LS", "LR", "MW", "MV", "ML", "MH", "FM", "NA", "NR", "NE", "PW", "PG", "WS", "SM", "ST", "SN", "SC", "SL", "SB", "KN", "LC", "VC", "SR", "TL", "TO", "TT", "TV", "VU", "AZ", "BN", "BI", "KH", "CM", "TD", "KM", "GQ", "SZ", "GA", "GN", "KG", "LA", "MO", "MR", "MN", "NP", "RW", "TG", "UZ", "ZW", "BJ", "MG", "MU", "MZ", "AO", "CI", "DJ", "ZM", "CD", "CG", "IQ", "LY", "TJ", "VE", "ET", "XK"],
+//             "external_urls": {
+//               "spotify": "https://open.spotify.com/album/0D59BFMmnA87oPyk1oSe1b"
+//             },
+//             "href": "https://api.spotify.com/v1/albums/0D59BFMmnA87oPyk1oSe1b",
+//             "id": "0D59BFMmnA87oPyk1oSe1b",
+//             "images": [
+//               {
+//                 "url": "https://i.scdn.co/image/ab67616d0000b273ce0947b85c30490447dbbd91",
+//                 "height": 640,
+//                 "width": 640
+//               },
+//               {
+//                 "url": "https://i.scdn.co/image/ab67616d00001e02ce0947b85c30490447dbbd91",
+//                 "height": 300,
+//                 "width": 300
+//               },
+//               {
+//                 "url": "https://i.scdn.co/image/ab67616d00004851ce0947b85c30490447dbbd91",
+//                 "height": 64,
+//                 "width": 64
+//               }
+//             ],
+//             "name": "Dos Prédios Deluxe",
+//             "release_date": "2023-05-19",
+//             "release_date_precision": "day",
+//             "type": "album",
+//             "uri": "spotify:album:0D59BFMmnA87oPyk1oSe1b",
+//             "artists": [
+//               {
+//                 "external_urls": {
+//                   "spotify": "https://open.spotify.com/artist/4YqwRbMLqGHRHLS1w2ZKse"
+//                 },
+//                 "href": "https://api.spotify.com/v1/artists/4YqwRbMLqGHRHLS1w2ZKse",
+//                 "id": "4YqwRbMLqGHRHLS1w2ZKse",
+//                 "name": "Veigh",
+//                 "type": "artist",
+//                 "uri": "spotify:artist:4YqwRbMLqGHRHLS1w2ZKse"
+//               },
+//               {
+//                 "external_urls": {
+//                   "spotify": "https://open.spotify.com/artist/3prRKGJz16RRMRSIM97nHw"
+//                 },
+//                 "href": "https://api.spotify.com/v1/artists/3prRKGJz16RRMRSIM97nHw",
+//                 "id": "3prRKGJz16RRMRSIM97nHw",
+//                 "name": "Supernova Ent",
+//                 "type": "artist",
+//                 "uri": "spotify:artist:3prRKGJz16RRMRSIM97nHw"
+//               }
+//             ]
+//           },
+//           "artists": [
+//             {
+//               "external_urls": {
+//                 "spotify": "https://open.spotify.com/artist/4YqwRbMLqGHRHLS1w2ZKse"
+//               },
+//               "href": "https://api.spotify.com/v1/artists/4YqwRbMLqGHRHLS1w2ZKse",
+//               "id": "4YqwRbMLqGHRHLS1w2ZKse",
+//               "name": "Veigh",
+//               "type": "artist",
+//               "uri": "spotify:artist:4YqwRbMLqGHRHLS1w2ZKse"
+//             },
+//             {
+//               "external_urls": {
+//                 "spotify": "https://open.spotify.com/artist/7saGN6a32YNpiMPo2SWJxE"
+//               },
+//               "href": "https://api.spotify.com/v1/artists/7saGN6a32YNpiMPo2SWJxE",
+//               "id": "7saGN6a32YNpiMPo2SWJxE",
+//               "name": "Bvga Beatz",
+//               "type": "artist",
+//               "uri": "spotify:artist:7saGN6a32YNpiMPo2SWJxE"
+//             },
+//             {
+//               "external_urls": {
+//                 "spotify": "https://open.spotify.com/artist/5X5jKBLJ88Ji6tzwfL0g4c"
+//               },
+//               "href": "https://api.spotify.com/v1/artists/5X5jKBLJ88Ji6tzwfL0g4c",
+//               "id": "5X5jKBLJ88Ji6tzwfL0g4c",
+//               "name": "Prod Malax",
+//               "type": "artist",
+//               "uri": "spotify:artist:5X5jKBLJ88Ji6tzwfL0g4c"
+//             },
+//             {
+//               "external_urls": {
+//                 "spotify": "https://open.spotify.com/artist/3prRKGJz16RRMRSIM97nHw"
+//               },
+//               "href": "https://api.spotify.com/v1/artists/3prRKGJz16RRMRSIM97nHw",
+//               "id": "3prRKGJz16RRMRSIM97nHw",
+//               "name": "Supernova Ent",
+//               "type": "artist",
+//               "uri": "spotify:artist:3prRKGJz16RRMRSIM97nHw"
+//             }
+//           ],
+//           "available_markets": ["AR", "AU", "AT", "BE", "BO", "BR", "BG", "CA", "CL", "CO", "CR", "CY", "CZ", "DK", "DO", "DE", "EC", "EE", "SV", "FI", "FR", "GR", "GT", "HN", "HK", "HU", "IS", "IE", "IT", "LV", "LT", "LU", "MY", "MT", "MX", "NL", "NZ", "NI", "NO", "PA", "PY", "PE", "PH", "PL", "PT", "SG", "SK", "ES", "SE", "CH", "TW", "TR", "UY", "US", "GB", "AD", "LI", "MC", "ID", "JP", "TH", "VN", "RO", "IL", "ZA", "SA", "AE", "BH", "QA", "OM", "KW", "EG", "MA", "DZ", "TN", "LB", "JO", "PS", "IN", "BY", "KZ", "MD", "UA", "AL", "BA", "HR", "ME", "MK", "RS", "SI", "KR", "BD", "PK", "LK", "GH", "KE", "NG", "TZ", "UG", "AG", "AM", "BS", "BB", "BZ", "BT", "BW", "BF", "CV", "CW", "DM", "FJ", "GM", "GE", "GD", "GW", "GY", "HT", "JM", "KI", "LS", "LR", "MW", "MV", "ML", "MH", "FM", "NA", "NR", "NE", "PW", "PG", "WS", "SM", "ST", "SN", "SC", "SL", "SB", "KN", "LC", "VC", "SR", "TL", "TO", "TT", "TV", "VU", "AZ", "BN", "BI", "KH", "CM", "TD", "KM", "GQ", "SZ", "GA", "GN", "KG", "LA", "MO", "MR", "MN", "NP", "RW", "TG", "UZ", "ZW", "BJ", "MG", "MU", "MZ", "AO", "CI", "DJ", "ZM", "CD", "CG", "IQ", "LY", "TJ", "VE", "ET", "XK"],
+//           "disc_number": 1,
+//           "duration_ms": 140322,
+//           "explicit": true,
+//           "external_ids": {
+//             "isrc": "QZMWW2396002"
+//           },
+//           "external_urls": {
+//             "spotify": "https://open.spotify.com/track/4hKLzFvNwHF6dPosGT30ed"
+//           },
+//           "href": "https://api.spotify.com/v1/tracks/4hKLzFvNwHF6dPosGT30ed",
+//           "id": "4hKLzFvNwHF6dPosGT30ed",
+//           "name": "Novo Balanço",
+//           "popularity": 85,
+//           "preview_url": "https://p.scdn.co/mp3-preview/af031ca41aac7b60676833187f323d94fc387bce?cid=a868220599e44884a59b4757af164104",
+//           "track_number": 1,
+//           "type": "track",
+//           "uri": "spotify:track:4hKLzFvNwHF6dPosGT30ed",
+//           "is_local": false
+//         }
+//       ]
+//     }
+//   }

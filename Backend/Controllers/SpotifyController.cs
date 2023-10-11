@@ -395,6 +395,37 @@ public class SpotifyController : ControllerBase
         }
     }
 
+    [HttpPost("AddTrackToPlaylist")]
+    public async Task<ActionResult> AddTrackToPlaylist(
+        [FromBody] JWTWithData<TrackAndPlaylist> data,
+        [FromServices] IJwtService jwt,
+        [FromServices] IRepository<Token> tokenRepository,
+        [FromServices] IRepository<User> userRepository,
+        [FromServices] HttpClient client
+    ){
+        try{
+            var userJwt = jwt.Validate<UserJwtData>(data.Jwt.Value);
+            var user = await userRepository.FirstOrDefaultAsync(user => 
+                user.Email == userJwt.Email ||
+                user.Name == userJwt.Name
+            );
+            var token = await tokenRepository.FirstOrDefaultAsync(token => 
+                token.User == user.Name &&
+                token.Service == "Spotify"
+            );
+
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token.ServiceToken}");
+            var responseSearch = await client.GetAsync($"{this.clientUrl}/search?q=remaster%2520track%3A{data.Data.Data.name}%2520artist%3A{data.Data.Data.author}&type=track&limit=1&offset=0");
+            var obj = await responseSearch.Content.ReadFromJsonAsync<TrackSearchData>();
+
+            
+
+            return Ok(obj);
+        } catch (Exception exp) {
+            return BadRequest(exp);
+        }
+    }
+
     //* Private Methods
     private async Task<SpotifyUserData> GetUserSpotify (
         [FromServices] HttpClient client,
