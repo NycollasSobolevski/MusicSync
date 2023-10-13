@@ -413,14 +413,40 @@ public class SpotifyController : ControllerBase
                 token.User == user.Name &&
                 token.Service == "Spotify"
             );
-
+            data.Data.Data.name = data.Data.Data.name.Replace(" ", "%2520");
+            data.Data.Data.author = data.Data.Data.author.Replace(" ", "%2520");
             client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token.ServiceToken}");
             var responseSearch = await client.GetAsync($"{this.clientUrl}/search?q=remaster%2520track%3A{data.Data.Data.name}%2520artist%3A{data.Data.Data.author}&type=track&limit=1&offset=0");
-            var obj = await responseSearch.Content.ReadFromJsonAsync<TrackSearchData>();
-
             
+            if(responseSearch.StatusCode == HttpStatusCode.Unauthorized)
+                return Unauthorized("Unauthorized");
 
-            return Ok(obj);
+            if(responseSearch.StatusCode != HttpStatusCode.OK)
+                return BadRequest("internal server error");
+
+            var obj = await responseSearch.Content.ReadFromJsonAsync<TrackSearchData>();
+            var strin = await responseSearch.Content.ReadAsStringAsync();
+
+            if(obj.tracks.items.Length == 0)
+                return BadRequest("Track not found");
+
+            var bodyData = new {
+                uris = new string[] { obj.tracks.items[0].uri }
+            };
+
+
+            string json = JsonSerializer.Serialize(bodyData);
+            StringContent httpContent = new (json, System.Text.Encoding.UTF8, "application/json");
+            responseSearch = await client.PostAsync($"https://api.spotify.com/v1/playlists/{data.Data.PlaylistId}/tracks", httpContent);
+
+            if(responseSearch.StatusCode == HttpStatusCode.Unauthorized)
+                return Unauthorized("Unauthorized");
+
+            if(responseSearch.StatusCode != HttpStatusCode.OK)
+                return BadRequest("internal server error");
+
+
+            return Ok("Music Inserted");
         } catch (Exception exp) {
             return BadRequest(exp);
         }

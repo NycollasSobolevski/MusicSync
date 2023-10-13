@@ -24,6 +24,7 @@ import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { VerifyEmailComponent } from './Components/verify-email/verify-email.component';
 import { AlertComponent } from './Components/alert/alert.component';
 import { CreatePlaylistComponent } from './Components/CardComponents/create-playlist/create-playlist.component';
+import { MainCardComponent } from './Components/PlaylistTransferComponents/main-card/main-card.component';
 
 
 const COMPONENTS = [
@@ -45,7 +46,7 @@ const COMPONENTS = [
   LoaderComponent
 ]
 @NgModule({
-  declarations: [COMPONENTS, VerifyEmailComponent, AlertComponent, CreatePlaylistComponent],
+  declarations: [COMPONENTS, VerifyEmailComponent, AlertComponent, CreatePlaylistComponent, MainCardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
