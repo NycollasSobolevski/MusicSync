@@ -97,7 +97,7 @@ p {
 
 
 
-@media screen and (max-width: 575px) {
+@media screen and (max-width: 576px) {
   svg#rocket-smoke {
     display: none;
     visibility: hidden;

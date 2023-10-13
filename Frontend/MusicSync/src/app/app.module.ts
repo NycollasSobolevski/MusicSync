@@ -25,6 +25,8 @@ import { VerifyEmailComponent } from './Components/verify-email/verify-email.com
 import { AlertComponent } from './Components/alert/alert.component';
 import { CreatePlaylistComponent } from './Components/CardComponents/create-playlist/create-playlist.component';
 import { MainCardComponent } from './Components/PlaylistTransferComponents/main-card/main-card.component';
+import { SelectStreamerComponent } from './Components/PlaylistTransferComponents/select-streamer/select-streamer.component';
+import { SelectPlaylistComponent } from './Components/PlaylistTransferComponents/select-playlist/select-playlist.component';
 
 
 const COMPONENTS = [
@@ -46,7 +48,7 @@ const COMPONENTS = [
   LoaderComponent
 ]
 @NgModule({
-  declarations: [COMPONENTS, VerifyEmailComponent, AlertComponent, CreatePlaylistComponent, MainCardComponent],
+  declarations: [COMPONENTS, VerifyEmailComponent, AlertComponent, CreatePlaylistComponent, MainCardComponent, SelectStreamerComponent, SelectPlaylistComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

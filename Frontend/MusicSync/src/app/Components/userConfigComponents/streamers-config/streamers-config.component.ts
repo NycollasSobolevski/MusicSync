@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SpotifyService } from 'src/app/services/Spotify.Service';
+import { StreamerService } from 'src/app/services/Streamer.Service';
 import { jwt } from 'src/app/services/UserDto';
 import { Alert } from 'src/app/services/Funcionalities';
 
@@ -10,7 +10,7 @@ import { Alert } from 'src/app/services/Funcionalities';
 })
 export class StreamersConfigComponent {
   constructor( 
-    private spotifyService : SpotifyService
+    private spotifyService : StreamerService
   ){
     
   }
@@ -73,7 +73,7 @@ export class StreamersConfigComponent {
     if(jwtt.value == "")
       window.location.href = "/login";
     console.log(this.spotifyService)
-    this.spotifyService.LogOff(jwtt).subscribe({
+    this.spotifyService.LogOff("Spotify",jwtt).subscribe({
       next: data => {
         window.location.reload();
       },

@@ -2,8 +2,8 @@ import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { itemsOfPlaylist } from '../../services/SpotifyDto';
-import { SpotifyService } from '../../services/Spotify.Service';
-import { IStreamerService } from '../../services/Streamer.Service';
+import { StreamerService } from '../../services/Streamer.Service';
+import { IStreamerService } from '../../services/IStreamer.Service';
 import { JwtWithData, jwt } from '../../services/UserDto';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -21,7 +21,7 @@ export class PlaylistPageComponent {
     value: sessionStorage.getItem('jwt') || '',
   }
 
-  constructor( private service : SpotifyService,
+  constructor( private service : StreamerService,
     private activatedRoute : ActivatedRoute ,
     private router : Router
   ){  }
@@ -77,7 +77,7 @@ export class PlaylistPageComponent {
     }
 
 
-    this.service.GetPlaylist(this.jwt, id).subscribe({
+    this.service.GetPlaylist("Spotify",this.jwt, id).subscribe({
       next:(data: any) => {
         this.PlaylisData = data;
         sessionStorage.setItem('lastPlaylistData', JSON.stringify(data));
@@ -85,7 +85,7 @@ export class PlaylistPageComponent {
       error: (error : HttpErrorResponse) => {
         switch (error.status) {
           case 401:
-            this.service.RefreshToken(this.jwt).subscribe({
+            this.service.RefreshToken("Spotify",this.jwt).subscribe({
               next: () => {
                 console.log('token refreshed');
                 window.location.reload();
@@ -112,7 +112,7 @@ export class PlaylistPageComponent {
     if(!id || id == "")
       return;
 
-    this.service.GetPlaylistTracks(this.jwt, id).subscribe({
+    this.service.GetPlaylistTracks("Spotify",this.jwt, id).subscribe({
       next: ( data : any ) => {
         this.Playlist = data;
         sessionStorage.setItem('lastPlaylistOpened', JSON.stringify(data));
@@ -120,7 +120,7 @@ export class PlaylistPageComponent {
       error: ( error : HttpErrorResponse) => {
         switch (error.status) {
           case 401:
-            this.service.RefreshToken(this.jwt).subscribe({
+            this.service.RefreshToken("Spotify",this.jwt).subscribe({
               next: () => {
                 window.location.reload();
               },
@@ -150,7 +150,7 @@ export class PlaylistPageComponent {
       data: this.Playlist.next
     }
 
-    this.service.GetMoreTracks(body).subscribe({
+    this.service.GetMoreTracks("Spotify",body).subscribe({
       next:(data: any) => {
         console.log(data.items);
         console.log(this.Playlist.items);

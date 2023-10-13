@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SpotifyService } from '../../services/Spotify.Service';
+import { StreamerService } from '../../services/Streamer.Service';
 import { StringReturn } from '../../services/SpotifyDto';
 import { ActivatedRoute, Router } from '@angular/router';
 import { jwt } from '../../services/UserDto';
@@ -20,7 +20,7 @@ export class MenuComponent {
   cardOn= false;
 
   constructor(
-    private service: SpotifyService,
+    private service: StreamerService,
     private router: Router,
     private route : ActivatedRoute
   ) { }
@@ -30,7 +30,7 @@ export class MenuComponent {
     if(this.jwt.value == "" || this.jwt.value == undefined)
       return
     this.service
-      .GetAccesUrl( this.jwt )
+      .GetAccesUrl( "Spotify", this.jwt )
       .subscribe({
         next: (res: StringReturn) => {
           this.link = res.data

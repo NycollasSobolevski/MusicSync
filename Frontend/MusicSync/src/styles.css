@@ -7,6 +7,12 @@
 
 button{
     background-color: transparent;
+    min-width: 70px;
+    min-height: 10px;
+    width: 5vw;
+    height: 5vh;
+    background-color: var(--qua-color);
+    border-radius: 5px;
 }
 button:hover{
     cursor: pointer;

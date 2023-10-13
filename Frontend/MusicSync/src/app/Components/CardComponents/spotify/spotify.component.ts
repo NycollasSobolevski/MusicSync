@@ -3,7 +3,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Playlist, itemsOfPlaylist } from 'src/app/services/SpotifyDto';
-import { SpotifyService } from 'src/app/services/Spotify.Service';
+import { StreamerService } from 'src/app/services/Streamer.Service';
 import { JWTWithGetPlaylistData, jwt } from 'src/app/services/UserDto';
 
 @Component({
@@ -13,13 +13,17 @@ import { JWTWithGetPlaylistData, jwt } from 'src/app/services/UserDto';
 })
 export class SpotifyComponent {
   constructor (
-    private service : SpotifyService,
+    private service : StreamerService,
     private sanitizer : DomSanitizer,
     private router : Router
   ) {}
   // !TODO: Implementar o closeCard
     @Output() closeCardEvent = new EventEmitter()
 
+
+  playlists : Playlist = {
+    items: []
+  };
 
   private jwt : JWTWithGetPlaylistData = {
     jwt:{
@@ -30,7 +34,7 @@ export class SpotifyComponent {
   }
   
   async refreshToken(){
-    this.service.RefreshToken(this.jwt.jwt).subscribe({
+    this.service.RefreshToken("Spotify",this.jwt.jwt).subscribe({
       next: ( data ) => {
         console.log("Refreshed token");
       },
@@ -42,7 +46,7 @@ export class SpotifyComponent {
   }
   
   async getPlaylist(){
-    this.service.GetPlaylists(this.jwt).subscribe({
+    this.service.GetPlaylists("Spotify",this.jwt).subscribe({
       next: ( data : any ) => {
         if(this.playlists.items == null)
           this.playlists = data;
@@ -57,7 +61,7 @@ export class SpotifyComponent {
       error: error => {
         if (error.status == 401) {
           console.log("Refreshing token");
-          this.service.RefreshToken(this.jwt.jwt).subscribe({
+          this.service.RefreshToken("Spotify",this.jwt.jwt).subscribe({
             next: ( data ) => {
               console.log("Refreshed token");
               location.reload();
@@ -110,11 +114,6 @@ export class SpotifyComponent {
   getPlaylistTracks(playlist : itemsOfPlaylist){
     this.router.navigate(['/playlist'], { queryParams: { id: playlist.id, streamer: "spotify" } });
   }
-
-  playlists : Playlist = {
-    items: []
-  };
-
 
   closeCard(){
     this.closeCardEvent.emit();

@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SpotifyService } from 'src/app/services/Spotify.Service';
 import { itemsOfPlaylist } from 'src/app/services/SpotifyDto';
-import { IStreamerService } from 'src/app/services/Streamer.Service';
 
 @Component({
   selector: 'app-music-page',

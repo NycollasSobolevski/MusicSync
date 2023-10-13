@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { SpotifyService } from '../../services/Spotify.Service';
+import { StreamerService } from '../../services/Streamer.Service';
 import { CallbackData } from '../../services/SpotifyDto';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -18,7 +18,7 @@ export class CallbackPageComponent {
   
   constructor ( 
     private route : ActivatedRoute,
-    private service : SpotifyService,
+    private service : StreamerService,
     private router : Router
   ) {}
 
@@ -30,7 +30,7 @@ export class CallbackPageComponent {
       console.log(this.data);
       
 
-      this.service.Callback(this.data).subscribe({
+      this.service.Callback("Spotify",this.data).subscribe({
         next: (res) => {
           console.log(res);
           this.router.navigate(['/']);
