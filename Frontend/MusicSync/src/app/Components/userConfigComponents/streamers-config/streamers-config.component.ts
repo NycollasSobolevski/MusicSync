@@ -22,7 +22,6 @@ export class StreamersConfigComponent {
 
   ngOnInit() {
     this.Jwt.value = sessionStorage.getItem("jwt") ?? "";
-    console.log(this.Jwt);
 
     if(this.Jwt.value == ""){
       window.location.href = "/login";
@@ -72,7 +71,6 @@ export class StreamersConfigComponent {
 
     if(jwtt.value == "")
       window.location.href = "/login";
-    console.log(this.spotifyService)
     this.spotifyService.LogOff("Spotify",jwtt).subscribe({
       next: data => {
         window.location.reload();

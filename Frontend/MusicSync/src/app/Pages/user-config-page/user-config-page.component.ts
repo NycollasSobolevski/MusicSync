@@ -10,13 +10,7 @@ export class UserConfigPageComponent {
 
 
   selectTab(event : string){
-    switch (event) {
-      case "streamers":
-        this.tab = "streamers";
-        break;
-    
-      default:
-        break;
-    }
+    console.log(event);
+    this.tab = event;
   }
 }
