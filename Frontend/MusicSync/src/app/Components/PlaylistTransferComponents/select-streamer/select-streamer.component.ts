@@ -12,12 +12,23 @@ export class SelectStreamerComponent {
   
   ngOnInit(){
     this.streamerForm = new FormGroup({
-      from: new FormControl(),
-      to:   new FormControl()
+      from: new FormControl("",[Validators.required]),
+      to:   new FormControl("",[Validators.required])
     })
   }
 
+  get from(){
+    return this.streamerForm.get('from');
+  }
+  get to(){
+    return this.streamerForm.get('to');
+  }
+
   next(){
+    
+    if(this.streamerForm.invalid){
+      return;
+    }
     this.nextClicked.emit(this.streamerForm.value);
   }
 }

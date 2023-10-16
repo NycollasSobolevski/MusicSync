@@ -21,6 +21,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 1rem;
 }
 
 .selects-container{
@@ -51,6 +52,12 @@ option{
 }
 .select-container label{
     font-size: small;
+}
+
+
+.alert{
+    font-size: small;
+    color: red;
 }
 @media screen and (max-width: 576px) {
     .selects-container{

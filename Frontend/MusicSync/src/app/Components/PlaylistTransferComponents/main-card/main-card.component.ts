@@ -6,11 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./main-card.component.css']
 })
 export class MainCardComponent {
-  sessions = ['select-streamer', 'select-playlist', 'select-songs', 'transfer'];
+  sessions = ['select-streamer', 'select-playlist', 'playlist-settings', 'transfer'];
   index = 0;
 
-  private toStreamer = "";
-  private fromStreamer = "";
+  toStreamer = "";
+  fromStreamer = "";
 
   nextClicked( obj : any ){
     console.log(obj);

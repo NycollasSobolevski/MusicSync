@@ -7,6 +7,9 @@
 
 button{
     background-color: transparent;
+
+}
+.btn{
     min-width: 70px;
     min-height: 10px;
     width: 5vw;

@@ -233,6 +233,8 @@ public class SpotifyController : ControllerBase
     )
     {
         var userJwt = jwt.Validate<UserJwtData>(data.Jwt.Value);
+        if (data.Limit == 0)
+            data.Limit = 20;
         try{
             var user = await userRepository.FirstOrDefaultAsync(
                 u => u.Email == userJwt.Email
