@@ -9,7 +9,7 @@ export class ConfigMenuComponent {
   @Output() outputTab = new EventEmitter<string>();
   streamers = false;
 
-  streamersToggle () {
-    this.outputTab.emit("streamers");
+  toggle (page : string) {
+    this.outputTab.emit(page);
   }
 }
