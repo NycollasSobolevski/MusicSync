@@ -22,17 +22,17 @@ public class UserController : ControllerBase
     ) 
     {
 
-        User peopleIfExists = await repository
+        User peopleExists = await repository
             .FirstOrDefaultAsync( x => 
                 x.Name == data.Name ||
                 x.Email == data.Email
         );
 
-        if ( peopleIfExists != null )
+        if ( peopleExists != null )
         {
-            if( peopleIfExists.Name == data.Name )
+            if( peopleExists.Name == data.Name )
                 return BadRequest("This username already exists");
-            if( peopleIfExists.Email == data.Email )
+            if( peopleExists.Email == data.Email )
                 return BadRequest("This email already exists");
         }
 
@@ -42,7 +42,8 @@ public class UserController : ControllerBase
             Password = data.Password,
             Birth = data.Birth,
             Salt = PasswordConfig.GenerateStringSalt(12),
-            EmailConfirmed = false
+            EmailConfirmed = false,
+            IsActive = true
         };
 
         newUserData.Password = PasswordConfig.GetHash(
@@ -77,14 +78,14 @@ public class UserController : ControllerBase
         [FromServices] IJwtService jwt
     )
     {
-        System.Console.WriteLine($"UserData: {data.Identify},{data.Password}");
+        // System.Console.WriteLine($"UserData: {data.Identify},{data.Password}");
 
         var user = await repository.FirstOrDefaultAsync( user => 
             user.Email == data.Identify ||
             user.Name.Contains(data.Identify)
         );
 
-        if(user == null)
+        if(user == null || !user.IsActive)
             return NotFound("Username or Email not exists");
 
         if ( PasswordConfig.GetHash(data.Password, user.Salt) != user.Password )
@@ -117,8 +118,10 @@ public class UserController : ControllerBase
             u.Name == jwtResult.Name  || 
             u.Email == jwtResult.Email
         );
+        user.IsActive = false;
+        
         try {
-            await repository.Delete(user);
+            await repository.Update(user);
             return Ok("User deleted");
         }
         catch (System.Exception exp) {

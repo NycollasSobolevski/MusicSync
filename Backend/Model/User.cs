@@ -19,5 +19,7 @@ public partial class User
     public string Salt { get; set; }
     [BsonElement("EmailConfirmed")]
     public bool EmailConfirmed { get; set; }
+    [BsonElement("IsActive")]
+    public bool IsActive { get; set; }
     
 }
