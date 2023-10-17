@@ -24,16 +24,53 @@ public class UserController : ControllerBase
 
         User peopleExists = await repository
             .FirstOrDefaultAsync( x => 
-                x.Name == data.Name ||
+                x.Name.ToLower() == data.Name.ToLower() ||
                 x.Email == data.Email
         );
 
-        if ( peopleExists != null )
+        if ( peopleExists != null && peopleExists.IsActive)
         {
             if( peopleExists.Name == data.Name )
                 return BadRequest("This username already exists");
             if( peopleExists.Email == data.Email )
                 return BadRequest("This email already exists");
+        }
+        if(peopleExists != null && !peopleExists.IsActive)
+        {
+            try
+            {
+                peopleExists.Name = data.Name;
+                peopleExists.Email = data.Email;
+                peopleExists.EmailConfirmed = false;
+                peopleExists.IsActive = true;
+                peopleExists.Salt = PasswordConfig.GenerateStringSalt(12);
+                peopleExists.Password = PasswordConfig.GetHash(
+                    data.Password,
+                    peopleExists.Salt
+                );
+                peopleExists.Birth = data.Birth;
+
+                await repository.Update(peopleExists);
+
+                var token = await tokenRepository.FirstOrDefaultAsync(tk => 
+                    tk.User == peopleExists.Name && tk.Service == "Email"
+                );
+                token.ServiceToken = Rand.GetRandomString(6)
+                ;
+                await tokenRepository.Update(token);
+                try{
+                    SendEmail.SendEmailValidation(peopleExists.Email,peopleExists.Name,token.ServiceToken );
+                }
+                catch (Exception exp) {
+                    System.Console.WriteLine("email not sended");
+                }
+
+                return Ok("Subscription successfull");
+            }
+            catch (Exception exp)
+            {
+                System.Console.WriteLine(exp);
+            }
         }
 
         User newUserData = new() {
@@ -60,8 +97,12 @@ public class UserController : ControllerBase
                 Service = "Email",
                 ServiceToken = Rand.GetRandomString(6),
             });
-            
-            SendEmail.SendEmailValidation(newUserData.Email,newUserData.Name,token.ServiceToken );
+            try{
+                SendEmail.SendEmailValidation(newUserData.Email,newUserData.Name,token.ServiceToken );
+            }
+            catch {
+                System.Console.WriteLine("email not sended");
+            }
 
             return Ok("Subscription successfull");
         }
@@ -82,7 +123,7 @@ public class UserController : ControllerBase
 
         var user = await repository.FirstOrDefaultAsync( user => 
             user.Email == data.Identify ||
-            user.Name.Contains(data.Identify)
+            user.Name.ToLower() == data.Identify.ToLower()
         );
 
         if(user == null || !user.IsActive)
