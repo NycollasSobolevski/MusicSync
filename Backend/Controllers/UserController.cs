@@ -55,7 +55,8 @@ public class UserController : ControllerBase
                 var token = await tokenRepository.FirstOrDefaultAsync(tk => 
                     tk.User == peopleExists.Name && tk.Service == "Email"
                 );
-                token.ServiceToken = Rand.GetRandomString(6)
+                token.ServiceToken = Rand.GetRandomString(6);
+                token.LastUpdate = DateTime.Now;
                 ;
                 await tokenRepository.Update(token);
                 try{
@@ -96,6 +97,8 @@ public class UserController : ControllerBase
                 User = newUserData.Name,
                 Service = "Email",
                 ServiceToken = Rand.GetRandomString(6),
+                ExpiresIn = 3000,
+                LastUpdate = DateTime.Now
             });
             try{
                 SendEmail.SendEmailValidation(newUserData.Email,newUserData.Name,token.ServiceToken );
@@ -200,5 +203,14 @@ public class UserController : ControllerBase
         catch (System.Exception exp) {
             return BadRequest(exp);
         };
+    }
+
+    [HttpPost("UpdatePassword")]
+    public async Task<ActionResult> UpdatePassword (
+
+    ){
+        //!todo:======================================================================================
+
+        return Ok();
     }
 }

@@ -154,6 +154,8 @@ public class SpotifyController : ControllerBase
                 Service = "Spotify",
                 ServiceToken = token.access_token,
                 RefreshToken = token.refresh_token,
+                ExpiresIn = token.expires_in,
+                LastUpdate = DateTime.Now
             };
             await tokenRepository.add(_token);
 
@@ -200,6 +202,7 @@ public class SpotifyController : ControllerBase
 
             var result = await refreshToken.Content.ReadFromJsonAsync<SpotifyToken>();
             token.ServiceToken = result.access_token;
+            token.LastUpdate = DateTime.Now;
             await tokenRepository.Update( token );
 
             return Ok("Token Updated");
@@ -502,6 +505,7 @@ public class SpotifyController : ControllerBase
 
         var result = await refreshToken.Content.ReadFromJsonAsync<SpotifyToken>();
         token.ServiceToken = result.access_token;
+        token.LastUpdate = DateTime.Now;
         await tokenRepository.Update( token );
 
     }

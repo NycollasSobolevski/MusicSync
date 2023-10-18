@@ -16,5 +16,8 @@ public partial class Token
     public string ServiceToken { get; set; }
     [BsonElement("RefreshToken")]
     public string RefreshToken { get; set; }
-
+    [BsonElement("ExpiresIn")]
+    public int ExpiresIn { get; set; }
+    [BsonElement("LasUpdate")]
+    public DateTime LastUpdate { get; set; }
 }

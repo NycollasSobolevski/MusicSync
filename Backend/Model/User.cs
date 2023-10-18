@@ -21,5 +21,4 @@ public partial class User
     public bool EmailConfirmed { get; set; }
     [BsonElement("IsActive")]
     public bool IsActive { get; set; }
-    
 }
