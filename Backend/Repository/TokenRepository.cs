@@ -78,6 +78,8 @@ public class TokenRepository : IRepository<Token>
                 Builders<Token>.Update
                     .Set(t => t.ServiceToken, obj.ServiceToken)
                     .Set(t => t.RefreshToken, obj.RefreshToken)
+                    .Set(t => t.LastUpdate, obj.LastUpdate)
+                    .Set(t => t.ExpiresIn, obj.ExpiresIn)
             );
     }
 }

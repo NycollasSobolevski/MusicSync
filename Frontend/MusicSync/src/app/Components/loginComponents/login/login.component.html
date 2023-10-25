@@ -23,9 +23,10 @@
                     <p *ngIf="password.errors?.['required']" >Required input</p>
                 </div>
             </div>
+            <a href="/forgetPassword">Forget password</a>
             <div class="buttons">
                 <button type="submit">Login</button>
-                <button (click)="siginClicked()">Sign In</button>
+                <button type="button" (click)="siginClicked()">Sign In</button>
             </div>
         </form>
     </div>

@@ -4,6 +4,7 @@ public record LoginData
 {
     public string Identify { get; set; }
     public string Password { get; set; }
+    public string? token { get; set; }
 }
 
 public record UserJwtData

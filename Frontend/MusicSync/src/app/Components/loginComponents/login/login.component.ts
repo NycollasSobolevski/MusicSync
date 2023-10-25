@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { UserServices } from '../../services/User.Service';
-import { JwtWithData, jwt, jwtWithVerified, userLoginData } from '../../services/UserDto';
+import { UserServices } from '../../../services/User.Service';
+import { JwtWithData, jwt, jwtWithVerified, userLoginData } from '../../../services/UserDto';
 import { Router } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -56,7 +56,7 @@ export class LoginComponent {
 
                     if (!res.data) {
                         console.log(res);
-
+                        sessionStorage.setItem('useridentify', this.identify.value);
                         this.sendToVerify.emit(res.jwt);
                         return;
                     }

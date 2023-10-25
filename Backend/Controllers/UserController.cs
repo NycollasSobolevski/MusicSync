@@ -5,6 +5,7 @@ using music_api.DTO;
 using music_api.Model;
 using music_api.Password;
 using Security_jwt;
+using Swan.Formatters;
 
 namespace music_api.Controllers;
 
@@ -31,9 +32,9 @@ public class UserController : ControllerBase
         if ( peopleExists != null && peopleExists.IsActive)
         {
             if( peopleExists.Name == data.Name )
-                return BadRequest("This username already exists");
+                return Unauthorized("This username already exists");
             if( peopleExists.Email == data.Email )
-                return BadRequest("This email already exists");
+                return Unauthorized("This email already exists");
         }
         if(peopleExists != null && !peopleExists.IsActive)
         {
@@ -57,7 +58,7 @@ public class UserController : ControllerBase
                 );
                 token.ServiceToken = Rand.GetRandomString(6);
                 token.LastUpdate = DateTime.Now;
-                ;
+                token.ExpiresIn = 3600;
                 await tokenRepository.Update(token);
                 try{
                     SendEmail.SendEmailValidation(peopleExists.Email,peopleExists.Name,token.ServiceToken );
@@ -65,12 +66,13 @@ public class UserController : ControllerBase
                 catch (Exception exp) {
                     System.Console.WriteLine("email not sended");
                 }
-
-                return Ok("Subscription successfull");
+                var body = Json.Serialize("Subscription successfull");
+                return Ok(body);
             }
             catch (Exception exp)
             {
                 System.Console.WriteLine(exp);
+                return BadRequest("internal server error");
             }
         }
 
@@ -97,9 +99,10 @@ public class UserController : ControllerBase
                 User = newUserData.Name,
                 Service = "Email",
                 ServiceToken = Rand.GetRandomString(6),
-                ExpiresIn = 3000,
+                ExpiresIn = 3600,
                 LastUpdate = DateTime.Now
             });
+            
             try{
                 SendEmail.SendEmailValidation(newUserData.Email,newUserData.Name,token.ServiceToken );
             }
@@ -107,7 +110,8 @@ public class UserController : ControllerBase
                 System.Console.WriteLine("email not sended");
             }
 
-            return Ok("Subscription successfull");
+            var body = Json.Serialize("Subscription successfull");
+            return Ok(body);
         }
         catch (System.Exception exp)
         {
@@ -175,42 +179,121 @@ public class UserController : ControllerBase
 
     [HttpPost("VerifyEmail")]
     public async Task<ActionResult> VerifyEmail (
-        [FromBody]JWTWithData<string> data,
+        [FromBody] LoginData body,
         [FromServices] IRepository<User> userRepository,
-        [FromServices] IRepository<Token> tokenRepository,
-        [FromServices] IJwtService jwt
+        [FromServices] IRepository<Token> tokenRepository
     ){
         try{
-            var jwtUser = jwt.Validate<UserJwtData>(data.Jwt.Value);
+            System.Console.WriteLine(body);
             var user = await userRepository.FirstOrDefaultAsync( user => 
-                user.Name == jwtUser.Name &&
-                user.Email == jwtUser.Email
+                user.Name == body.Identify ||
+                user.Email == body.Identify
             );
             
+            if(user == null)
+                return NotFound("User not found");
+
             var token = await tokenRepository.FirstOrDefaultAsync( t => 
                 t.User == user.Name &&
                 t.Service == "Email"
             );
+            bool ifTokenValid = token.LastUpdate.AddSeconds(token.ExpiresIn) >= DateTime.UtcNow;
+            
+            if(!ifTokenValid)
+                return BadRequest("Token expired");
 
-            if (token.ServiceToken.ToLower() != data.Data.ToLower())
-                return Unauthorized("Invelid Token");
+            if (token.ServiceToken.ToLower() != body.token.ToLower())
+                return Unauthorized("Invalid Token");
             
             user.EmailConfirmed = true;
             await userRepository.Update(user);
-
-            return Ok("Token Validated");
+            var resBody = Json.Serialize("Email Confirmed");
+            return Ok(resBody);
         }
         catch (System.Exception exp) {
+            System.Console.WriteLine(exp);
             return BadRequest(exp);
         };
     }
 
+    [HttpPost("UpdateEmailToken")]
+    public async Task<ActionResult> UpdateEmailToken (
+        [FromBody] UserJwtData data,
+        [FromServices] IRepository<User> userRepository,
+        [FromServices] IRepository<Token> tokenRepository
+    ){
+        try{
+            var user = await userRepository.FirstOrDefaultAsync( user => 
+                user.Email == data.Email
+            );
+            if(user == null)
+                return NotFound("User not found");
+
+            var token = await tokenRepository.FirstOrDefaultAsync( t => 
+                t.User == user.Name &&
+                t.Service == "Email"
+            );
+            token.ServiceToken = Rand.GetRandomString(6);
+            token.LastUpdate = DateTime.Now;
+            
+            System.Console.WriteLine($"{token.LastUpdate}\n {DateTime.Now}");
+            await tokenRepository.Update(token);
+
+            try{
+                SendEmail.SendEmailRecoveryPassword(user.Email, user.Name, token.ServiceToken );
+                System.Console.WriteLine("email token sended");
+            } catch (Exception exp) {
+                System.Console.WriteLine($"email not sended: {exp}");
+            }
+            var result = Json.Serialize("Token Updated");
+            return Ok(result);
+
+        } catch (Exception exp) {
+            return BadRequest("internal server error");
+        }
+
+       
+    
+    }
+
     [HttpPost("UpdatePassword")]
     public async Task<ActionResult> UpdatePassword (
-
+        [FromBody] LoginData data,
+        [FromServices] IRepository<User> userRepository,
+        [FromServices] IRepository<Token> tokenRepository
     ){
-        //!todo:======================================================================================
+        try{
+            System.Console.WriteLine(data);
+            var user = await userRepository.FirstOrDefaultAsync( user => 
+                user.Name == data.Identify ||
+                user.Email == data.Identify
+            );
 
-        return Ok();
+            var token = await tokenRepository.FirstOrDefaultAsync( t => 
+                t.User == user.Name &&
+                t.Service == "Email"
+            );
+            string bodyToken = data.token.Replace(" ","").ToLower();
+            if(bodyToken != token.ServiceToken.ToLower())
+                return Unauthorized("Invalid Token");
+            
+
+            bool ifTokenValid = token.LastUpdate.AddSeconds(token.ExpiresIn) >= DateTime.UtcNow;
+            
+            if(!ifTokenValid)
+                return BadRequest("Token is expired");
+
+            user.Salt = PasswordConfig.GenerateStringSalt(12);
+
+            user.Password = PasswordConfig.GetHash(
+                user.Password,
+                user.Salt
+            );
+            var resBody = Json.Serialize("Password Updated");
+            return Ok(resBody);
+        } catch {
+            return BadRequest("internal server error");
+        }
+
     }
 }

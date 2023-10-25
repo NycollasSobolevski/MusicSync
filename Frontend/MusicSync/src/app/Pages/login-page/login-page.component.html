@@ -13,6 +13,7 @@
             class="component"></app-login>
         <app-subscribe class="{{ !isLogin ? '' : ' hidden' }}"
             (loginClickEvent)="changeToSigin()" 
+            (sendAlert)="alert($event)"
             class="component"></app-subscribe>
     </div>
     <div class="container" *ngIf="VerifyEmail">

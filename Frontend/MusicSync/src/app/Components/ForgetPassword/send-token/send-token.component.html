@@ -1,0 +1,23 @@
+<div class="send-identify">
+    <header>
+        <h3>Send Token</h3>
+    </header>
+    <div class="container">
+        <form (ngSubmit)="sendToken()" class="content" [formGroup]="userForm"
+            #formDir="ngForm">
+            <div class="input-container">
+                <input type="text"
+                maxlength="6"
+                formControlName="token"
+                placeholder="Token">
+                <span></span>
+                <div class="error-input-validation" *ngIf="token.invalid && formDir.submitted" >
+                    <p *ngIf="token.errors?.['required']" >Required input</p>
+                </div>
+            </div>
+            <div class="buttons">
+                <button type="submit">Send</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserServices } from '../../services/User.Service';
-import { userRegisterData } from '../../services/UserDto';
+import { UserServices } from '../../../services/User.Service';
+import { userRegisterData } from '../../../services/UserDto';
 import { EMPTY } from 'rxjs';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -89,7 +89,7 @@ export class SubscribeComponent {
 
   checkPassword () {
     if(this.password.value.length <= 8){
-      this.Alert("Password must contain special characters and be longer than 8 characters ")
+      this.sendAlert.emit("Password must contain special characters and be longer than 8 characters ")
       return
     }
 
@@ -99,7 +99,7 @@ export class SubscribeComponent {
     console.log(this.password.value);
     console.log(this.repassword.value);
     
-    this.Alert("Passwords not match")
+    this.sendAlert.emit("Passwords not match")
     return false
   }
 

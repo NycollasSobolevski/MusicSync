@@ -3,7 +3,8 @@ interface jwt {
 }
 interface userLoginData {
     identify : string,
-    password : string
+    password : string,
+    token?   : string 
 }
 interface userRegisterData {
     name: string,
@@ -24,5 +25,9 @@ interface jwtWithVerified {
     jwt : jwt,
     verified : boolean
 }
+interface userJwtData {
+    Name : string,
+    Email : string
+}
 
-export { jwt, userLoginData, userRegisterData, JWTWithGetPlaylistData, JwtWithData, jwtWithVerified }
+export { jwt, userLoginData, userRegisterData, JWTWithGetPlaylistData, JwtWithData, jwtWithVerified,userJwtData }

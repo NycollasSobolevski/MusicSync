@@ -7,8 +7,8 @@ import { NavComponent } from './Components/nav/nav.component';
 import { MenuComponent } from './Components/menu/menu.component';
 import { HomePageComponent } from './Pages/home-page/home-page.component';
 import { LoginPageComponent } from './Pages/login-page/login-page.component';
-import { LoginComponent } from './Components/login/login.component';
-import { SubscribeComponent } from './Components/subscribe/subscribe.component';
+import { LoginComponent } from './Components/loginComponents/login/login.component';
+import { SubscribeComponent } from './Components/loginComponents/subscribe/subscribe.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CallbackPageComponent } from './Pages/callback-page/callback-page.component';
 import { SpotifyComponent } from './Components/CardComponents/spotify/spotify.component';
@@ -29,6 +29,10 @@ import { SelectStreamerComponent } from './Components/PlaylistTransferComponents
 import { SelectPlaylistComponent } from './Components/PlaylistTransferComponents/select-playlist/select-playlist.component';
 import { PlaylistSettingsComponent } from './Components/PlaylistTransferComponents/playlist-settings/playlist-settings.component';
 import { AccountConfigComponent } from './Components/userConfigComponents/account-config/account-config.component';
+import { ForgetPasswordPageComponent } from './Pages/forget-password-page/forget-password-page.component';
+import { SendIdentifyComponent } from './Components/ForgetPassword/send-identify/send-identify.component';
+import { SendTokenComponent } from './Components/ForgetPassword/send-token/send-token.component';
+import { SendPasswordComponent } from './Components/ForgetPassword/send-password/send-password.component';
 
 
 const COMPONENTS = [
@@ -48,10 +52,19 @@ const COMPONENTS = [
   MusicPageComponent,
   PlaylistPageComponent,
   LoaderComponent,
-  AccountConfigComponent
+  AccountConfigComponent,
+  VerifyEmailComponent, 
+  AlertComponent, 
+  CreatePlaylistComponent, 
+  MainCardComponent, 
+  SelectStreamerComponent, 
+  SelectPlaylistComponent, 
+  PlaylistSettingsComponent, 
+  ForgetPasswordPageComponent
+
 ]
 @NgModule({
-  declarations: [COMPONENTS, VerifyEmailComponent, AlertComponent, CreatePlaylistComponent, MainCardComponent, SelectStreamerComponent, SelectPlaylistComponent, PlaylistSettingsComponent],
+  declarations: [COMPONENTS, SendIdentifyComponent, SendTokenComponent, SendPasswordComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

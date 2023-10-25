@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserServices } from 'src/app/services/User.Service';
-import { JwtWithData, jwt } from 'src/app/services/UserDto';
+import { JwtWithData, jwt, userLoginData } from 'src/app/services/UserDto';
 
 @Component({
   selector: 'app-verify-email',
@@ -21,9 +21,10 @@ export class VerifyEmailComponent {
   ) { }
 
   verify(){
-    var data : JwtWithData<string> = {
-      jwt: this.jwt,
-      data: this.codeInput
+    var data : userLoginData = {
+      identify: sessionStorage.getItem('useridentify')??"",
+      password: '',
+      token: this.codeInput
     };
 
     this.userService.VerifyEmail(data).subscribe({
