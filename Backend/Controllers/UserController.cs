@@ -233,6 +233,7 @@ public class UserController : ControllerBase
                 t.User == user.Name &&
                 t.Service == "Email"
             );
+            System.Console.WriteLine(token);
             token.ServiceToken = Rand.GetRandomString(6);
             token.LastUpdate = DateTime.Now;
             
@@ -249,6 +250,7 @@ public class UserController : ControllerBase
             return Ok(result);
 
         } catch (Exception exp) {
+            System.Console.WriteLine(exp);
             return BadRequest("internal server error");
         }
 
@@ -286,9 +288,10 @@ public class UserController : ControllerBase
             user.Salt = PasswordConfig.GenerateStringSalt(12);
 
             user.Password = PasswordConfig.GetHash(
-                user.Password,
+                data.Password,
                 user.Salt
             );
+            await userRepository.Update(user);
             var resBody = Json.Serialize("Password Updated");
             return Ok(resBody);
         } catch {

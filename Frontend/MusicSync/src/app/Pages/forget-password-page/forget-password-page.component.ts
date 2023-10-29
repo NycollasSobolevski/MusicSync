@@ -6,7 +6,7 @@ import { UserServices } from 'src/app/services/User.Service';
 @Component({
   selector: 'app-forget-password-page',
   templateUrl: './forget-password-page.component.html',
-  styleUrls: ['./forget-password-page.component.css']
+  styleUrls: ['./forget-password-page.component.css','../login-page/login-page.component.css']
 })
 export class ForgetPasswordPageComponent {
   page = ["identify", "token", "password"];

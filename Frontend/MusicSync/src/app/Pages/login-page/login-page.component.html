@@ -1,4 +1,4 @@
-<main>
+<div class="main-container">
     <div class="container" *ngIf="!VerifyEmail">
         <div class="wall" [ngStyle]="{'left' : ( isLogin ? 'calc(25vw )' : 'calc(25vw - (50vw / 2 ))' )}">
             <div class="content">
@@ -23,4 +23,4 @@
         *ngIf="alertContainer"
         [alertContent]="alertMessage"
     />
-</main>
+</div >

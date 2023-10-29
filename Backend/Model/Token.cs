@@ -18,6 +18,6 @@ public partial class Token
     public string RefreshToken { get; set; }
     [BsonElement("ExpiresIn")]
     public int ExpiresIn { get; set; }
-    [BsonElement("LasyUpdate")]
+    [BsonElement("LastUpdate")]
     public DateTime LastUpdate { get; set; }
 }
