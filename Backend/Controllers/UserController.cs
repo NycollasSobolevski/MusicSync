@@ -19,7 +19,8 @@ public class UserController : ControllerBase
     public async Task<ActionResult> RegisterUser (
         [FromBody] SigninData data,
         [FromServices] IRepository<User> repository,
-        [FromServices] IRepository<Token> tokenRepository
+        [FromServices] IRepository<Token> tokenRepository,
+        [FromServices] IMailService mailService
     ) 
     {
 
@@ -61,7 +62,7 @@ public class UserController : ControllerBase
                 token.ExpiresIn = 3600;
                 await tokenRepository.Update(token);
                 try{
-                    SendEmail.SendEmailValidation(peopleExists.Email,peopleExists.Name,token.ServiceToken );
+                    mailService.SendEmailValidation(peopleExists.Email,peopleExists.Name,token.ServiceToken );
                 }
                 catch (Exception exp) {
                     System.Console.WriteLine("email not sended");
@@ -104,7 +105,7 @@ public class UserController : ControllerBase
             });
             
             try{
-                SendEmail.SendEmailValidation(newUserData.Email,newUserData.Name,token.ServiceToken );
+                mailService.SendEmailValidation(newUserData.Email,newUserData.Name,token.ServiceToken );
             }
             catch {
                 System.Console.WriteLine("email not sended");
@@ -220,7 +221,8 @@ public class UserController : ControllerBase
     public async Task<ActionResult> UpdateEmailToken (
         [FromBody] UserJwtData data,
         [FromServices] IRepository<User> userRepository,
-        [FromServices] IRepository<Token> tokenRepository
+        [FromServices] IRepository<Token> tokenRepository,
+        [FromServices] IMailService mailService
     ){
         try{
             var user = await userRepository.FirstOrDefaultAsync( user => 
@@ -241,7 +243,7 @@ public class UserController : ControllerBase
             await tokenRepository.Update(token);
 
             try{
-                SendEmail.SendEmailRecoveryPassword(user.Email, user.Name, token.ServiceToken );
+                mailService.SendEmailRecoveryPassword(user.Email, user.Name, token.ServiceToken );
                 System.Console.WriteLine("email token sended");
             } catch (Exception exp) {
                 System.Console.WriteLine($"email not sended: {exp}");

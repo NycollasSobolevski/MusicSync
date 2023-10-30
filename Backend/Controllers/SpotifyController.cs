@@ -162,7 +162,8 @@ public class SpotifyController : ControllerBase
             return Ok();
         }
         catch (Exception exp)
-        {
+        {  
+            System.Console.WriteLine(exp);
             return BadRequest($"internal server error");
         }
     }
