@@ -54,5 +54,14 @@ interface itemsOfPlaylist {
     type: string,
     uri: string
 }
-
-export { StringReturn, CallbackData, Playlist, itemsOfPlaylist }
+interface NewTrack {
+    name: string,
+    author: string,
+    uri: string,
+}
+interface NewPlaylist {
+    name: string,
+    description: string,
+    public: boolean
+}
+export { StringReturn, CallbackData, Playlist, itemsOfPlaylist, NewTrack, NewPlaylist }

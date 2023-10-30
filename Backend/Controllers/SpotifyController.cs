@@ -420,10 +420,10 @@ public class SpotifyController : ControllerBase
                 token.User == user.Name &&
                 token.Service == "Spotify"
             );
-            data.Data.Data.name = data.Data.Data.name.Replace(" ", "%2520");
-            data.Data.Data.author = data.Data.Data.author.Replace(" ", "%2520");
+            data.Data.Track.name = data.Data.Track.name.Replace(" ", "%2520");
+            data.Data.Track.author = data.Data.Track.author.Replace(" ", "%2520");
             client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token.ServiceToken}");
-            var responseSearch = await client.GetAsync($"{this.clientUrl}/search?q=remaster%2520track%3A{data.Data.Data.name}%2520artist%3A{data.Data.Data.author}&type=track&limit=1&offset=0");
+            var responseSearch = await client.GetAsync($"{this.clientUrl}/search?q=remaster%2520track%3A{data.Data.Track.name}%2520artist%3A{data.Data.Track.author}&type=track&limit=1&offset=0");
             
             if(responseSearch.StatusCode == HttpStatusCode.Unauthorized)
                 return Unauthorized("Unauthorized");

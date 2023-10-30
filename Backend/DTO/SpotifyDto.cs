@@ -138,7 +138,7 @@ public record musicData
 
 public record TrackAndPlaylist
 {
-  public musicData Data { get; set; }
+  public musicData Track { get; set; }
   public string PlaylistId { get; set; }
 }
 

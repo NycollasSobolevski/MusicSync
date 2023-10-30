@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { CallbackData, Playlist, StringReturn } from "./SpotifyDto";
+import { CallbackData, NewPlaylist, NewTrack, Playlist, StringReturn } from "./SpotifyDto";
 import { JWTWithGetPlaylistData, JwtWithData, jwt } from "./UserDto";
 import {  IStreamerService } from "./IStreamer.Service";
 import { environment } from "../Environments/Environment.prod";
@@ -43,4 +43,10 @@ export class StreamerService implements IStreamerService{
     LogOff  ( streamer: string,  data : jwt ) {
         return this.http.post(`${this.url}${streamer}/LogOff`, data)
     };
+    CreatePlaylist  ( streamer: string,  data : JwtWithData<NewPlaylist> ) {
+        return this.http.post(`${this.url}${streamer}/CreatePlaylist`, data)
+    };
+    AddTrackToPlaylist (streamer: string, data : JwtWithData<NewTrack> ) {
+        return this.http.post(`${this.url}${streamer}/AddTrackToPlaylist`, data)
+    }
 }
