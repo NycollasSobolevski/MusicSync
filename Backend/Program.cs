@@ -1,5 +1,6 @@
 using System.Net;
 using music_api;
+using music_api.Auxi;
 using music_api.Model;
 using Security_jwt;
 
@@ -17,6 +18,7 @@ builder.Services.AddTransient(p =>
 });
 
 builder.Services.AddTransient<IRepository<User>, UserRepository>();
+builder.Services.AddTransient<IMailService, SendEmail>();
 builder.Services.AddTransient<IRepository<Token>, TokenRepository>();
 builder.Services.AddTransient<IJwtService>( p => 
     new JwTService(new PasswordProvider(
