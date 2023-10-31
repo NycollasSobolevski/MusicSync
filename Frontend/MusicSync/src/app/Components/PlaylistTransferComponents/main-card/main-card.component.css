@@ -27,24 +27,33 @@
 .selects-container{
     flex-direction: row;
     gap: 1rem;
-
 }
-.select-streamer{
+.select-streamer {
     gap: 1rem;
 }
-select{
+select, input, textarea{
     border: 1px solid var(--input-border-color);
     border-radius: 15px;
     height: 35px;
     padding: .5rem;
     background-color: transparent;
 }
+.input-container{
+    gap: 0
+}
+input {
+    height: 1rem;
+}
+textarea{ 
+    height: 5rem;
+}
+
 option{
     background-color: black;
     /* background-color: var(--semitransparent-background); */
 }
 
-.select-container{
+.select-container, .input-container{
     display: flex;
     flex-direction: column;
     justify-content: center;

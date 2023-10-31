@@ -11,16 +11,20 @@ export class MainCardComponent {
 
   toStreamer = "";
   fromStreamer = "";
-
+  fromPlaylistId ="";
+  
   nextClicked( obj : any ){
     console.log(obj);
     if(this.index == 0){
       this.fromStreamer = obj.from;
       this.toStreamer = obj.to;
     }
-
+    
     if(this.index < this.sessions.length - 1)
       this.index++;
+    if(obj.includes("playlistId")){
+      this.fromPlaylistId = obj.split(":")[1];
+    }
   }
 
   returnClicked(){

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Playlist } from 'src/app/services/SpotifyDto';
+import { PlaylistsArray } from 'src/app/services/SpotifyDto';
 import { StreamerService } from 'src/app/services/Streamer.Service';
 import { JWTWithGetPlaylistData, JwtWithData } from 'src/app/services/UserDto';
 
@@ -12,7 +12,7 @@ import { JWTWithGetPlaylistData, JwtWithData } from 'src/app/services/UserDto';
 export class SelectPlaylistComponent {
   
   @Input() fromStreamer = "";
-  Playlists! : Playlist 
+  Playlists! : PlaylistsArray 
   playlistForm! : FormGroup;
   @Output() nextClicked = new EventEmitter();
 
@@ -61,7 +61,7 @@ export class SelectPlaylistComponent {
     if(this.playlistForm.invalid){
       return;
     }
-    this.nextClicked.emit(this.SelectedPlaylist?.value);
+    this.nextClicked.emit(`playlistId:${this.SelectedPlaylist?.value}`);
   }
 
 }

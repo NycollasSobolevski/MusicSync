@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { itemsOfPlaylist } from '../../services/SpotifyDto';
+import { Playlist, itemsOfPlaylist } from '../../services/SpotifyDto';
 import { StreamerService } from '../../services/Streamer.Service';
 import { IStreamerService } from '../../services/IStreamer.Service';
 import { JwtWithData, jwt } from '../../services/UserDto';
@@ -15,7 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class PlaylistPageComponent {
   
   protected PlaylisData? : itemsOfPlaylist;
-  protected Playlist :any;
+  protected Playlist! : Playlist;
 
   private jwt : jwt = {
     value: sessionStorage.getItem('jwt') || '',
@@ -115,6 +115,10 @@ export class PlaylistPageComponent {
     this.service.GetPlaylistTracks("Spotify",this.jwt, id).subscribe({
       next: ( data : any ) => {
         this.Playlist = data;
+        console.log("playlist data");
+        
+        console.log(data);
+        
         sessionStorage.setItem('lastPlaylistOpened', JSON.stringify(data));
       },
       error: ( error : HttpErrorResponse) => {
@@ -147,19 +151,16 @@ export class PlaylistPageComponent {
 
     const body : JwtWithData<string> = {
       jwt: this.jwt,
-      data: this.Playlist.next
+      data: this.Playlist.next!
     }
 
     this.service.GetMoreTracks("Spotify",body).subscribe({
       next:(data: any) => {
-        console.log(data.items);
-        console.log(this.Playlist.items);
         
         // ! AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         this.Playlist.items.push(...data.items);
         this.Playlist.next = data.next ?? "";
         sessionStorage.setItem('lastPlaylistOpened', JSON.stringify(this.Playlist));
-        console.log(this.Playlist);
       },
       error: (error : HttpErrorResponse) => {
         console.log(error);

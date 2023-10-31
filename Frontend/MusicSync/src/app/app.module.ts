@@ -33,6 +33,7 @@ import { ForgetPasswordPageComponent } from './Pages/forget-password-page/forget
 import { SendIdentifyComponent } from './Components/ForgetPassword/send-identify/send-identify.component';
 import { SendTokenComponent } from './Components/ForgetPassword/send-token/send-token.component';
 import { SendPasswordComponent } from './Components/ForgetPassword/send-password/send-password.component';
+import { TransferTracksComponent } from './Components/PlaylistTransferComponents/transfer-tracks/transfer-tracks.component';
 
 
 const COMPONENTS = [
@@ -64,7 +65,7 @@ const COMPONENTS = [
 
 ]
 @NgModule({
-  declarations: [COMPONENTS, SendIdentifyComponent, SendTokenComponent, SendPasswordComponent],
+  declarations: [COMPONENTS, SendIdentifyComponent, SendTokenComponent, SendPasswordComponent, TransferTracksComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

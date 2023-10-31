@@ -1,5 +1,5 @@
 <div class="select-playlist-main">
-    <form class="container" [formGroup]="playlistForm">
+    <form class="container" [formGroup]="playlistForm" >
         <select name="select-playlist" id="select-playlist" formControlName="playlist">
             <option value="" selected disabled >Select Your Playlist </option>
             <option value={{playlist.id}} *ngFor="let playlist of this.Playlists.items">

@@ -36,7 +36,9 @@ export class MenuComponent {
           this.link = res.data
         },
         error: (err) => {
-          console.log("ERRO:\n" + err);
+          console.log("ERRO:");
+          console.log(err);
+          
         }
       }
     );

@@ -389,11 +389,15 @@ public class SpotifyController : ControllerBase
             StringContent httpContent = new (json, System.Text.Encoding.UTF8, "application/json");
             System.Console.WriteLine(json);
             var createResponse = await client.PostAsync($"{this.clientUrl}/users/{userSpotify.id}/playlists", httpContent);
-            
+             
+            var obj = await createResponse.Content.ReadFromJsonAsync<SpotifyUserPlaylistItems>();
+            var strin = await createResponse.Content.ReadAsStringAsync();
+
             System.Console.WriteLine(createResponse.StatusCode);
+            System.Console.WriteLine(strin);
 
             if(createResponse.StatusCode == HttpStatusCode.OK)
-                return Ok($"Playlist {data.Data.name} created");
+                return Ok(obj);
             
             return BadRequest("Internal server error");
                 

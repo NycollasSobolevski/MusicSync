@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpResponse, HttpResponseBase } from '@angular/comm
 import { Component, EventEmitter, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Playlist, itemsOfPlaylist } from 'src/app/services/SpotifyDto';
+import { PlaylistsArray, itemsOfPlaylist } from 'src/app/services/SpotifyDto';
 import { StreamerService } from 'src/app/services/Streamer.Service';
 import { JWTWithGetPlaylistData, jwt } from 'src/app/services/UserDto';
 
@@ -21,7 +21,7 @@ export class SpotifyComponent {
     @Output() closeCardEvent = new EventEmitter()
 
 
-  playlists : Playlist = {
+  playlists : PlaylistsArray = {
     items: []
   };
 

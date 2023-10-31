@@ -2,5 +2,11 @@
     <h3>Transfer your playlist!</h3>
     <app-select-streamer *ngIf="sessions[index] == 'select-streamer'" (nextClicked)="nextClicked($event)" />
     <app-select-playlist *ngIf="sessions[index] == 'select-playlist'" (nextClicked)="nextClicked($event)" [fromStreamer]="fromStreamer" />
-    <app-playlist-settings *ngIf="sessions[index] == 'playlist-setings'"/>
+    <app-playlist-settings 
+        *ngIf="sessions[index] == 'playlist-settings'" 
+        [playlistId]="this.fromPlaylistId" 
+        [fromStreamer]="this.fromStreamer"
+        [toStreamer]="this.toStreamer"
+    />
+    <app-transfer-tracks *ngIf="sessions[index] == 'transfer'" />
 </div>
