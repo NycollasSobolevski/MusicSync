@@ -11,6 +11,7 @@ using music_api;
 using music_api.Auxi;
 using music_api.DTO;
 using music_api.Model;
+using Swan.Formatters;
 
 [ApiController]
 [Route("[controller]")]
@@ -397,11 +398,8 @@ public class SpotifyController : ControllerBase
             System.Console.WriteLine(createResponse.StatusCode);
             System.Console.WriteLine(strin);
 
-            if(createResponse.StatusCode == HttpStatusCode.OK)
-                return Ok(obj);
-            
-            return BadRequest("Internal server error");
-                
+            return Ok(obj);
+                        
         } catch (Exception exp){
             return BadRequest(exp);
         }
@@ -415,6 +413,7 @@ public class SpotifyController : ControllerBase
         [FromServices] IRepository<User> userRepository,
         [FromServices] HttpClient client
     ){
+        System.Console.WriteLine(data);
         try{
             var userJwt = jwt.Validate<UserJwtData>(data.Jwt.Value);
             var user = await userRepository.FirstOrDefaultAsync(user => 
@@ -453,12 +452,8 @@ public class SpotifyController : ControllerBase
 
             if(responseSearch.StatusCode == HttpStatusCode.Unauthorized)
                 return Unauthorized("Unauthorized");
-
-            if(responseSearch.StatusCode != HttpStatusCode.OK)
-                return BadRequest("internal server error");
-
-
-            return Ok("Music Inserted");
+            var res = Json.Serialize("Music Inserted");
+            return Ok(res);
         } catch (Exception exp) {
             return BadRequest(exp);
         }

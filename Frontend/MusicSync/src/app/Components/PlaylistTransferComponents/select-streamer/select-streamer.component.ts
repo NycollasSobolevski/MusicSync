@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TransferPlaylistObject } from 'src/app/services/SpotifyDto';
 
 @Component({
   selector: 'app-select-streamer',
@@ -25,10 +26,16 @@ export class SelectStreamerComponent {
   }
 
   next(){
-    
+    const obj : TransferPlaylistObject = {
+      identifier: "streamer",
+      data: {
+        from: this.from?.value,
+        to: this.to?.value
+      }
+    }
     if(this.streamerForm.invalid){
       return;
     }
-    this.nextClicked.emit(this.streamerForm.value);
+    this.nextClicked.emit(obj);
   }
 }

@@ -97,7 +97,7 @@ export class PlaylistPageComponent {
             break;
         
           default:
-            console.log(error);
+            console.error(error);
             break;
         }
       }

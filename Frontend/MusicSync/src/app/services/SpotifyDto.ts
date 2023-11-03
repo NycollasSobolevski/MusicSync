@@ -7,7 +7,10 @@ interface CallbackData {
     code:  string,
     state: string 
 }
-
+interface TransferPlaylistObject {
+    identifier: string,
+    data: any
+}
 interface PlaylistsArray {
     href?: string,
     limit?: number,
@@ -54,6 +57,10 @@ interface itemsOfPlaylist {
     type: string,
     uri: string
 }
+interface NewTrackToPlaylist {
+    track: NewTrack,
+    playlistId: string
+}
 interface NewTrack {
     name: string,
     author: string,
@@ -66,11 +73,10 @@ interface NewPlaylist {
 }
 
 interface Playlist {
-    href?: string,
-    limit?: number,
     next?: string,
-    offset?: number,
-    previous?: string,
+    href?: string,
+    id?: string,
+    name?: string,
     total?: number,
     items :Track[]
 }
@@ -90,25 +96,34 @@ interface UserInfo {
     uri:string
 }
 interface TrackInfo {
-//     album:{album_type: 'album', artists: Array(1), available_markets: Array(184), external_urls: {…}, href: 'https://api.spotify.com/v1/albums/4TOkZvtqNpg5UHyGxCn0mS', …}
-// artists:(2) [{…}, {…}]
-// available_markets:(184) ['AR', 'AU', 'AT', 'BE', 'BO', 'BR', 'BG', 'CA', 'CL', 'CO', 'CR', 'CY', 'CZ', 'DK', 'DO', 'DE', 'EC', 'EE', 'SV', 'FI', 'FR', 'GR', 'GT', 'HN', 'HK', 'HU', 'IS', 'IE', 'IT', 'LV', 'LT', 'LU', 'MY', 'MT', 'MX', 'NL', 'NZ', 'NI', 'NO', 'PA', 'PY', 'PE', 'PH', 'PL', 'PT', 'SG', 'SK', 'ES', 'SE', 'CH', 'TW', 'TR', 'UY', 'US', 'GB', 'AD', 'LI', 'MC', 'ID', 'JP', 'TH', 'VN', 'RO', 'IL', 'ZA', 'SA', 'AE', 'BH', 'QA', 'OM', 'KW', 'EG', 'MA', 'DZ', 'TN', 'LB', 'JO', 'PS', 'IN', 'BY', 'KZ', 'MD', 'UA', 'AL', 'BA', 'HR', 'ME', 'MK', 'RS', 'SI', 'KR', 'BD', 'PK', 'LK', 'GH', 'KE', 'NG', 'TZ', 'UG', 'AG', …]
-// disc_number:1
-// duration_ms:164205
-// episode:false
-// explicit:false
-// external_ids:{isrc: 'USWB11701181'}
-// external_urls:{spotify: 'https://open.spotify.com/track/4e4fqjx0Izh4svvTef1z7e'}
-// href:"https://api.spotify.com/v1/tracks/4e4fqjx0Izh4svvTef1z7e"
-// id:"4e4fqjx0Izh4svvTef1z7e"
-// is_local:false
-// name: "Meant to Be (feat. Florida Georgia Line)"
-// popularity:76
-// preview_url:"https://p.scdn.co/mp3-preview/0b972d24c49e50be428edfacbafae85cb80249e9?cid=14a2f8a4ac8a4dd48d9fa64dc997ffc0"
-// track:true
-// track_number:14
-// type:"track"
-// uri:"spotify:track:4e4fqjx0Izh4svvTef1z7e"
+    album: { 
+        album_type: 'album', 
+        artists: {name: string}[], 
+        available_markets: string[], 
+        external_urls: {spotify:string}[],
+        images:{url:string}[], 
+        href: string
+    },
+    artists: { name:string }[],
+    available_markets: string[],
+    disc_number: number,
+    duration_ms: number,
+    episode: boolean,
+    explicit: boolean,
+    external_ids: { isrc: string },
+    external_urls:{ spotify: string },
+    href: string,
+    id: string, 
+    is_local: boolean,
+    name: string,
+    popularity: number,
+    preview_url: string,
+    track: boolean,
+    track_number: number,
+    type: string,
+    uri: string
 }
 
-export { StringReturn, CallbackData, PlaylistsArray, itemsOfPlaylist, NewTrack, NewPlaylist, Playlist, Track, TrackInfo, UserInfo }
+export { StringReturn, CallbackData, PlaylistsArray, itemsOfPlaylist, 
+    NewTrack, NewPlaylist, Playlist, Track, TrackInfo, UserInfo, 
+    TransferPlaylistObject, NewTrackToPlaylist }

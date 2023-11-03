@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TransferPlaylistObject, itemsOfPlaylist } from 'src/app/services/SpotifyDto';
 
 @Component({
   selector: 'app-main-card',
@@ -11,20 +12,23 @@ export class MainCardComponent {
 
   toStreamer = "";
   fromStreamer = "";
-  fromPlaylistId ="";
-  
-  nextClicked( obj : any ){
-    console.log(obj);
-    if(this.index == 0){
-      this.fromStreamer = obj.from;
-      this.toStreamer = obj.to;
-    }
+  fromPlaylist! : itemsOfPlaylist;
+  toPlaylist!: itemsOfPlaylist;
+
+  nextClicked( obj : TransferPlaylistObject ){
     
-    if(this.index < this.sessions.length - 1)
-      this.index++;
-    if(obj.includes("playlistId")){
-      this.fromPlaylistId = obj.split(":")[1];
+    if(obj.identifier == "streamer"){
+      this.fromStreamer = obj.data.from;
+      this.toStreamer = obj.data.to;
     }
+    if(obj.identifier == "playlist"){
+      this.fromPlaylist = obj.data;
+    }
+    if(obj.identifier == "newPlaylist")
+      this.toPlaylist = obj.data;
+
+
+    this.index++;
   }
 
   returnClicked(){
