@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using music_api;
+using music_api.Controllers;
 using music_api.DTO;
 using music_api.Model;
 
@@ -13,72 +14,79 @@ using music_api.Model;
 [EnableCors("MainPolicy")]
 public class DeezerController : StreamerController
 {
-    [HttpPost("Callback")]
-    public override async Task<ActionResult> Callback([FromServices] HttpClient client,
-        [FromBody] CallbackData data,
-        [FromServices] IRepository<Token> tokenRepository,
-        [FromServices] IRepository<User> userRepository,
-        [FromServices] IJwtService jwt
-    ){
+    [HttpPost("AddTrackToPlaylist")]
+    public override Task<ActionResult> AddTrackToPlaylist([FromBody] JWTWithData<TrackAndPlaylist> data, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository, [FromServices] IRepository<User> userRepository, [FromServices] HttpClient client)
+    {
         throw new NotImplementedException();
     }
 
-    [HttpPost("GetData")]
-    public override async Task<ActionResult<StringReturn>> Get()
+    [HttpPost("callback")]
+    public override Task<ActionResult> Callback([FromServices] HttpClient client, [FromBody] CallbackData data, [FromServices] IRepository<Token> tokenRepository, [FromServices] IRepository<User> userRepository, [FromServices] IJwtService jwt)
+    {
+        throw new NotImplementedException();
+    }
+
+    [HttpPost("CreatePlaylist")]
+    public override Task<ActionResult> CreatePlaylist([FromBody] UserCreatePlaylistWithJwt data, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository, [FromServices] IRepository<User> userRepository, [FromServices] HttpClient client)
+    {
+        throw new NotImplementedException();
+    }
+
+    [HttpPost("GetDeezerData")]
+    public override Task<ActionResult<StringReturn>> Get([FromBody] JWT data, [FromServices] IRepository<User> userRepository, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository)
     {
         throw new NotImplementedException();
     }
 
     [HttpPost("GetMoreTracks")]
-    public override async Task<ActionResult> GetMoreTracks( )
+    public override Task<ActionResult> GetMoreTracks([FromBody] JWTWithData<string> body, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository, [FromServices] HttpClient client)
     {
         throw new NotImplementedException();
     }
 
     [HttpPost("GetMusicData")]
-    public override async Task GetMusicData()
+    public override Task GetMusicData([FromServices] HttpClient client, [FromBody] string accessToken)
     {
         throw new NotImplementedException();
     }
 
-    [HttpPost("GetPlaylist")]
-    public override async Task<ActionResult> GetPlaylist()
+    [HttpPost("GetPlaylist/")]
+    public override Task<ActionResult> GetPlaylist([FromQuery(Name = "id")] string id, [FromBody] JWT body, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository, [FromServices] HttpClient client)
     {
         throw new NotImplementedException();
     }
 
-    [HttpPost("GetPlaylistTracks")]
-    public override async Task<ActionResult> GetPlaylistTracks()
+    [HttpPost("GetPlaylistTracks/")]
+    public override Task<ActionResult> GetPlaylistTracks([FromQuery(Name = "id")] string id, [FromQuery(Name = "streamer")] string streamer, [FromBody] JWT body, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository, [FromServices] HttpClient client)
     {
         throw new NotImplementedException();
     }
 
     [HttpPost("GetUserPlaylists")]
-    public override async Task<ActionResult> GetUserPlaylists()
+    public override Task<ActionResult> GetUserPlaylists([FromBody] JWTWithGetPlaylistData data, [FromServices] IJwtService jwt, [FromServices] IRepository<User> userRepository, [FromServices] IRepository<Token> tokenRepository, [FromServices] HttpClient client)
     {
         throw new NotImplementedException();
     }
 
-    [HttpPost("LogOff")]
-    public override async Task<ActionResult> LogOff()
+    [HttpPost("logoff")]
+
+    public override Task<ActionResult> LogOff([FromBody] JWT data, [FromServices] IRepository<User> userRepository, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository)
     {
         throw new NotImplementedException();
     }
 
     [HttpPost("RefreshToken")]
-    public override async Task<ActionResult> RefreshToken()
+    public override Task<ActionResult> RefreshToken([FromServices] HttpClient client, [FromServices] IRepository<Token> tokenRepository, [FromServices] IRepository<User> userRepository, [FromServices] IJwtService jwtService, [FromBody] JWT jwt)
     {
         throw new NotImplementedException();
     }
 
-    [HttpPost("GetUserSpotify")]
-    protected override Task<SpotifyUserData> GetUserSpotify()
+    protected override Task<SpotifyUserData> GetUserData([FromServices] HttpClient client, string token)
     {
         throw new NotImplementedException();
     }
 
-    [HttpPost("refreshToken")]
-    protected override Task refreshToken()
+    protected override Task refreshToken(string username, [FromServices] HttpClient client, [FromServices] IRepository<Token> tokenRepository)
     {
         throw new NotImplementedException();
     }
