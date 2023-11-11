@@ -27,26 +27,45 @@ public class DeezerController : StreamerController
     public override async Task<ActionResult<StringReturn>> Get(
         [FromBody] JWT data,
         [FromServices] IRepository<User> userRepository,
-        [FromServices] IJwtService jwt,
-        [FromServices] IRepository<Token> tokenRepository
+        [FromServices] IRepository<Token> tokenRepository,
+        [FromServices] IJwtService jwt
     )
     {
 
+        try{
+            var userJwt = jwt.Validate<UserJwtData>(data.Value);
+            var user = await userRepository.FirstOrDefaultAsync( user => 
+                user.Name == userJwt.Name
+            );
 
+            var token = await tokenRepository.FirstOrDefaultAsync( token => 
+                token.User == user.Name && token.Service == "deezer"
+            );
 
-        string scope = """
-            basic_access, 
-            manage_library,
-            delete_library,
-            manage_community
-        """;
+            if(token != null){
+                return Ok(new StringReturn{
+                    Data = "http://localhost:4200/?tab=Deezer"
+                });
+            }
 
-        string deezerUriConnect = 
-            $"https://connect.deezer.com/oauth/auth.php?app_id={clientId}&redirect_uri={redirectCallback}&perms={scope}";
-        
-        return Ok( new StringReturn{
-            Data = deezerUriConnect
-        });
+            string scope = """
+                basic_access, 
+                manage_library,
+                delete_library,
+                manage_community
+            """;
+
+            string deezerUriConnect = 
+                $"https://connect.deezer.com/oauth/auth.php?app_id={clientId}&redirect_uri={redirectCallback}&perms={scope}";
+            
+            return Ok( new StringReturn{
+                Data = deezerUriConnect
+            });
+        } catch (Exception e){
+            System.Console.WriteLine(e.Message);
+            return BadRequest("Unknow server error");
+        }
+
     }
 
 

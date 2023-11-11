@@ -28,7 +28,7 @@ public class SpotifyController : ControllerBase
     private readonly string redirectCallback = $"http://localhost:{Environment.GetEnvironmentVariable("FRONTEND_PORT")}/Callback?streamer=spotify";
     // private readonly string redirectCallback = $"http://localhost:{Environment.GetEnvironmentVariable("SERVER_PORT")}/Spotify/callback";
 
-    [HttpPost("GetSpotifyData")]
+    [HttpPost("GetData")]
     public async Task<ActionResult<StringReturn>> Get(
         [FromBody] JWT data,
         [FromServices] IRepository<User> userRepository,

@@ -15,8 +15,8 @@ public abstract class StreamerController : ControllerBase
 
     public abstract Task<ActionResult<StringReturn>> Get ([FromBody] JWT data,
         [FromServices] IRepository<User> userRepository,
-        [FromServices] IJwtService jwt,
-        [FromServices] IRepository<Token> tokenRepository);
+        [FromServices] IRepository<Token> tokenRepository,
+        [FromServices] IJwtService jwt);
     public abstract Task<ActionResult> LogOff ([FromBody] JWT data, [FromServices] IRepository<User> userRepository, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository);
     public abstract Task<ActionResult> Callback ( [FromServices] HttpClient client, [FromBody] CallbackData data, [FromServices] IRepository<Token> tokenRepository,[FromServices] IRepository<User> userRepository, [FromServices] IJwtService jwt);
     public abstract Task<ActionResult> RefreshToken ([FromServices] HttpClient client, [FromServices] IRepository<Token> tokenRepository, [FromServices] IRepository<User> userRepository, [FromServices] IJwtService jwtService, [FromBody] JWT jwt);
