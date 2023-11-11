@@ -13,6 +13,42 @@ using music_api.Model;
 [EnableCors("MainPolicy")]
 public class DeezerController : StreamerController
 {
+
+    private readonly string serverPort = Environment.GetEnvironmentVariable("SERVER_PORT");
+    private readonly string frontPort = Environment.GetEnvironmentVariable("FRONTEND_PORT");
+    private readonly string clientUrl = Environment.GetEnvironmentVariable("DEEZER_CLIENT_URL");
+
+    private readonly string clientId = Environment.GetEnvironmentVariable("DEEZER_CLIENT_ID");
+    private readonly string clientSecret = Environment.GetEnvironmentVariable("DEEZER_CLIENT_SECRET");
+    private readonly string redirectCallback = $"http://localhost:{Environment.GetEnvironmentVariable("FRONTEND_PORT")}/Callback?streamer=deezer";
+
+    [HttpPost("GetData")]
+    public override async Task<ActionResult<StringReturn>> Get(
+        [FromBody] JWT data,
+        [FromServices] IRepository<User> userRepository,
+        [FromServices] IJwtService jwt,
+        [FromServices] IRepository<Token> tokenRepository
+    )
+    {
+
+
+
+        string scope = """
+            basic_access, 
+            manage_library,
+            delete_library,
+            manage_community
+        """;
+
+        string deezerUriConnect = 
+            $"https://connect.deezer.com/oauth/auth.php?app_id={clientId}&redirect_uri={redirectCallback}&perms={scope}";
+        
+        return Ok( new StringReturn{
+            Data = deezerUriConnect
+        });
+    }
+
+
     [HttpPost("Callback")]
     public override async Task<ActionResult> Callback([FromServices] HttpClient client,
         [FromBody] CallbackData data,
@@ -23,11 +59,6 @@ public class DeezerController : StreamerController
         throw new NotImplementedException();
     }
 
-    [HttpPost("GetData")]
-    public override async Task<ActionResult<StringReturn>> Get()
-    {
-        throw new NotImplementedException();
-    }
 
     [HttpPost("GetMoreTracks")]
     public override async Task<ActionResult> GetMoreTracks( )

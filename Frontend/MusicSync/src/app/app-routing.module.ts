@@ -14,7 +14,7 @@ import { ForgetPasswordPageComponent } from './Pages/forget-password-page/forget
 const routes: Routes = [
   { path: "", title: "Music Sync | Home", component: HomePageComponent},
   { path: "Login", title: "Music Sync | Login", component: LoginPageComponent},
-  { path: "spotifyCallback", title:"Music Sync | Callback", component: CallbackPageComponent},
+  { path: "Callback", title:"Music Sync | Callback", component: CallbackPageComponent},
   { path: "settings", title: "Music Sync | Settings", component: UserConfigPageComponent},
   { path: "playlist", title: "Music Sync | Playlist", component: PlaylistPageComponent},
   { path: "music", title: "Music Sync | Music", component: MusicPageComponent},

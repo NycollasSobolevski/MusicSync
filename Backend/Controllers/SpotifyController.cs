@@ -25,7 +25,7 @@ public class SpotifyController : ControllerBase
     private readonly string clientId = Environment.GetEnvironmentVariable("CLIENT_ID");
     private readonly string clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
 
-    private readonly string redirectCallback = $"http://localhost:{Environment.GetEnvironmentVariable("FRONTEND_PORT")}/spotifyCallback";
+    private readonly string redirectCallback = $"http://localhost:{Environment.GetEnvironmentVariable("FRONTEND_PORT")}/Callback?streamer=spotify";
     // private readonly string redirectCallback = $"http://localhost:{Environment.GetEnvironmentVariable("SERVER_PORT")}/Spotify/callback";
 
     [HttpPost("GetSpotifyData")]

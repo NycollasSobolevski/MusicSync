@@ -13,7 +13,10 @@ public abstract class StreamerController : ControllerBase
     protected readonly string redirectCallback = $"http://localhost:{Environment.GetEnvironmentVariable("FRONTEND_PORT")}/spotifyCallback";
 
 
-    public abstract Task<ActionResult<StringReturn>> Get ();
+    public abstract Task<ActionResult<StringReturn>> Get ([FromBody] JWT data,
+        [FromServices] IRepository<User> userRepository,
+        [FromServices] IJwtService jwt,
+        [FromServices] IRepository<Token> tokenRepository);
     public abstract Task<ActionResult> LogOff ();
     public abstract Task<ActionResult> Callback ( [FromServices] HttpClient client,
         [FromBody] CallbackData data,

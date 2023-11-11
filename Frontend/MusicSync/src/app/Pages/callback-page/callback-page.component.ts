@@ -10,12 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./callback-page.component.css']
 })
 export class CallbackPageComponent {
-  data : CallbackData = {
-    jwt: sessionStorage.getItem('jwt') ?? "",
-    code: '',
-    state: ''
-  }
-  
+
   constructor ( 
     private route : ActivatedRoute,
     private service : StreamerService,
@@ -23,14 +18,41 @@ export class CallbackPageComponent {
   ) {}
 
   ngOnInit ( ) {
+    var streamer = "";
     this.route.queryParamMap.subscribe( query=> {
-      this.data.code = query.get('code') ?? "";
-      this.data.state = query.get('state') ?? "";
+      streamer = query.get('streamer') ?? "";
+      
+      if(streamer == "")
+        return;
+      if(streamer == "deezer")
+        this.DeezerCallback();
+      if(streamer == "spotify")
+        this.SpotifyCallback();
 
-      console.log(this.data);
+    })
+  }
+
+  DeezerCallback(){
+    console.log("DeezerCallback");
+    
+  }
+
+  SpotifyCallback(){
+    var data : CallbackData = {
+      jwt: sessionStorage.getItem('jwt') ?? "",
+      code: '',
+      state: ''
+    }
+  
+
+    this.route.queryParamMap.subscribe( query=> {
+      data.code = query.get('code') ?? "";
+      data.state = query.get('state') ?? "";
+
+      console.log(data);
       
 
-      this.service.Callback("Spotify",this.data).subscribe({
+      this.service.Callback("Spotify",data).subscribe({
         next: (res) => {
           console.log(res);
           this.router.navigate(['/']);
