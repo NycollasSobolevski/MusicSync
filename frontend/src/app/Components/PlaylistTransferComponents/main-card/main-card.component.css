@@ -1,0 +1,82 @@
+.main-transfer-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 3rem;
+    border: 1px solid var(--input-border-color);
+    border-radius: 20px;
+    background-color: var(--semitransparent-background);
+    gap: 1rem;
+    width: 50vw;
+    height: 50vh;
+    /* max-width: 500px; */
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.selects-container{
+    flex-direction: row;
+    gap: 1rem;
+}
+.select-streamer {
+    gap: 1rem;
+}
+select, input, textarea{
+    border: 1px solid var(--input-border-color);
+    border-radius: 15px;
+    height: 35px;
+    padding: .5rem;
+    background-color: transparent;
+}
+.input-container{
+    gap: 0
+}
+input {
+    height: 1rem;
+}
+textarea{ 
+    height: 5rem;
+}
+
+option{
+    background-color: black;
+    /* background-color: var(--semitransparent-background); */
+}
+
+.select-container, .input-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+.select-container label{
+    font-size: small;
+}
+
+
+.alert{
+    font-size: small;
+    color: red;
+}
+@media screen and (max-width: 576px) {
+    .selects-container{
+        flex-direction: column;
+    }
+    .selects-container svg{
+        transform: rotate(90deg);
+    }
+    .main-transfer-container{
+        width: calc(95vw - 6rem - 2px);
+        height: 60vh;
+    }
+}

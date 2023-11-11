@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="streaming-area">
+        <h3>Spotify</h3>
+        <div class="container">
+            <span>
+                <div class="description">
+                    <h4>Deslogar do Spotify</h4>
+                    <p>Deseja deslogar esta conta do Spotify</p>
+                </div>
+                <button class="trash-button" (click)="logoffTogle('Spotify')">
+                    <svg x="0px" y="0px" width="40" height="40" viewBox="0 0 30 30">
+                        <path d="M 13 3 A 1.0001 1.0001 0 0 0 11.986328 4 L 6 4 A 1.0001 1.0001 0 1 0 6 6 L 24 6 A 1.0001 1.0001 0 1 0 24 4 L 18.013672 4 A 1.0001 1.0001 0 0 0 17 3 L 13 3 z M 6 8 L 6 24 C 6 25.105 6.895 26 8 26 L 22 26 C 23.105 26 24 25.105 24 24 L 24 8 L 6 8 z"></path>
+                    </svg>
+                </button>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="alert-bg" *ngIf="this.alert.isAlert" (click)="closeAlert()"></div>
+<div class="alert" *ngIf="this.alert.isAlert">
+    <h4>{{alert.title}}</h4>
+    <p>{{alert.message}}</p>
+    <button
+        *ngIf="this.alert.functionToCall != undefined"
+        (click)="this.alert.functionToCall()"
+        >LogOff</button>
+    <button (click)="closeAlert()">Close</button>
+</div>

@@ -1,0 +1,19 @@
+<p>transfer-tracks works!</p>
+<div class="music-list">
+    <div class="music" *ngFor="let music of this.oldPlaylistWithTracks.items; let i = index">
+        <div class="data">
+            <h5 class="index">{{i}}</h5>
+            <p class="music-name">{{music.track.name}}</p>
+        </div>
+        <input type="checkbox" checked name="" id="">
+    </div>
+</div>
+
+<progress 
+    [max]="this.oldPlaylistWithTracks.total"
+    [value]="this.index"
+>
+    {{index}} of {{this.oldPlaylistWithTracks.total}}
+</progress>
+
+<button (click)="transfer()">Show</button>

@@ -1,0 +1,33 @@
+<div class="main-login-subscribe">
+    <header>
+        <h3>Login</h3>
+    </header>
+    <div class="container">
+        <form (ngSubmit)="login()" class="content" [formGroup]="userForm"
+            #formDir="ngForm">
+            <div class="input-container">
+                <input type="text"
+                    formControlName="identify"
+                    placeholder="Login / Email">
+                <span></span>
+                <div class="error-input-validation" *ngIf="identify.invalid && formDir.submitted" >
+                    <p *ngIf="identify.errors?.['required']" >Required input</p>
+                </div>
+            </div>
+            <div class="input-container">
+                <input type="password" 
+                    formControlName="password"
+                    placeholder="Password">
+                <span></span>
+                <div class="error-input-validation" *ngIf="password.invalid && formDir.submitted">
+                    <p *ngIf="password.errors?.['required']" >Required input</p>
+                </div>
+            </div>
+            <a href="/forgetPassword">Forget password</a>
+            <div class="buttons">
+                <button type="submit">Login</button>
+                <button type="button" (click)="siginClicked()">Sign In</button>
+            </div>
+        </form>
+    </div>
+</div>

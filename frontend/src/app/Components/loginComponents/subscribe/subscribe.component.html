@@ -1,0 +1,48 @@
+<div class="main-login-subscribe">
+    <header>
+        <h3>Sign In</h3>
+    </header>
+    <div class="container">
+        <form class="content" (ngSubmit)="signInClicked()"
+            [formGroup]="accountForm">
+            <div class="input-container">
+                <input required type="text" 
+                    formControlName="name"
+                    name="subs-name" id="subs-name" placeholder="Name">
+                    
+                <span></span>
+            </div>
+            <div class="input-container">
+                <input required type="email" 
+                    formControlName="email"
+                    name="subs-email" id="subs-email" placeholder="Email">
+                <span></span>
+            </div>
+            <div class="input-container">
+                <input required type="date" 
+                    formControlName="birth"
+                    name="subs-birth" id="subs-birth" placeholder="Birth">
+                <span></span>
+            </div>
+            <div class="input-container">
+                <input required type="password" 
+                    formControlName="password"
+                    name="subs-pass" id="subs-pass" placeholder="Password">
+                <span></span>
+            </div>
+            <div class="input-container">
+                <input required type="password"
+                    formControlName="repassword"
+                    name="subs-repass" id="subs-repass" placeholder="Password">
+                <span></span>
+            </div>
+            <div class="buttons">
+                <button type="submit">Send</button>
+                <button type="button"  (click)="loginClicked()">Login</button>
+            </div>
+        </form>
+    </div>
+    <div class="alert" *ngIf="isAlert">
+        <h4>{{alertContent}}</h4>
+    </div>
+</div>

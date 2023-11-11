@@ -1,0 +1,26 @@
+<div class="main-container">
+    <div class="container" *ngIf="!VerifyEmail">
+        <div class="wall" [ngStyle]="{'left' : ( isLogin ? 'calc(25vw )' : 'calc(25vw - (50vw / 2 ))' )}">
+            <div class="content">
+                <h2>Music Sync</h2>
+                <img src="../../assets/transparent logo with border.png" height="200px" alt="">
+            </div>
+        </div>
+        <app-login class="{{ isLogin ? '' : ' hidden' }}"
+            (siginClickEvent)="changeToSigin()"  
+            (sendAlert)="alert($event)"
+            (sendToVerify)="changeToVerifyEmail($event)"
+            class="component"></app-login>
+        <app-subscribe class="{{ !isLogin ? '' : ' hidden' }}"
+            (loginClickEvent)="changeToSigin()" 
+            (sendAlert)="alert($event)"
+            class="component"></app-subscribe>
+    </div>
+    <div class="container" *ngIf="VerifyEmail">
+        <app-verify-email [jwt]="this.jwt"></app-verify-email>
+    </div>
+    <app-alert 
+        *ngIf="alertContainer"
+        [alertContent]="alertMessage"
+    />
+</div >

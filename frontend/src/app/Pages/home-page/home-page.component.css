@@ -1,0 +1,15 @@
+.home-page-container{
+    background: var(--background-mesher-blur-image);
+    display: grid;
+    
+    grid-template:
+    "menu main main" auto
+    "menu main main" auto
+    "menu main main" auto /
+     auto auto auto
+    ;
+}
+.home-page-container main{
+    display: grid;
+    place-items: center;
+}

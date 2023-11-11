@@ -1,0 +1,10 @@
+<div class="verify-email-container">
+    <h3>Verify your email</h3>
+    <p>Enter the code sent to your email below</p>
+    <h6>(This process will only be necessary on the first login)</h6>
+    <div class="input-container">
+        <input type="text" [(ngModel)]="codeInput" [maxLength]="6"/>
+        <span></span>
+    </div>
+    <button (click)="verify()">Verify</button>
+</div>

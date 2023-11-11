@@ -1,0 +1,35 @@
+<main>
+    <div class="container">
+        <div class="header-container">
+            <a href="{{this.PlaylisData?.external_urls?.spotify}}" target="_blank" class="playlist-header">
+                        <img *ngIf="this.PlaylisData" src="{{this.PlaylisData.images[0].url}}" alt="Playlist folde">
+                <div class="data">
+                    <p class="playlist-streamer">Spotify Playlist</p>
+                    <h3>{{this.PlaylisData?.name}}</h3>
+                    <p class="playlist-description">{{this.PlaylisData?.description}}</p>
+                </div>
+            </a>
+        </div>
+        <table>
+            <tr *ngFor="let music of Playlist.items">
+                <button class="music-item" (click)="getMusicPage(music)">
+                    <td class="music-index"><p>{{Playlist.items.indexOf(music)}}</p></td>
+                    <td class="album-image-container">
+                        <img src="{{music.track.album.images[2].url}}" alt="album-image" />
+                    </td>
+                    <td class="music-identify">
+                        <div class="music-name">{{music.track.name}}</div>
+                        <div class="artists-music-session">
+                            <p *ngFor="let artist of music.track.artists">
+                                {{music.track.artists.indexOf(artist) >= 1 ? ",  ":"" }}
+                                {{artist.name}}
+                            </p>
+                        </div>
+                    </td>
+                </button>
+            </tr>
+
+        </table>
+        <button (click)="getMoreTrack()" *ngIf='this.Playlist.next !=""'>More Music</button>
+    </div>
+</main>

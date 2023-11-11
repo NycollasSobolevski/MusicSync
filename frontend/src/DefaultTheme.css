@@ -1,0 +1,37 @@
+:root {
+    --pri-color : #2190EB;
+    --sec-color : #3a5061;
+    --ter-color : #1A71B8;
+    --qua-color : #69B2EE;
+    --qui-color : #061629;
+    --ms-blue-50 :#1a6eb3;
+    --back-colorA: #14281D;
+    --back-colorB: #060b0f;
+    --back-colorC: #06004a;
+    --text-colorA: Black;
+    --text-colorB: AliceBlue;
+    --input-colorA: rgba(4, 44, 155, 0.2);
+    --red-alert-color: #f35858c0 ;
+    --yellow-alert-color: #f3d758c0;
+}
+
+:root{
+    --input-border-color: #000000;
+    --loader-background-color: #00000083;
+    --menu-header-background: #06004a9f;
+    --semitransparent-background: rgb(0,0,0,0.2);
+    --default-background-color: var(--sec-color) ;
+    --menu-background-color: var(--sec-color) ;
+    --default-box-shadow-color: black;
+    --seccondary-box-shadow-color: #4d92b9;
+    --background-mesher-blur-image: radial-gradient(at 2% 40%, hsla(207,74%,40%,1) 0px, transparent 50%),radial-gradient(at 29% 73%, hsla(206,75%,41%,1) 0px, transparent 50%),radial-gradient(at 90% 81%, hsla(207,38%,30%,1) 0px, transparent 50%),radial-gradient(at 67% 44%, hsla(207,83%,52%,1) 0px, transparent 50%);
+    
+    
+    --desktop-max-width: 1200px;
+    --tablet-max-width: 768px;
+    --mobile-max-width: 576px;
+}
+
+*{
+    font-family: 'Poppins', sans-serif;;
+}
