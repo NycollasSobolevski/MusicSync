@@ -7,6 +7,10 @@ interface CallbackData {
     code:  string,
     state: string 
 }
+interface streamerJsonData {
+    name: string,
+    path: string
+  }
 interface TransferPlaylistObject {
     identifier: string,
     data: any
@@ -126,4 +130,4 @@ interface TrackInfo {
 
 export { StringReturn, CallbackData, PlaylistsArray, itemsOfPlaylist, 
     NewTrack, NewPlaylist, Playlist, Track, TrackInfo, UserInfo, 
-    TransferPlaylistObject, NewTrackToPlaylist }
+    TransferPlaylistObject, NewTrackToPlaylist, streamerJsonData }

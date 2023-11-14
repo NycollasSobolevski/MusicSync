@@ -34,7 +34,7 @@ import { SendIdentifyComponent } from './Components/ForgetPassword/send-identify
 import { SendTokenComponent } from './Components/ForgetPassword/send-token/send-token.component';
 import { SendPasswordComponent } from './Components/ForgetPassword/send-password/send-password.component';
 import { TransferTracksComponent } from './Components/PlaylistTransferComponents/transfer-tracks/transfer-tracks.component';
-import { MenuItemComponent } from './Components/menu-item/menu-item.component';
+import { MenuCardComponent } from './Components/menu-card/menu-card.component';
 
 
 const COMPONENTS = [
@@ -62,11 +62,14 @@ const COMPONENTS = [
   SelectStreamerComponent, 
   SelectPlaylistComponent, 
   PlaylistSettingsComponent, 
-  ForgetPasswordPageComponent
-
+  ForgetPasswordPageComponent,
+  SendIdentifyComponent, 
+  SendTokenComponent, 
+  SendPasswordComponent, 
+  TransferTracksComponent, 
 ]
 @NgModule({
-  declarations: [COMPONENTS, SendIdentifyComponent, SendTokenComponent, SendPasswordComponent, TransferTracksComponent, MenuItemComponent],
+  declarations: [COMPONENTS, MenuCardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

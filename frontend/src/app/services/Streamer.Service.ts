@@ -17,7 +17,7 @@ export class StreamerService implements IStreamerService{
     }
 
     GetAccesUrl  ( streamer: string,  data : jwt ) {
-        return this.http.post<StringReturn>( `${this.url}${streamer}/GetSpotifyData`, data )
+        return this.http.post<StringReturn>( `${this.url}${streamer}/GetData`, data )
     };
     Callback  ( streamer: string,  data : CallbackData ) {
         return this.http.post(`${this.url}${streamer}/callback`, data);
