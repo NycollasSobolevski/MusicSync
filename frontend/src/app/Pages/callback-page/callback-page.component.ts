@@ -34,7 +34,29 @@ export class CallbackPageComponent {
 
   DeezerCallback(){
     console.log("DeezerCallback");
-    
+    var data: CallbackData = {
+      jwt: sessionStorage.getItem('jwt')!,
+      code: '',
+      state: ''
+    }
+
+    this.route.queryParamMap.subscribe( query=> {
+      data.code = query.get('code') ?? "";
+
+      console.log(data);
+      
+      this.service.Callback("deezer",data).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.router.navigate(['/']);
+        },
+        error: (err : HttpErrorResponse) => {
+          console.log(err.message);
+          
+        }
+      });
+    })
+  
   }
 
   SpotifyCallback(){

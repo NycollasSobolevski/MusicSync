@@ -207,7 +207,9 @@ public class SpotifyController : ControllerBase
             token.LastUpdate = DateTime.Now;
             await tokenRepository.Update( token );
 
-            return Ok("Token Updated");
+            var returnBody = Json.Serialize("Token Updated");
+
+            return Ok(returnBody);
         }
         catch(Exception exp){
             return BadRequest($"{exp}");
