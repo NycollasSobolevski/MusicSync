@@ -3,6 +3,7 @@ using System.Net;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
+using MongoDB.Bson.IO;
 using music_api;
 using music_api.Controllers;
 using music_api.DTO;
@@ -39,7 +40,7 @@ public class DeezerController : StreamerController
             );
 
             var token = await tokenRepository.FirstOrDefaultAsync( token => 
-                token.User == user.Name && token.Service == "deezer"
+                token.User == user.Name && token.Service == "Deezer"
             );
 
             if(token != null){
@@ -51,6 +52,7 @@ public class DeezerController : StreamerController
             string scope = """
                 basic_access, 
                 manage_library,
+                offline_access,
                 delete_library,
                 manage_community
             """;
@@ -76,7 +78,40 @@ public class DeezerController : StreamerController
         [FromServices] IRepository<User> userRepository,
         [FromServices] IJwtService jwt
     ){
-        throw new NotImplementedException();
+        try{
+            System.Console.WriteLine(data.code);
+
+            var userJwt = jwt.Validate<UserJwtData>(data.jwt);
+            var user = await userRepository.FirstOrDefaultAsync( user => 
+                user.Name == userJwt.Name
+            );
+
+            string url = $"https://connect.deezer.com/oauth/access_token.php?app_id={this.clientId}&secret={this.clientSecret}&code={data.code}&output=json";
+            System.Console.WriteLine(url);
+            var response = await client.GetAsync(url);
+
+            if(response.StatusCode != HttpStatusCode.OK){
+                return BadRequest("Error getting token");
+            }
+            var tokenData = await response.Content.ReadFromJsonAsync<DeezerToken>();
+            System.Console.WriteLine(tokenData);
+            Token _token = new() 
+            {
+                User = user.Name,
+                Service = "Deezer",
+                ServiceToken = tokenData.access_token,
+                ExpiresIn = tokenData.expires,
+                LastUpdate = DateTime.Now
+            };
+            System.Console.WriteLine($"Token: {_token.ServiceToken}\nRefreshToken: {_token.RefreshToken}\nExpiresIn: {_token.ExpiresIn}\nLastUpdate: {_token.LastUpdate}");
+            await tokenRepository.add(_token);
+
+            return Ok();
+
+        } catch (Exception e){
+            System.Console.WriteLine(e);
+            return BadRequest("Unknow server error");
+        }
     }
 
 

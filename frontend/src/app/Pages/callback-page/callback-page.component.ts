@@ -19,7 +19,7 @@ export class CallbackPageComponent {
 
   ngOnInit ( ) {
     var streamer = "";
-    this.route.queryParamMap.subscribe( query=> {
+    this.route.queryParamMap.subscribe( query => {
       streamer = query.get('streamer') ?? "";
       
       if(streamer == "")
@@ -40,12 +40,12 @@ export class CallbackPageComponent {
       state: ''
     }
 
-    this.route.queryParamMap.subscribe( query=> {
+    this.route.queryParamMap.subscribe( query => {
       data.code = query.get('code') ?? "";
 
       console.log(data);
       
-      this.service.Callback("deezer",data).subscribe({
+      this.service.Callback("Deezer",data).subscribe({
         next: (res) => {
           console.log(res);
           this.router.navigate(['/']);

@@ -145,9 +145,9 @@ public class SpotifyController : ControllerBase
                 user.Name == jwtUser.Name
             );
 
-            System.Console.WriteLine("response: " + response);
+            // System.Console.WriteLine("response: " + response);
             var token = await response.Content.ReadFromJsonAsync<SpotifyToken>();
-            System.Console.WriteLine($"Token: {token.access_token}\n Refresh: {token.refresh_token}\n Scope: {token.scope}\n Type: {token.token_type}");
+            // System.Console.WriteLine($"Token: {token.access_token}\n Refresh: {token.refresh_token}\n Scope: {token.scope}\n Type: {token.token_type}");
         
             Token _token = new()
             {

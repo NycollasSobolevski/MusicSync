@@ -10,6 +10,11 @@ public record JWTWithGetPlaylistData
     public int Limit { get; set; }    
 }
 
+public class DeezerToken
+{
+    public string access_token { get; set; }
+    public int expires { get; set; }
+}
 public class SpotifyToken
 {
     public string access_token { get; set; }
