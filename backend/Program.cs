@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 DotNetEnv.Env.Load();
-
+//! tirar duvida com trevis
 builder.Services.AddTransient(p =>
 {
     return new HttpClient()

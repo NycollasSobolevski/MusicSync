@@ -42,7 +42,7 @@ public class DeezerController : StreamerController
             var token = await tokenRepository.FirstOrDefaultAsync( token => 
                 token.User == user.Name && token.Service == "Deezer"
             );
-
+            System.Console.WriteLine(token);
             if(token != null){
                 return Ok(new StringReturn{
                     Data = "http://localhost:4200/?tab=Deezer"
@@ -140,9 +140,28 @@ public class DeezerController : StreamerController
     }
 
     [HttpPost("GetUserPlaylists")]
-    public override Task<ActionResult> GetUserPlaylists([FromBody] JWTWithGetPlaylistData data, [FromServices] IJwtService jwt, [FromServices] IRepository<User> userRepository, [FromServices] IRepository<Token> tokenRepository, [FromServices] HttpClient client)
-    {
-        throw new NotImplementedException();
+    public override async Task<ActionResult> GetUserPlaylists(
+        [FromBody] JWTWithGetPlaylistData data, 
+        [FromServices] IJwtService jwt, 
+        [FromServices] IRepository<User> userRepository, 
+        [FromServices] IRepository<Token> tokenRepository, 
+        [FromServices] HttpClient client
+    ){
+        try{
+            var User = await UserTools.ValidateUser(userRepository, jwt, data.Jwt.Value);
+        } catch {
+            return BadRequest("User not found");
+        }
+
+        try{
+            
+        } catch (Exception e){
+            System.Console.WriteLine(e.Message);
+            return BadRequest("Unknow server error");
+        }
+
+
+        return Ok("asda");
     }
 
     [HttpPost("logoff")]
@@ -158,9 +177,19 @@ public class DeezerController : StreamerController
         throw new NotImplementedException();
     }
 
-    protected override Task<SpotifyUserData> GetUserData([FromServices] HttpClient client, string token)
+    protected override async Task<DeezerUserData> GetUserData([FromServices] HttpClient client, string token)
     {
-        throw new NotImplementedException();
+        try{
+            string url = $"https://api.spotify.com/v1/me?access_token={token}";
+            var res = await client.GetAsync(url);
+            DeezerUserData userdata = await res.Content.ReadFromJsonAsync<DeezerUserData>();
+            return userdata;
+
+        } catch (Exception e) {
+            System.Console.WriteLine(e.Message);
+            return null;
+        }
+
     }
 
     protected override Task refreshToken(string username, [FromServices] HttpClient client, [FromServices] IRepository<Token> tokenRepository)

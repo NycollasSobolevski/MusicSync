@@ -25,6 +25,6 @@ public abstract class StreamerController : ControllerBase
     public abstract Task<ActionResult> GetPlaylist ([FromQuery(Name = "id")] string id, [FromBody] JWT body, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository, [FromServices] HttpClient client);
     public abstract Task<ActionResult> GetPlaylistTracks ([FromQuery(Name = "id")] string id, [FromQuery(Name = "streamer")] string streamer, [FromBody] JWT body, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository, [FromServices] HttpClient client);
     public abstract Task<ActionResult> GetMoreTracks([FromBody] JWTWithData<string> body, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository, [FromServices] HttpClient client);
-    protected abstract Task<SpotifyUserData> GetUserData([FromServices] HttpClient client, string token);
+    protected abstract Task GetUserData([FromServices] HttpClient client, string token);
     protected abstract Task refreshToken(string username, [FromServices] HttpClient client, [FromServices] IRepository<Token> tokenRepository);
 }

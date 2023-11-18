@@ -120,16 +120,11 @@ public class SpotifyController : ControllerBase
         [FromServices] IJwtService jwt
     )
     {
-        string clientId = Environment.GetEnvironmentVariable("CLIENT_ID");
-        string clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
-
-        string dataClient = $"{clientId}:{clientSecret}";
+        string dataClient = $"{this.clientId}:{this.clientSecret}";
         dataClient = Convert.ToBase64String(Encoding.UTF8.GetBytes(dataClient));
-        string authorization = $"Basic {dataClient}";
-        string contentType = "application/x-www-form-urlencoded";
 
-        client.DefaultRequestHeaders.Add("Authorization", authorization);
-        client.DefaultRequestHeaders.Add("ContentType", contentType);
+        client.DefaultRequestHeaders.Add("Authorization", $"Basic {dataClient}");
+        client.DefaultRequestHeaders.Add("ContentType", "application/x-www-form-urlencoded");
 
         var formData = new List<KeyValuePair<string, string>>();
         formData.Add(new KeyValuePair<string, string>("code", $"{data.code}"));
