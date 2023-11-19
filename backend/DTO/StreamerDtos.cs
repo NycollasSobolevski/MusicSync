@@ -83,3 +83,52 @@ public record JWTWithData<T>
     public JWT Jwt { get; set; }
     public T Data { get; set; }
 }
+
+public record JWTWithGetPlaylistData
+{
+    public JWT Jwt { get; set; }
+    public int Offset { get; set; }
+    public int Limit { get; set; }    
+}
+
+public record PlaylistData
+{
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public bool @Public { get; set; }
+    public string Id { get; set; }
+    public string Href { get; set; }
+    public string Uri { get; set; }
+    public List<Images> Images { get; set; }
+    public PlaylistOwner Owner { get; set; }
+    public HrefTracks TracksTotal { get; set; }
+
+}
+public class HrefTracks
+{
+  public string href { get; set; }
+  public int total { get; set; }
+}
+
+public record PlaylistOwner
+{
+  public external_urls external_urls { get; set; }
+  public followers followers { get; set; }
+  public string href { get; set; }
+  public string id { get; set; }
+  public string type { get; set; }
+  public string uri { get; set; }
+  public string display_name { get; set; }
+}
+
+public record Images {
+  public string url { get; set; }
+  public int height { get; set; }
+  public int width { get; set; }
+}
+
+public record PlaylistsData
+{
+    public List<PlaylistData> Items { get; set; }
+    public int Total { get; set; }
+}

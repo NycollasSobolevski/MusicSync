@@ -20,3 +20,8 @@ public record SigninData
     public string Password  { get; set; }
     public DateTime Birth { get; set; }
 }
+
+public class StringReturn
+{
+    public string Data { get; set;}
+}

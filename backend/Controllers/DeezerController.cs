@@ -8,16 +8,18 @@ using music_api;
 using music_api.Controllers;
 using music_api.DTO;
 using music_api.Model;
+using SpotifyAPI.Web;
+using ZstdSharp.Unsafe;
 
-
+#pragma warning disable
 [ApiController]
 [Route("[controller]")]
 [EnableCors("MainPolicy")]
 public class DeezerController : StreamerController
 {
 
-    private readonly string serverPort = Environment.GetEnvironmentVariable("SERVER_PORT");
-    private readonly string frontPort = Environment.GetEnvironmentVariable("FRONTEND_PORT");
+    // private readonly string serverPort = Environment.GetEnvironmentVariable("SERVER_PORT");
+    // private readonly string frontPort = Environment.GetEnvironmentVariable("FRONTEND_PORT");
     private readonly string clientUrl = Environment.GetEnvironmentVariable("DEEZER_CLIENT_URL");
 
     private readonly string clientId = Environment.GetEnvironmentVariable("DEEZER_CLIENT_ID");
@@ -147,21 +149,71 @@ public class DeezerController : StreamerController
         [FromServices] IRepository<Token> tokenRepository, 
         [FromServices] HttpClient client
     ){
-        try{
-            var User = await UserTools.ValidateUser(userRepository, jwt, data.Jwt.Value);
-        } catch {
-            return BadRequest("User not found");
-        }
+        
 
         try{
+            var _user = await UserTools.ValidateUser(userRepository, jwt, data.Jwt.Value);
             
+            if(User == null) return BadRequest("Invalid user");
+            
+            var token = await tokenRepository.FirstOrDefaultAsync( token => 
+                token.User == _user.Name && token.Service == "Deezer"
+            );
+            if (token == null) return Unauthorized("Token not found");
+
+
+            string url = $"https://api.deezer.com/user/me/playlists?access_token={token.ServiceToken}";
+            var res = await client.GetAsync(url);
+            var playlists = await res.Content.ReadFromJsonAsync<DeezerPlaylistsData>();
+
+            PlaylistsData result = new PlaylistsData();
+            result.Items = new List<PlaylistData>();
+            result.Total = playlists.total;
+
+            foreach (var item in playlists.data)
+            {
+                PlaylistData _playlist = new PlaylistData(){
+                    Id = item.id.ToString(),
+                    Name = item.title,
+                    Description = "",
+                    Owner = new PlaylistOwner{
+                        id = item.creator.id.ToString(),
+                        display_name = item.creator.name,
+                    }
+                };
+                _playlist.Images = new List<Images>();
+                _playlist.Images.Add(new Images{
+                    url = item.picture_small,
+                    height = 56,
+                    width = 56
+                });
+                _playlist.Images.Add(new Images{
+                    url = item.picture_medium,
+                    height = 250,
+                    width = 250
+                });
+                _playlist.Images.Add(new Images{
+                    url = item.picture_big,
+                    height = 500,
+                    width = 500
+                });
+                _playlist.Images.Add(new Images{
+                    url = item.picture_xl,
+                    height = 1000,
+                    width = 1000
+                });
+
+                result.Items.Add(_playlist);
+                
+                
+            }
+            
+            return Ok(result);
+
         } catch (Exception e){
-            System.Console.WriteLine(e.Message);
+            System.Console.WriteLine(e);
             return BadRequest("Unknow server error");
         }
-
-
-        return Ok("asda");
     }
 
     [HttpPost("logoff")]
@@ -180,7 +232,7 @@ public class DeezerController : StreamerController
     protected override async Task<DeezerUserData> GetUserData([FromServices] HttpClient client, string token)
     {
         try{
-            string url = $"https://api.spotify.com/v1/me?access_token={token}";
+            string url = $"https://api.deezer.com/v1/me?access_token={token}";
             var res = await client.GetAsync(url);
             DeezerUserData userdata = await res.Content.ReadFromJsonAsync<DeezerUserData>();
             return userdata;
@@ -194,6 +246,13 @@ public class DeezerController : StreamerController
 
     protected override Task refreshToken(string username, [FromServices] HttpClient client, [FromServices] IRepository<Token> tokenRepository)
     {
+
+        // var token = tokenRepository.FirstOrDefaultAsync( token => 
+        //     token.User == username && token.Service == "Deezer"
+        // );
+        // if(token == null) return null;
+
+        //! teoricamente, o token do deezer não expira
         throw new NotImplementedException();
     }
 }
