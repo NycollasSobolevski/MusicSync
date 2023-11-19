@@ -15,7 +15,7 @@ export class MenuComponent {
   deezerCard = false;
   link = ''
   cardOn= false;
-
+  ActivatedStreamerCard = "";
   streamers = streamers;
   
   private jwt : jwt = {
@@ -46,10 +46,13 @@ export class MenuComponent {
           break;
         case "spotify":
           this.spotifyCard = true;
+          this.ActivatedStreamerCard = "Spotify";
           this.cardOn = true;
           break;
         case "deezer":
           this.deezerCard = true;
+          this.ActivatedStreamerCard = "Deezer";
+
           this.cardOn = true;
           break;
         default:

@@ -1,4 +1,4 @@
-.spotify-card{
+.card{
     margin: auto;
     position: fixed;
     top: 0; bottom: 0; right: 0; left: 0;
@@ -23,7 +23,7 @@
         width: 80vw;
     }
 }
-.spotify-card::-webkit-scrollbar{
+.streamer-card::-webkit-scrollbar{
     display: none;
 }
 .header{

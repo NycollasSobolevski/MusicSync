@@ -4,4 +4,5 @@
 
 <div class="bg" *ngIf="cardOn" (click)="closeAllCards()"></div>
 
-<app-spotify *ngIf="spotifyCard" (closeCardEvent)="closeAllCards()" />
+<app-playlist-card *ngIf="cardOn" [streamer]="ActivatedStreamerCard" (closeCardEvent)="closeAllCards()" />
+<!-- <app-spotify *ngIf="spotifyCard" (closeCardEvent)="closeAllCards()" /> -->

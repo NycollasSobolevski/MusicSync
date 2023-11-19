@@ -11,8 +11,6 @@ import { LoginComponent } from './Components/loginComponents/login/login.compone
 import { SubscribeComponent } from './Components/loginComponents/subscribe/subscribe.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CallbackPageComponent } from './Pages/callback-page/callback-page.component';
-import { SpotifyComponent } from './Components/CardComponents/spotify/spotify.component';
-import { DeezerComponent } from './Components/CardComponents/deezer/deezer.component';
 import { UserConfigPageComponent } from './Pages/user-config-page/user-config-page.component';
 import { ConfigMenuComponent } from './Components/userConfigComponents/config-menu/config-menu.component';
 import { StreamersConfigComponent } from './Components/userConfigComponents/streamers-config/streamers-config.component';
@@ -35,6 +33,7 @@ import { SendTokenComponent } from './Components/ForgetPassword/send-token/send-
 import { SendPasswordComponent } from './Components/ForgetPassword/send-password/send-password.component';
 import { TransferTracksComponent } from './Components/PlaylistTransferComponents/transfer-tracks/transfer-tracks.component';
 import { MenuCardComponent } from './Components/menu-card/menu-card.component';
+import { PlaylistCardComponent } from './Components/CardComponents/playlist-card/playlist-card.component';
 
 
 const COMPONENTS = [
@@ -46,8 +45,6 @@ const COMPONENTS = [
   LoginComponent,
   SubscribeComponent,
   CallbackPageComponent,
-  SpotifyComponent,
-  DeezerComponent,
   UserConfigPageComponent,
   ConfigMenuComponent,
   StreamersConfigComponent,
@@ -67,9 +64,11 @@ const COMPONENTS = [
   SendTokenComponent, 
   SendPasswordComponent, 
   TransferTracksComponent, 
+  MenuCardComponent,
+  PlaylistCardComponent,
 ]
 @NgModule({
-  declarations: [COMPONENTS, MenuCardComponent],
+  declarations: [COMPONENTS, ],
   imports: [
     BrowserModule,
     AppRoutingModule,

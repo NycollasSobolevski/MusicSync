@@ -1,5 +1,4 @@
-import { HttpErrorResponse, HttpResponse, HttpResponseBase } from '@angular/common/http';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { PlaylistsArray, itemsOfPlaylist } from 'src/app/services/SpotifyDto';
@@ -7,19 +6,19 @@ import { StreamerService } from 'src/app/services/Streamer.Service';
 import { JWTWithGetPlaylistData, jwt } from 'src/app/services/UserDto';
 
 @Component({
-  selector: 'app-spotify',
-  templateUrl: './spotify.component.html',
-  styleUrls: ['./spotify.component.css']
+  selector: 'app-playlist-card',
+  templateUrl: './playlist-card.component.html',
+  styleUrls: ['./playlist-card.component.css']
 })
-export class SpotifyComponent {
+export class PlaylistCardComponent {
   constructor (
     private service : StreamerService,
     private sanitizer : DomSanitizer,
     private router : Router
-  ) {}
-  // !TODO: Implementar o closeCard
+    ) {}
+    // !TODO: Implementar o closeCard
+    @Input() streamer! : string;
     @Output() closeCardEvent = new EventEmitter()
-
 
   playlists : PlaylistsArray = {
     items: []
@@ -34,7 +33,7 @@ export class SpotifyComponent {
   }
   
   async refreshToken(){
-    this.service.RefreshToken("Spotify",this.jwt.jwt).subscribe({
+    this.service.RefreshToken(this.streamer,this.jwt.jwt).subscribe({
       next: ( data ) => {
         console.log("Refreshed token");
       },
@@ -46,7 +45,7 @@ export class SpotifyComponent {
   }
   
   async getPlaylist(){
-    this.service.GetPlaylists("Spotify",this.jwt).subscribe({
+    this.service.GetPlaylists(this.streamer,this.jwt).subscribe({
       next: ( data : any ) => {
         if(this.playlists.items == null)
           this.playlists = data;
@@ -55,13 +54,13 @@ export class SpotifyComponent {
         }
         
         if(this.playlists != null)
-          sessionStorage.setItem('SpotifyPlaylists', JSON.stringify(this.playlists));
+          sessionStorage.setItem(`${this.streamer}Playlists`, JSON.stringify(this.playlists));
         return data.result;
       },
       error: error => {
         if (error.status == 401) {
           console.log("Refreshing token");
-          this.service.RefreshToken("Spotify",this.jwt.jwt).subscribe({
+          this.service.RefreshToken(this.streamer,this.jwt.jwt).subscribe({
             next: ( data ) => {
               console.log("Refreshed token");
               location.reload();
@@ -83,12 +82,12 @@ export class SpotifyComponent {
     if (this.jwt.jwt.value == "") 
       return;
     
-    var sessionPlaylists = sessionStorage.getItem('SpotifyPlaylists') ?? "";
+    var sessionPlaylists = sessionStorage.getItem(`${this.streamer}Playlists`) ?? "";
     console.log(sessionPlaylists);
     
 
     if(sessionPlaylists != ""){
-      this.playlists = JSON.parse(sessionStorage.getItem('SpotifyPlaylists') ?? "");
+      this.playlists = JSON.parse(sessionStorage.getItem(`${this.streamer}Playlists`) ?? "");
       return;
     }
     console.log("Getting playlists");
@@ -112,7 +111,7 @@ export class SpotifyComponent {
   }
 
   getPlaylistTracks(playlist : itemsOfPlaylist){
-    this.router.navigate(['/playlist'], { queryParams: { id: playlist.id, streamer: "spotify" } });
+    this.router.navigate(['/playlist'], { queryParams: { id: playlist.id, streamer: this.streamer } });
   }
 
   closeCard(){
