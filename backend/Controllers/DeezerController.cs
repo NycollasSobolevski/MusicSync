@@ -21,11 +21,20 @@ public class DeezerController : StreamerController
     // private readonly string serverPort = Environment.GetEnvironmentVariable("SERVER_PORT");
     // private readonly string frontPort = Environment.GetEnvironmentVariable("FRONTEND_PORT");
     private readonly string clientUrl = Environment.GetEnvironmentVariable("DEEZER_CLIENT_URL");
-
     private readonly string clientId = Environment.GetEnvironmentVariable("DEEZER_CLIENT_ID");
     private readonly string clientSecret = Environment.GetEnvironmentVariable("DEEZER_CLIENT_SECRET");
     private readonly string redirectCallback = $"http://localhost:{Environment.GetEnvironmentVariable("FRONTEND_PORT")}/Callback?streamer=deezer";
+    private readonly string streamer = "Deezer";
 
+
+    /// <summary>
+    ///     Decide se a primeira interação com o usuario seria conectar com o cliente ou se ja estiver conectado, redireciona-lo a outra aba do frontend
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="userRepository"></param>
+    /// <param name="tokenRepository"></param>
+    /// <param name="jwt"></param>
+    /// <returns></returns>
     [HttpPost("GetData")]
     public override async Task<ActionResult<StringReturn>> Get(
         [FromBody] JWT data,
@@ -42,7 +51,7 @@ public class DeezerController : StreamerController
             );
 
             var token = await tokenRepository.FirstOrDefaultAsync( token => 
-                token.User == user.Name && token.Service == "Deezer"
+                token.User == user.Name && token.Service == this.streamer
             );
             System.Console.WriteLine(token);
             if(token != null){
@@ -72,7 +81,15 @@ public class DeezerController : StreamerController
 
     }
 
-
+    /// <summary>
+    ///     Executada quando se retorna do login com o cliente aonde salva o token do usuario no banco
+    /// </summary>
+    /// <param name="client"></param>
+    /// <param name="data"></param>
+    /// <param name="tokenRepository"></param>
+    /// <param name="userRepository"></param>
+    /// <param name="jwt"></param>
+    /// <returns></returns>
     [HttpPost("Callback")]
     public override async Task<ActionResult> Callback([FromServices] HttpClient client,
         [FromBody] CallbackData data,
@@ -100,7 +117,7 @@ public class DeezerController : StreamerController
             Token _token = new() 
             {
                 User = user.Name,
-                Service = "Deezer",
+                Service = this.streamer,
                 ServiceToken = tokenData.access_token,
                 ExpiresIn = tokenData.expires,
                 LastUpdate = DateTime.Now
@@ -116,7 +133,7 @@ public class DeezerController : StreamerController
         }
     }
 
-
+    
     [HttpPost("GetMoreTracks")]
     public override Task<ActionResult> GetMoreTracks([FromBody] JWTWithData<string> body, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository, [FromServices] HttpClient client)
     {
@@ -157,7 +174,7 @@ public class DeezerController : StreamerController
             if(User == null) return BadRequest("Invalid user");
             
             var token = await tokenRepository.FirstOrDefaultAsync( token => 
-                token.User == _user.Name && token.Service == "Deezer"
+                token.User == _user.Name && token.Service == this.streamer
             );
             if (token == null) return Unauthorized("Token not found");
 
@@ -223,6 +240,32 @@ public class DeezerController : StreamerController
         throw new NotImplementedException();
     }
 
+    [HttpPost("createPlaylist")]
+    public override async Task<ActionResult> CreatePlaylist(
+        [FromBody] UserCreatePlaylistWithJwt data, 
+        [FromServices] IJwtService jwt, 
+        [FromServices] IRepository<Token> tokenRepository, 
+        [FromServices] IRepository<User> userRepository, 
+        [FromServices] HttpClient client
+    )
+    {
+        try{
+            var user = await UserTools.ValidateUser(userRepository, jwt, data.Jwt.Value);
+            var token = await UserTools.GetUserToken(tokenRepository, user.Name, this.streamer);
+
+            var deezerUser = await GetUserData(client, token.ServiceToken);
+
+            string uri = $"https://api.deezer.com/user/{deezerUser.id}/playlists";
+
+            return Ok("");
+
+        }
+        catch (Exception e) {
+            System.Console.WriteLine(e);
+            return BadRequest("Unknow server error");
+        }
+    }
+
     [HttpPost("RefreshToken")]
     public override Task<ActionResult> RefreshToken([FromServices] HttpClient client, [FromServices] IRepository<Token> tokenRepository, [FromServices] IRepository<User> userRepository, [FromServices] IJwtService jwtService, [FromBody] JWT jwt)
     {
@@ -248,11 +291,12 @@ public class DeezerController : StreamerController
     {
 
         // var token = tokenRepository.FirstOrDefaultAsync( token => 
-        //     token.User == username && token.Service == "Deezer"
+        //     token.User == username && token.Service == this.streamer
         // );
         // if(token == null) return null;
 
         //! teoricamente, o token do deezer não expira
         throw new NotImplementedException();
     }
+
 }
