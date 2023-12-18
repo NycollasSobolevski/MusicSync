@@ -136,9 +136,36 @@ public class DeezerController : StreamerController
     }
 
     [HttpPost("GetPlaylistTracks/")]
-    public override Task<ActionResult> GetPlaylistTracks([FromQuery(Name = "id")] string id, [FromQuery(Name = "streamer")] string streamer, [FromBody] JWT body, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository, [FromServices] HttpClient client)
-    {
-        throw new NotImplementedException();
+    public override async Task<ActionResult> GetPlaylistTracks(
+        [FromQuery(Name = "id")] string id, 
+        [FromQuery(Name = "streamer")] string streamer, 
+        [FromBody] JWT body, 
+        [FromServices] IJwtService jwt, 
+        [FromServices] IRepository<Token> tokenRepository, 
+        [FromServices] HttpClient client,
+        [FromServices] IRepository<User> userRepository
+    ){
+        var user = await UserTools.ValidateUser(userRepository, jwt, body.Value);
+        if(user == null) return BadRequest("Invalid user");
+        try
+        {
+            var token = await tokenRepository.FirstOrDefaultAsync( token => 
+                token.User == user.Name && token.Service == "Deezer"
+            );
+            if(token == null) return Unauthorized("Token not found");
+
+            string url = $"https://api.deezer.com/playlist/{id}?access_token={token.ServiceToken}";
+            var res = await client.GetAsync(url);
+            var playlist = await res.Content.ReadFromJsonAsync<DeezerPlaylistsData>();
+            string stt= await res.Content.ReadAsStringAsync();
+            System.Console.WriteLine(stt);
+            return Ok(playlist);
+        }
+        catch (System.Exception e)
+        {   
+            System.Console.WriteLine(e);
+            return BadRequest("Unknow server error");
+        }
     }
 
     [HttpPost("GetUserPlaylists")]
@@ -217,10 +244,27 @@ public class DeezerController : StreamerController
     }
 
     [HttpPost("logoff")]
-
-    public override Task<ActionResult> LogOff([FromBody] JWT data, [FromServices] IRepository<User> userRepository, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository)
+    public override async Task<ActionResult> LogOff([FromBody] JWT data, [FromServices] IRepository<User> userRepository, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var _user = await UserTools.ValidateUser(userRepository, jwt, data.Value);
+            if(_user == null) return BadRequest("Invalid user");
+
+            var token = await tokenRepository.FirstOrDefaultAsync( token => 
+                token.User == _user.Name && token.Service == "Deezer"
+            );
+            
+            if(token == null) return BadRequest("Token not found");
+
+            await tokenRepository.Delete(token);
+            return Ok();
+        }
+        catch (System.Exception e)
+        {
+            System.Console.WriteLine(e);
+            return BadRequest("Unknow server error");
+        }
     }
 
     [HttpPost("RefreshToken")]
