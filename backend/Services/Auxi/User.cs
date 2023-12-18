@@ -15,6 +15,20 @@ public static class UserTools
             throw new Exception("User not found");
 
         return user;
+    }
+
+    public static async Task<Token> GetUserToken( IRepository<Token> tokenRepository, string username, string service ) {
+        try{
+            Token token = await tokenRepository.FirstOrDefaultAsync( token => 
+                token.User == username && 
+                token.ServiceToken == service 
+            );
+
+            return token;
+        } catch (Exception e){
+            System.Console.WriteLine(e);
+            throw;
+        }
 
     }
 }
