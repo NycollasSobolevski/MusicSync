@@ -87,9 +87,11 @@ export class TransferTracksComponent {
           author: this.oldPlaylistWithTracks.items[this.index].track.artists[0].name,
           uri: this.oldPlaylistWithTracks.items[this.index].track.uri,
         },
-        playlistId: this.newPlaylist.id
+        playlistId: this.newPlaylist.id.toString()
       }
+      
     }
+    console.log(body);
     
     this.service.AddTrackToPlaylist(this.toStreamer, body)
       .subscribe({

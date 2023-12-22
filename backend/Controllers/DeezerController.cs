@@ -285,9 +285,11 @@ public class DeezerController : StreamerController
             if(deezerUser == null) return BadRequest("Error getting user data");
             string uri = $"https://api.deezer.com/user/{deezerUser.id}/playlists?title={data.Data.name}&access_token={token.ServiceToken}";
             var res = await client.PostAsync(uri, null);
-            
             if(res.StatusCode != HttpStatusCode.OK) return BadRequest("Error creating playlist");
-            return Ok("Playlist created");
+
+            PlaylistCreateReturn playlistId = await res.Content.ReadFromJsonAsync<PlaylistCreateReturn>();
+
+            return Ok(playlistId);
 
         }
         catch (Exception e) {
@@ -303,7 +305,7 @@ public class DeezerController : StreamerController
         try{
 
             var user = await UserTools.ValidateUser(userRepository, jwt, data.Jwt.Value);
-            if(user == null) return BadRequest("Invalid user");
+            if(user == null) return Unauthorized("Invalid user");
             var token = await UserTools.GetUserToken(tokenRepository, user.Name, this.streamer);
             if(token == null) return Unauthorized("Token not found");
 
@@ -312,21 +314,22 @@ public class DeezerController : StreamerController
             
 
             //! search track
-            // data.Data.Track.name = data.Data.Track.name.Replace(" ", "%2520");
             data.Data.Track.name = WebUtility.UrlEncode(data.Data.Track.name);
-            // data.Data.Track.author = data.Data.Track.author.Replace(" ", "%2520");
             data.Data.Track.author = WebUtility.UrlEncode(data.Data.Track.author);
             string uri = $"https://api.deezer.com/search/track?q={data.Data.Track.author}%2520{data.Data.Track.name}&access_token={token.ServiceToken}";
             var res = await client.GetAsync(uri);
 
-            string str = await res.Content.ReadAsStringAsync();
-            System.Console.WriteLine(str);
+            if(res.StatusCode != HttpStatusCode.OK) return BadRequest("Error searching track");
+
+            var searchResult = await res.Content.ReadFromJsonAsync<SearchData>();
+            SearchTrackData track = searchResult.data[0];
             //! add to playlist
-            uri = $"https://api.deezer.com/playlist/{data.Data.PlaylistId}/tracks?songs=data.Data.name&access_token={token.ServiceToken}";
-            // var res = await client.PostAsync(uri, null);
+            uri = $"https://api.deezer.com/playlist/{data.Data.PlaylistId}/tracks?songs={track.id}&access_token={token.ServiceToken}";
+            res = await client.PostAsync(uri, null);
+            string stt = await res.Content.ReadAsStringAsync();
             
 
-            return Ok(str);
+            return Ok(stt);
 
         } catch (Exception e){
             System.Console.WriteLine(e);

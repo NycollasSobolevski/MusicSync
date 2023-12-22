@@ -77,7 +77,7 @@ public record DeezerPlaylistsData
 
 public record Artist
 {
-    public string id {get;set;}
+    public ulong? id {get;set;}
     public string name {get;set;}
     public string link {get;set;}
     public string picture {get;set;}
@@ -91,7 +91,7 @@ public record Artist
 
 public record Album
 {
-    public string id {get;set;}
+    public ulong? id {get;set;}
     public string title {get;set;}
     public string cover {get;set;}
     public string cover_small {get;set;}
@@ -103,22 +103,36 @@ public record Album
     public string type {get;set;}
 }
 
+public record SearchData
+{
+    public SearchTrackData[] data {get;set;}
+    public int total {get;set;}
+    public string next {get;set;}
+}
+
 public record SearchTrackData
 {
-    public string id {get;set;} //: string,
-    public string readable {get;set;} //: bool,
+    public ulong? id {get;set;} //: string,
+    public bool readable {get;set;} //: bool,
     public string title {get;set;} //: string,
     public string title_short {get;set;} //: string,
     public string title_version {get;set;} //:string ,
     public string link {get;set;} //: string,
-    public string duration {get;set;} //: string
-    public string rank {get;set;} //: string,
-    public string explicit_lyrics {get;set;} //: bool,
-    public string explicit_content_lyrics {get;set;} //: int,
-    public string explicit_content_cover {get;set;} //: int,
+    public int duration {get;set;} //: string
+    public long rank {get;set;} //: string,
+    public bool explicit_lyrics {get;set;} //: bool,
+    public int explicit_content_lyrics {get;set;} //: int,
+    public int explicit_content_cover {get;set;} //: int,
     public string preview {get;set;} //: string,
     public string md5_image {get;set;} //: string,
-    public string artist {get;set;} //: {},
-    public string album {get;set;} //: {},
+    public Artist artist {get;set;} //: {},
+    public Album album {get;set;} //: {},
     public string type {get;set;} //: "track"
 }
+
+public record PlaylistCreateReturn
+{
+    public ulong? id {get;set;}
+}
+
+
