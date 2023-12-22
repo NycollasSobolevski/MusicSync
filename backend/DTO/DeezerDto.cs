@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace music_api.DTO;
 
 public class DeezerToken
@@ -6,29 +8,30 @@ public class DeezerToken
     public int expires { get; set; }
 }
 
-public record DeezerUserData
+public class DeezerUserData
 {
-    public string id { get; set; }
-    public string name { get; set; }
-    public string lastname { get; set; }
-    public string firstname { get; set; }
-    public int status { get; set; }
-    public string birthday { get; set; }
-    public string inscription_date { get; set; }
-    public string gender { get; set; }
-    public string link { get; set; }
-    public string picture { get; set; }
-    public string picture_small { get; set; }
-    public string picture_medium { get; set; }
-    public string picture_big { get; set; }
-    public string picture_xl { get; set; }
-    public string country { get; set; }
-    public string lang { get; set; }
-    public bool is_kid { get; set; }
-    public string explicit_content_level { get; set; }
-    public List<string> explicit_content_levels_available { get; set; }
-    public string tracklist { get; set; }
-    public string type { get; set; }
+    [JsonPropertyName("id")]
+    public ulong? id { get; set; }
+	public string name { get; set; }
+	public string lastname { get; set; }
+	public string firstname { get; set; }
+	public int? status { get; set; }
+	public string birthday { get; set; }
+	public string inscription_date { get; set; }
+	public string gender { get; set; }
+	public string link { get; set; }
+	public string picture { get; set; }
+	public string picture_small { get; set; }
+	public string picture_medium { get; set; }
+	public string picture_big { get; set; }
+	public string picture_xl { get; set; }
+	public string country { get; set; }
+	public string lang { get; set; }
+	public bool is_kid { get; set; }
+	public string explicit_content_level { get; set; }
+	public string[] explicit_content_levels_available { get; set; }
+	public string tracklist { get; set; }
+	public string typ { get; set; }
 }
 
 public record Creator
@@ -70,4 +73,52 @@ public record DeezerPlaylistsData
 {
     public List<DeezerPlaylist> data { get; set; }
     public int total { get; set; }
+}
+
+public record Artist
+{
+    public string id {get;set;}
+    public string name {get;set;}
+    public string link {get;set;}
+    public string picture {get;set;}
+    public string picture_small {get;set;}
+    public string picture_medium {get;set;}
+    public string picture_big {get;set;}
+    public string picture_xl {get;set;}
+    public string tracklist {get;set;}
+    public string type {get;set;}
+}
+
+public record Album
+{
+    public string id {get;set;}
+    public string title {get;set;}
+    public string cover {get;set;}
+    public string cover_small {get;set;}
+    public string cover_medium {get;set;}
+    public string cover_big {get;set;}
+    public string cover_xl {get;set;}
+    public string md5_image {get;set;}
+    public string tracklist {get;set;}
+    public string type {get;set;}
+}
+
+public record SearchTrackData
+{
+    public string id {get;set;} //: string,
+    public string readable {get;set;} //: bool,
+    public string title {get;set;} //: string,
+    public string title_short {get;set;} //: string,
+    public string title_version {get;set;} //:string ,
+    public string link {get;set;} //: string,
+    public string duration {get;set;} //: string
+    public string rank {get;set;} //: string,
+    public string explicit_lyrics {get;set;} //: bool,
+    public string explicit_content_lyrics {get;set;} //: int,
+    public string explicit_content_cover {get;set;} //: int,
+    public string preview {get;set;} //: string,
+    public string md5_image {get;set;} //: string,
+    public string artist {get;set;} //: {},
+    public string album {get;set;} //: {},
+    public string type {get;set;} //: "track"
 }

@@ -1,5 +1,6 @@
 
 using System.Net;
+using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
@@ -37,10 +38,7 @@ public class DeezerController : StreamerController
     /// <returns></returns>
     [HttpPost("GetData")]
     public override async Task<ActionResult<StringReturn>> Get(
-        [FromBody] JWT data,
-        [FromServices] IRepository<User> userRepository,
-        [FromServices] IRepository<Token> tokenRepository,
-        [FromServices] IJwtService jwt
+        [FromBody] JWT data,[FromServices] IRepository<User> userRepository,[FromServices] IRepository<Token> tokenRepository,[FromServices] IJwtService jwt
     )
     {
 
@@ -91,11 +89,8 @@ public class DeezerController : StreamerController
     /// <param name="jwt"></param>
     /// <returns></returns>
     [HttpPost("Callback")]
-    public override async Task<ActionResult> Callback([FromServices] HttpClient client,
-        [FromBody] CallbackData data,
-        [FromServices] IRepository<Token> tokenRepository,
-        [FromServices] IRepository<User> userRepository,
-        [FromServices] IJwtService jwt
+    public override async Task<ActionResult> Callback(
+        [FromServices] HttpClient client,[FromBody] CallbackData data,[FromServices] IRepository<Token> tokenRepository,[FromServices] IRepository<User> userRepository,[FromServices] IJwtService jwt
     ){
         try{
             System.Console.WriteLine(data.code);
@@ -154,13 +149,7 @@ public class DeezerController : StreamerController
 
     [HttpPost("GetPlaylistTracks/")]
     public override async Task<ActionResult> GetPlaylistTracks(
-        [FromQuery(Name = "id")] string id, 
-        [FromQuery(Name = "streamer")] string streamer, 
-        [FromBody] JWT body, 
-        [FromServices] IJwtService jwt, 
-        [FromServices] IRepository<Token> tokenRepository, 
-        [FromServices] HttpClient client,
-        [FromServices] IRepository<User> userRepository
+        [FromQuery(Name = "id")] string id, [FromQuery(Name = "streamer")] string streamer, [FromBody] JWT body, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository, [FromServices] HttpClient client,[FromServices] IRepository<User> userRepository
     ){
         var user = await UserTools.ValidateUser(userRepository, jwt, body.Value);
         if(user == null) return BadRequest("Invalid user");
@@ -187,11 +176,7 @@ public class DeezerController : StreamerController
 
     [HttpPost("GetUserPlaylists")]
     public override async Task<ActionResult> GetUserPlaylists(
-        [FromBody] JWTWithGetPlaylistData data, 
-        [FromServices] IJwtService jwt, 
-        [FromServices] IRepository<User> userRepository, 
-        [FromServices] IRepository<Token> tokenRepository, 
-        [FromServices] HttpClient client
+        [FromBody] JWTWithGetPlaylistData data, [FromServices] IJwtService jwt, [FromServices] IRepository<User> userRepository, [FromServices] IRepository<Token> tokenRepository, [FromServices] HttpClient client
     ){
         
 
@@ -286,25 +271,64 @@ public class DeezerController : StreamerController
 
     [HttpPost("createPlaylist")]
     public override async Task<ActionResult> CreatePlaylist(
-        [FromBody] UserCreatePlaylistWithJwt data, 
-        [FromServices] IJwtService jwt, 
-        [FromServices] IRepository<Token> tokenRepository, 
-        [FromServices] IRepository<User> userRepository, 
-        [FromServices] HttpClient client
+        [FromBody] UserCreatePlaylistWithJwt data, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository, [FromServices] IRepository<User> userRepository, [FromServices] HttpClient client
     )
     {
+        System.Console.WriteLine("create playlist");
         try{
             var user = await UserTools.ValidateUser(userRepository, jwt, data.Jwt.Value);
+            if(user == null) return BadRequest("Invalid user");
             var token = await UserTools.GetUserToken(tokenRepository, user.Name, this.streamer);
+            if(token == null) return Unauthorized("Token not found");
 
-            var deezerUser = await GetUserData(client, token.ServiceToken);
-
-            string uri = $"https://api.deezer.com/user/{deezerUser.id}/playlists";
-
-            return Ok("");
+            var deezerUser = await this.GetUserData(client, token.ServiceToken);
+            if(deezerUser == null) return BadRequest("Error getting user data");
+            string uri = $"https://api.deezer.com/user/{deezerUser.id}/playlists?title={data.Data.name}&access_token={token.ServiceToken}";
+            var res = await client.PostAsync(uri, null);
+            
+            if(res.StatusCode != HttpStatusCode.OK) return BadRequest("Error creating playlist");
+            return Ok("Playlist created");
 
         }
         catch (Exception e) {
+            System.Console.WriteLine(e);
+            return BadRequest("Unknow server error");
+        }
+    }
+
+    [HttpPost("AddTrackToPlaylist")]
+    public override async Task<ActionResult> AddTrackToPlaylist(
+        [FromBody] JWTWithData<TrackAndPlaylist> data, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository, [FromServices] IRepository<User> userRepository, [FromServices] HttpClient client
+    ){
+        try{
+
+            var user = await UserTools.ValidateUser(userRepository, jwt, data.Jwt.Value);
+            if(user == null) return BadRequest("Invalid user");
+            var token = await UserTools.GetUserToken(tokenRepository, user.Name, this.streamer);
+            if(token == null) return Unauthorized("Token not found");
+
+            var deezerUser = await this.GetUserData(client, token.ServiceToken);
+            if(deezerUser == null) return BadRequest("Error getting user data");
+            
+
+            //! search track
+            // data.Data.Track.name = data.Data.Track.name.Replace(" ", "%2520");
+            data.Data.Track.name = WebUtility.UrlEncode(data.Data.Track.name);
+            // data.Data.Track.author = data.Data.Track.author.Replace(" ", "%2520");
+            data.Data.Track.author = WebUtility.UrlEncode(data.Data.Track.author);
+            string uri = $"https://api.deezer.com/search/track?q={data.Data.Track.author}%2520{data.Data.Track.name}&access_token={token.ServiceToken}";
+            var res = await client.GetAsync(uri);
+
+            string str = await res.Content.ReadAsStringAsync();
+            System.Console.WriteLine(str);
+            //! add to playlist
+            uri = $"https://api.deezer.com/playlist/{data.Data.PlaylistId}/tracks?songs=data.Data.name&access_token={token.ServiceToken}";
+            // var res = await client.PostAsync(uri, null);
+            
+
+            return Ok(str);
+
+        } catch (Exception e){
             System.Console.WriteLine(e);
             return BadRequest("Unknow server error");
         }
@@ -319,13 +343,16 @@ public class DeezerController : StreamerController
     protected override async Task<DeezerUserData> GetUserData([FromServices] HttpClient client, string token)
     {
         try{
-            string url = $"https://api.deezer.com/v1/me?access_token={token}";
+            string url = $"https://api.deezer.com/user/me?access_token={token}";
             var res = await client.GetAsync(url);
-            DeezerUserData userdata = await res.Content.ReadFromJsonAsync<DeezerUserData>();
+
+            if(res.StatusCode != HttpStatusCode.OK) return null;
+
+            var userdata = await res.Content.ReadFromJsonAsync<DeezerUserData>();
             return userdata;
 
         } catch (Exception e) {
-            System.Console.WriteLine(e.Message);
+            System.Console.WriteLine(e);
             return null;
         }
 

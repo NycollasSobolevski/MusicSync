@@ -21,7 +21,7 @@ public static class UserTools
         try{
             Token token = await tokenRepository.FirstOrDefaultAsync( token => 
                 token.User == username && 
-                token.ServiceToken == service 
+                token.Service == service 
             );
 
             return token;

@@ -23,6 +23,13 @@ public abstract class StreamerController : ControllerBase
     public abstract Task<ActionResult> GetPlaylistTracks ([FromQuery(Name = "id")] string id, [FromQuery(Name = "streamer")] string streamer, [FromBody] JWT body, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository, [FromServices] HttpClient client,[FromServices] IRepository<User> userRepository );
     public abstract Task<ActionResult> GetMoreTracks([FromBody] JWTWithData<string> body, [FromServices] IJwtService jwt, [FromServices] IRepository<Token> tokenRepository, [FromServices] HttpClient client);
     public abstract Task<ActionResult> CreatePlaylist( [FromBody] UserCreatePlaylistWithJwt data,[FromServices] IJwtService jwt,[FromServices] IRepository<Token> tokenRepository,[FromServices] IRepository<User> userRepository,[FromServices] HttpClient client);
+    public abstract Task<ActionResult> AddTrackToPlaylist(
+        [FromBody] JWTWithData<TrackAndPlaylist> data,
+        [FromServices] IJwtService jwt,
+        [FromServices] IRepository<Token> tokenRepository,
+        [FromServices] IRepository<User> userRepository,
+        [FromServices] HttpClient client
+    );
     protected abstract Task GetUserData([FromServices] HttpClient client, string token);
     protected abstract Task refreshToken(string username, [FromServices] HttpClient client, [FromServices] IRepository<Token> tokenRepository);
 }
