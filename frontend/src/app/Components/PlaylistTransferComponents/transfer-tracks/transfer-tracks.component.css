@@ -1,0 +1,22 @@
+.music-list{
+    width: 500px;
+    height: 350px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.music{
+    display: flex;
+    flex-direction: row ;
+    align-items: center;
+    justify-content: space-between;
+    padding: .5rem;
+}
+.music-name{
+    width: 100%;
+    overflow-wrap: break-word;
+}
+.data{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}

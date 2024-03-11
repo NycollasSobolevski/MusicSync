@@ -1,0 +1,96 @@
+.card{
+    margin: auto;
+    position: absolute;
+    top: 0; bottom: 0; right: 0; left: 0;
+    width: calc(60vw - 40px );
+    max-width: 50rem  ;
+    height: calc(90vh - 40px);
+    background-color: rgba(91, 91, 91, 0.546);
+    border-radius: 40px ;
+    z-index: 20;
+    padding: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    justify-content: center;
+    gap: .75rem;
+    overflow-y: scroll;
+
+    @media (max-width: 576px ) {
+        width:90vw;
+    }
+    @media (max-width: 768px) {
+        width: 80vw;
+    }
+}
+.card::-webkit-scrollbar{
+    display: none;
+}
+.header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: large;
+}
+.header svg{
+    width:50px;
+    fill: white;
+}
+.streamer-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .75rem;
+    text-decoration: none;
+}
+.close{
+    position:relative;
+    left: 0;
+}
+.close svg{
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke-width:2px;
+    stroke-linecap:round ;
+    stroke-linejoin:round;
+    stroke: var(--text-colorB);
+    cursor: pointer;
+}
+.items-session{
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+.playlists-item{
+    width: 75%;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    gap: 10px;
+    background-color: var(--semitransparent-background);
+    border-radius: 4rem;
+    padding: 0 0 0 1rem;
+
+    @media (max-width: 768px) {
+        width: 90%;
+    }
+}
+p{
+    font-size: x-small;
+}
+h5{
+    font-size: medium;
+}
+.playlists-item img{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}

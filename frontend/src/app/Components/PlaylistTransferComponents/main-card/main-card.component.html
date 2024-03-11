@@ -1,0 +1,19 @@
+<div class="main-transfer-container">
+    <h3>Transfer your playlist!</h3>
+    <app-select-streamer *ngIf="sessions[index] == 'select-streamer'" (nextClicked)="nextClicked($event)" />
+    <app-select-playlist *ngIf="sessions[index] == 'select-playlist'" (nextClicked)="nextClicked($event)" [fromStreamer]="fromStreamer" />
+    <app-playlist-settings 
+        *ngIf="sessions[index] == 'playlist-settings'" 
+        [playlist]="this.fromPlaylist" 
+        [fromStreamer]="this.fromStreamer"
+        [toStreamer]="this.toStreamer"
+        (PlaylistCreated)="nextClicked($event)"
+    />
+    <app-transfer-tracks 
+        *ngIf="sessions[index] == 'transfer'"
+        [fromStreamer]="this.fromStreamer"
+        [toStreamer]="this.toStreamer"
+        [oldPlaylist]="this.fromPlaylist"
+        [newPlaylist]="this.toPlaylist"
+    />
+</div>

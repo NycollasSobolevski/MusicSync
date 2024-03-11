@@ -1,0 +1,39 @@
+.alert-container{
+  position: fixed;
+  left: 50%;  top: 6rem;
+  background-color: aliceblue;
+  padding: .5rem 1rem ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  color: black;
+  transition: all 1s;
+}
+.hide {
+  display: none;
+}
+
+.primary-alert{
+  background-color: #CCE5FF;
+}
+.seccondary-alert{
+  background-color: #E2E3E5;
+}
+.danger{
+  background-color: #F8D7DA;
+}
+.info{
+  background-color: #D1ECF1;
+}
+.success{
+  background-color: #D4EDDA;
+}
+.alert{
+  background-color: #FFF3CD;
+}
+
+.active {
+  transform: translateX(-50%) translateY(-50%);
+}
+

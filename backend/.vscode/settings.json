@@ -1,0 +1,4 @@
+{
+    "dotnet.defaultSolution": "music api.sln",
+    "appService.defaultWebAppToDeploy": "None"
+}

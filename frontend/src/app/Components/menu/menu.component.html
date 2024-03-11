@@ -1,0 +1,8 @@
+<div class="menu-main">
+    <app-menu-card [jsonData]="item" *ngFor="let item of streamers.streamers" />
+</div>
+
+<div class="bg" *ngIf="cardOn" (click)="closeAllCards()"></div>
+
+<app-playlist-card *ngIf="cardOn" [streamer]="ActivatedStreamerCard" (closeCardEvent)="closeAllCards()" />
+<!-- <app-spotify *ngIf="spotifyCard" (closeCardEvent)="closeAllCards()" /> -->

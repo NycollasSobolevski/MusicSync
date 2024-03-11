@@ -1,0 +1,10 @@
+<main>
+
+    <menu>
+        <app-config-menu (outputTab)="selectTab($event)"/>
+    </menu>
+    <div class="content">
+        <app-streamers-config *ngIf="tab == 'streamers'" />
+        <app-account-config *ngIf="tab == 'account'" />
+    </div>
+</main>

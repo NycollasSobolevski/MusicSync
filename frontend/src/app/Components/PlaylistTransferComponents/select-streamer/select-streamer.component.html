@@ -1,0 +1,40 @@
+<form class="select-streamer container" [formGroup]="streamerForm">
+
+    <h3>Select your streamer</h3>
+    <div class="selects-container container" >
+        
+        <div class="select-container">
+            <label>From</label>
+            <select name="streamer-select" id="from-streamer-select" formControlName="from">
+                <option value="" selected disabled >Select streamer (from)</option>
+                <option value="Spotify">Spotify</option>
+                <option value="Deezer">Deezer</option>
+                <option value="Youtube Music">Youtube Music</option>
+                <option value="Amazon Music">Amazon Music</option>
+                <option value="Apple Music">Apple Music</option>
+            </select>
+            <div class="alert" *ngIf="this.from?.invalid">
+                Please select a valid option
+            </div>
+        </div>
+        
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+    
+        <div class="select-container">
+            <label >To</label>
+            <select name="streamer-select" id="to-streamer-select" formControlName="to">
+                <option value="" selected disabled >Select streamer (from)</option>
+                <option value="Spotify">Spotify</option>
+                <option value="Deezer">Deezer</option>
+                <option value="Youtube Music">Youtube Music</option>
+                <option value="Amazon Music">Amazon Music</option>
+                <option value="Apple Music">Apple Music</option>
+            </select>
+            <div class="alert" *ngIf="this.to?.invalid">
+                Please select a valid option
+            </div>
+        </div>
+
+    </div>
+    <button class="btn" (click)="next()">Next</button>
+</form>

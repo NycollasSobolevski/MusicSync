@@ -1,0 +1,36 @@
+.menu-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+}
+svg, path{
+    width: 30px;
+    height: 30px;
+    fill: var(--text-colorB);
+}
+.bg{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0; left: 0;
+    background-color: rgb(20, 20, 20, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 15;
+}
+a{
+    text-decoration: none;
+}
+.streamer-label{
+    font-size: small;
+}
+@media (max-width: 768px) {
+    .streamer-label{
+        display:none;
+    }
+    svg, path{
+        width: 50px;
+        height: 50px;
+    }
+}

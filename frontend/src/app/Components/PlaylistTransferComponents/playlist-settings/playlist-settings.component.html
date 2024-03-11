@@ -1,0 +1,18 @@
+<div class="main-container">
+    <form class="container" [formGroup]="playlistDataForm" (ngSubmit)="next()">
+        <div class="input-container container">
+
+            <label>Title</label>
+            <input type="text" formControlName="title">
+        </div>
+        <div class="input-container container">
+            <label>Description</label>
+            <textarea name="" id="" cols="30" rows="10" formControlName="description"></textarea>
+        </div>
+        <div class="container selects-container ">
+            <label>Public</label>
+            <input type="checkbox" name="checkPublic" id="" formControlName="checkPublic">
+        </div>
+        <button type="submit">Send</button>
+    </form>
+</div>

@@ -1,0 +1,17 @@
+<div class="select-playlist-main">
+    <form class="container" [formGroup]="playlistForm" >
+        <select name="select-playlist" id="select-playlist" formControlName="playlist">
+            <option value="" selected disabled >Select Your Playlist </option>
+            <option value={{playlist.id}} *ngFor="let playlist of this.Playlists.items">
+                {{playlist.name}}
+            </option>
+        </select>
+        <div class="alert" *ngIf="this.SelectedPlaylist?.invalid">
+            Please select a valid playlist
+        </div>
+        <button class="btn" 
+            *ngIf="this.SelectedPlaylist?.valid"
+            (click)="this.next()"
+        >Next</button>
+    </form>
+</div>

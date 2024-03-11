@@ -1,0 +1,36 @@
+<div class="main-login-subscribe">
+    <div class="container">
+        <form (ngSubmit)="login()" [formGroup]="userForm"
+        #formDir="ngForm">
+        <header>
+            <h3>Welcome to Music Sync</h3>
+        </header>
+        <div class="top form-container content">
+            <div class="input-container">
+                <input type="text"
+                formControlName="identify"
+                placeholder="Login / Email">
+                <div class="error-input-validation" *ngIf="identify.invalid && formDir.submitted" >
+                    <p *ngIf="identify.errors?.['required']" >Required input</p>
+                </div>
+            </div>
+            <div class="input-container">
+                <input type="password" 
+                formControlName="password"
+                placeholder="Password">
+                <div class="error-input-validation" *ngIf="password.invalid && formDir.submitted">
+                    <p *ngIf="password.errors?.['required']" >Required input</p>
+                </div>
+            </div>
+            <a href="/forgetPassword">Forget password</a>
+        </div>
+        <div class="bottom form-container content">
+
+            <div class="buttons">
+                <button type="submit">Login</button>
+                <a type="button" (click)="siginClicked()">Create Account</a>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>

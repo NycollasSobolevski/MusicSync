@@ -1,0 +1,31 @@
+<app-blurred-background></app-blurred-background>
+<div class="main-container">
+    <div class="logo-container">
+        <img src="../../../assets/Logos/MS Logo & Letter v1.svg" alt="" height="70px">
+    </div>
+    <div class="container" *ngIf="!VerifyEmail">
+        <div class="wall" [ngStyle]="{'left' : ( isLogin ? '50vw' : '25vw' )}">
+            <div class="content">
+                <h2>Music Sync</h2>
+                <img src="../../assets/Logos/MS Logo v1.svg" height="200px" alt="">
+            </div>
+        </div>
+        <app-login class="login {{ isLogin ? '' : ' hidden' }}"
+            (siginClickEvent)="changeToSigin()"  
+            (sendAlert)="alert($event)"
+            (sendToVerify)="changeToVerifyEmail($event)"
+            class="component"></app-login>
+        <app-subscribe class="subscribe {{ !isLogin ? '' : ' hidden' }}"
+            (loginClickEvent)="changeToSigin()" 
+            (sendAlert)="alert($event)"
+            class="component"></app-subscribe>
+    </div>
+    <div class="container" *ngIf="VerifyEmail">
+        <app-verify-email [jwt]="this.jwt"></app-verify-email>
+    </div>
+    <app-alert 
+        *ngIf="alertContainer"
+        [alertContent]="alertMessage"
+    />
+
+</div >

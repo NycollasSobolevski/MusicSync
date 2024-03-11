@@ -1,0 +1,32 @@
+:root {
+    --gray-50: #272727;
+    --back-colorA: #14281D;
+    --back-colorB: #060b0f;
+    --back-colorC: #06004a;
+    --text-colorA: Black;
+    --text-colorB: AliceBlue;
+    --input-colorA: #363636b5;
+    --red-alert-color: #f35858c0 ;
+    --yellow-alert-color: #f3d758c0;
+}
+
+:root{
+    --primary-btn-color:#84FBFB;
+    --input-border-color: #000000;
+    --loader-background-color: #00000083;
+    --menu-header-background: var(--gray-50);
+    --semitransparent-background: rgba(0, 0, 0, 0.404);
+    --default-background-color: #131313 ;
+    --default-box-shadow-color: black;
+    --seccondary-box-shadow-color: #4d92b9;
+    --background-mesher-blur-image: radial-gradient(at 20% 5%, #fcff4d90 0px, transparent 25%);
+    
+    
+    --desktop-max-width: 1200px;
+    --tablet-max-width: 768px;
+    --mobile-max-width: 576px;
+}
+
+*{
+    font-family: 'Poppins', sans-serif;;
+}

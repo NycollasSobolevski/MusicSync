@@ -1,0 +1,32 @@
+.background-container{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;left: 0;
+    display: flex;
+    filter: blur(100px);
+    flex-direction: column;
+    z-index: -1;
+    overflow: hidden;
+}
+.background-container span{
+    border-radius: 100%;
+    position: absolute;
+}
+.background-container span:nth-child(1){
+    width: 40vw; height: 40vw;
+    background-color: #FBFF4D;
+}
+
+.background-container span:nth-child(2){
+    width: 60vw; height: 60vw;
+    background-color: #37FFB7;
+    top: 25vh; right: 0;
+}
+
+.background-container span:nth-child(3){
+    width: 70vw; height: 70vw;
+    bottom: 0;
+
+    background-color: #00FFFF;
+}

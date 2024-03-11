@@ -1,0 +1,57 @@
+<div class="send-identify">
+    <header>
+        <h3>Send Token</h3>
+        <p>Check the token sent to your email</p>
+    </header>
+    <div class="container">
+        <form (ngSubmit)="sendToken()" class="content" [formGroup]="userForm"
+            #formDir="ngForm">
+            <div class="token-input-container">
+                <input type="text"
+                    autofocus
+                    class="token-input"
+                    (keyup)="moveToNext($event)"
+                    id="token0"
+                    maxlength="1"
+                    formControlName="token0">
+                <input type="text"
+                    class="token-input"
+                    (keyup)="moveToNext($event)"
+                    id="token1"
+                    maxlength="1"
+                    formControlName="token1">
+                <input type="text"
+                    class="token-input"
+                    (keyup)="moveToNext($event)"
+                    id="token2"
+                    maxlength="1"
+                    formControlName="token2">
+                <input type="text"
+                    class="token-input"
+                    (keyup)="moveToNext($event)"
+                    id="token3"
+                    maxlength="1"
+                    formControlName="token3">
+                <input type="text"
+                    class="token-input"
+                    (keyup)="moveToNext($event)"
+                    id="token4"
+                    maxlength="1"
+                    formControlName="token4">
+                <input type="text"
+                    class="token-input"
+                    (keyup)="moveToNext($event)"
+                    id="token5"
+                    maxlength="1"
+                    formControlName="token5">
+                <span></span>
+                <div class="error-input-validation" *ngIf="userForm.invalid && formDir.submitted" >
+                    <p *ngIf="userForm.errors?.['required']" >Required all inputs</p>
+                </div>
+            </div>
+            <div class="buttons">
+                <button type="submit">Send</button>
+            </div>
+        </form>
+    </div>
+</div>

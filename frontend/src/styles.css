@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: var(--text-colorB);
+}
+body{
+    background-color: var(--default-background-color);
+}
+button{
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn{
+    min-width: 70px;
+    min-height: 10px;
+    width: 5vw;
+    height: 5vh;
+    background-color: var(--qua-color);
+    border-radius: 5px;
+}
+button:hover{
+    cursor: pointer;
+}
+a{
+    font-size: smaller;
+    cursor: pointer;
+}
+
