@@ -14,8 +14,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class PlaylistPageComponent {
   
-  protected PlaylisData? : itemsOfPlaylist;
+  protected PlaylisData! : itemsOfPlaylist;
   protected Playlist! : Playlist;
+  protected streamer : string = "";
+  protected id : string = "";
+
 
   private jwt : jwt = {
     value: sessionStorage.getItem('jwt') || '',
@@ -27,19 +30,16 @@ export class PlaylistPageComponent {
   ){  }
 
   ngOnInit(){
-    var id = "";
-    var streamer ;
-
     
     this.activatedRoute.queryParams.subscribe(params => {
-      id       = params['id'];
-      streamer = params['streamer'];      
+      this.id       = params['id'];
+      this.streamer = params['streamer'];      
     });
     
-    this.getPlaylistData(id);
+    this.getPlaylistData(this.id);
     
-    if(!this.playlistInSession(id)){
-      this.getTracks(id ?? '');
+    if(!this.playlistInSession(this.id)){
+      this.getTracks(this.id ?? '');
     }
   }
 
@@ -77,15 +77,20 @@ export class PlaylistPageComponent {
     }
 
 
-    this.service.GetPlaylist("Spotify",this.jwt, id).subscribe({
-      next:(data: any) => {
+    this.service.GetPlaylist(this.streamer,this.jwt, id).subscribe({
+      next:(data: itemsOfPlaylist) => {
+        
         this.PlaylisData = data;
-        sessionStorage.setItem('lastPlaylistData', JSON.stringify(data));
+        // sessionStorage.setItem('lastPlaylistData', JSON.stringify(data));
+        console.log("this.PlaylisData");
+        console.log(data);
+        console.log(this.PlaylisData);
+        
       },
       error: (error : HttpErrorResponse) => {
         switch (error.status) {
           case 401:
-            this.service.RefreshToken("Spotify",this.jwt).subscribe({
+            this.service.RefreshToken(this.streamer,this.jwt).subscribe({
               next: () => {
                 console.log('token refreshed');
                 window.location.reload();
@@ -112,19 +117,20 @@ export class PlaylistPageComponent {
     if(!id || id == "")
       return;
 
-    this.service.GetPlaylistTracks("Spotify",this.jwt, id).subscribe({
+    this.service.GetPlaylistTracks(this.streamer,this.jwt, id).subscribe({
       next: ( data : any ) => {
         this.Playlist = data;
         console.log("playlist data");
         
         console.log(data);
+        console.log(this.Playlist);
         
-        sessionStorage.setItem('lastPlaylistOpened', JSON.stringify(data));
+        // sessionStorage.setItem('lastPlaylistOpened', JSON.stringify(data));
       },
       error: ( error : HttpErrorResponse) => {
         switch (error.status) {
           case 401:
-            this.service.RefreshToken("Spotify",this.jwt).subscribe({
+            this.service.RefreshToken(this.streamer,this.jwt).subscribe({
               next: () => {
                 window.location.reload();
               },
@@ -154,7 +160,7 @@ export class PlaylistPageComponent {
       data: this.Playlist.next!
     }
 
-    this.service.GetMoreTracks("Spotify",body).subscribe({
+    this.service.GetMoreTracks(this.streamer,body).subscribe({
       next:(data: any) => {
         
         // ! AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -170,6 +176,6 @@ export class PlaylistPageComponent {
   }
 
   getMusicPage(music: any){
-    this.router.navigate(['/music'], { queryParams: { id: music.track.id, streamer : "spotify" } });
+    this.router.navigate(['/music'], { queryParams: { id: music.track.id, streamer : this.streamer } });
   }
 }

@@ -1,7 +1,8 @@
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using music_api.Model;
 
-namespace music_api.DTO;
+namespace music_api.DTO.all;
+using  music_api.DTO.spotify;
 
 interface IStreamerController
 {
@@ -114,7 +115,7 @@ public class HrefTracks
 public record PlaylistOwner
 {
   public external_urls external_urls { get; set; }
-  public followers followers { get; set; }
+//   public followers followers { get; set; }
   public string href { get; set; }
   public string id { get; set; }
   public string type { get; set; }
@@ -137,51 +138,137 @@ public record PlaylistsData
 
 public record PlaylistTracksData
 {
-    public string href;
-    public List<Tracks> items;
-    public int limit;
-    public string next;
-    public int offset;
-    public string previous;
-    public int total;
+    public string href { get; set; }
+    public List<Tracks> items { get; set; }
+    public int limit { get; set; }
+    public string next { get; set; }
+    public int offset { get; set; }
+    public string previous { get; set; }
+    public int total { get; set; }
 }
 
 public record Tracks
 {
-    public string added_at;
-    public PlaylistOwner added_by;
-    public bool is_local;
-    public string primary_color;
-    public Track track;
+    public string added_at { get; set; }
+    public PlaylistOwner added_by { get; set; }
+    public bool is_local { get; set; }
+    public string? primary_color { get; set; }
+    public Track track { get; set; }
 }
 
-public record Track
-{
-    public string id;
-    public string href;
-    public string name;
-    public int track;
-    public int track_number;
-    public Album album;
-    public List<Artist> artist;
+// public record Track
+// {
+//     public string id { get; set; }
+//     public string href { get; set; }
+//     public string name { get; set; }
+//     public bool track { get; set; }
+//     public int track_number { get; set; }
+//     public Album album { get; set; }
+//     public List<Artist> artists { get; set; }
+//     public external_urls external_Urls { get; set; }
 
-    public external_urls external_Urls;
-
-}
-public record Album
-{
-    public string id;
-    public string name;
-    public string href;
-    public int total_tracks;
-    public List<DeezerArtist> artists;
-    public List<Images> images;
-    public external_urls external_Urls;
-}
+// }
 public record Artist
 {
-    public string id;
-    public string name;
-    public string href;
-    public external_urls external_Urls;
+    public ExternalUrls ExternalUrls { get; set; }
+    public string Href { get; set; }
+    public string Id { get; set; }
+    public string Name { get; set; }
+    public string Type { get; set; }
+    public string Uri { get; set; }
+}
+
+
+
+//---------------------------------------------------------------------------------
+public class SpotifyPlaylistTracksResponse
+{
+    public string Href { get; set; }
+    public IEnumerable<Item> Items { get; set; }
+    public int Limit { get; set; }
+    public string Next { get; set; }
+    public int Offset { get; set; }
+    public object Previous { get; set; }
+    public int Total { get; set; }
+}
+
+public class Item
+{
+    public DateTime AddedAt { get; set; }
+    public AddedBy AddedBy { get; set; }
+    public bool IsLocal { get; set; }
+    public object PrimaryColor { get; set; }
+    public Track Track { get; set; }
+    public VideoThumbnail VideoThumbnail { get; set; }
+}
+
+public class AddedBy
+{
+    public ExternalUrls ExternalUrls { get; set; }
+    public string Href { get; set; }
+    public string Id { get; set; }
+    public string Type { get; set; }
+    public string Uri { get; set; }
+}
+
+public class ExternalUrls
+{
+    public string Spotify { get; set; }
+}
+
+public class Track
+{
+    public string PreviewUrl { get; set; }
+    public List<object> AvailableMarkets { get; set; }
+    public bool Explicit { get; set; }
+    public string Type { get; set; }
+    public bool Episode { get; set; }
+    public bool IsTrack { get; set; }
+    public Album Album { get; set; }
+    public List<Artist> Artists { get; set; }
+    public int DiscNumber { get; set; }
+    public int TrackNumber { get; set; }
+    public int DurationMs { get; set; }
+    public ExternalIds ExternalIds { get; set; }
+    public ExternalUrls ExternalUrls { get; set; }
+    public string Href { get; set; }
+    public string Id { get; set; }
+    public string Name { get; set; }
+    public int Popularity { get; set; }
+    public string Uri { get; set; }
+    public bool IsLocal { get; set; }
+}
+
+public class Album
+{
+    public List<string> AvailableMarkets { get; set; }
+    public string Type { get; set; }
+    public string AlbumType { get; set; }
+    public string Href { get; set; }
+    public string Id { get; set; }
+    public List<Image> Images { get; set; }
+    public string Name { get; set; }
+    public string ReleaseDate { get; set; }
+    public string ReleaseDatePrecision { get; set; }
+    public string Uri { get; set; }
+    public List<Artist> Artists { get; set; }
+    public ExternalUrls ExternalUrls { get; set; }
+    public int TotalTracks { get; set; }
+}
+
+public class Image
+{
+    public int Height { get; set; }
+    public string Url { get; set; }
+    public int Width { get; set; }
+}
+
+public class ExternalIds
+{
+    public string Isrc { get; set; }
+}
+
+public class VideoThumbnail
+{
+    public object Url { get; set; }
 }

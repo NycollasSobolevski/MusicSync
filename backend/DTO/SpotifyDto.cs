@@ -1,7 +1,7 @@
 
-using music_api.DTO;
+using music_api.DTO.all;
 
-namespace music_api.DTO;
+namespace music_api.DTO.spotify;
 
 
 
@@ -129,8 +129,8 @@ public record TrackAndPlaylist
 
 public record TrackSearchItems
 {
-	public DeezerAlbum album { get; set; }
-	public DeezerArtist[] artists { get; set; }
+	public deezer.Album album { get; set; }
+	public deezer.Artist[] artists { get; set; }
 	public external_urls external_urls { get; set; }
 	public string href { get; set; }
 	public string id { get; set; }

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace music_api.DTO;
+namespace music_api.DTO.deezer;
 
 public class DeezerToken
 {
@@ -34,41 +34,41 @@ public class DeezerUserData
 	public string typ { get; set; }
 }
 
-public record Creator
-{
-    public long id { get; set; }
-    public string name { get; set; }
-    public string tracklist { get; set; }
-    public string type { get; set; }
-}
+// public record Creator
+// {
+//     public long id { get; set; }
+//     public string name { get; set; }
+//     public string tracklist { get; set; }
+//     public string type { get; set; }
+// }
 
-public record DeezerPlaylist
-{
-    public long id { get; set; }
-    public string title { get; set; }
-    public int duration { get; set; }
-    public bool @public { get; set; }
-    public bool is_loved_track { get; set; }
-    public bool collaborative { get; set; }
-    public int nb_tracks { get; set; }
-    public int fans { get; set; }
-    public string link { get; set; }
-    public string picture { get; set; }
-    public string picture_small { get; set; }
-    public string picture_medium { get; set; }
-    public string picture_big { get; set; }
-    public string picture_xl { get; set; }
-    public string checksum { get; set; }
-    public string tracklist { get; set; }
-    public string creation_date { get; set; }
-    public string md5_image { get; set; }
-    public string picture_type { get; set; }
-    public int time_add { get; set; }
-    public int time_mod { get; set; }
-    public Creator creator { get; set; }
-    public string type { get; set; }
+// public record DeezerPlaylist
+// {
+//     public long id { get; set; }
+//     public string title { get; set; }
+//     public int duration { get; set; }
+//     public bool @public { get; set; }
+//     public bool is_loved_track { get; set; }
+//     public bool collaborative { get; set; }
+//     public int nb_tracks { get; set; }
+//     public int fans { get; set; }
+//     public string link { get; set; }
+//     public string picture { get; set; }
+//     public string picture_small { get; set; }
+//     public string picture_medium { get; set; }
+//     public string picture_big { get; set; }
+//     public string picture_xl { get; set; }
+//     public string checksum { get; set; }
+//     public string tracklist { get; set; }
+//     public string creation_date { get; set; }
+//     public string md5_image { get; set; }
+//     public string picture_type { get; set; }
+//     public int time_add { get; set; }
+//     public int time_mod { get; set; }
+//     public Creator creator { get; set; }
+//     public string type { get; set; }
     
-}
+// }
 
 public record DeezerPlaylistsData
 {
@@ -137,3 +137,90 @@ public record PlaylistCreateReturn
 }
 
 
+//-------------------------------------------------------------------------------------
+
+public class DeezerPlaylist
+{
+    public long Id { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public int Duration { get; set; }
+    public bool Public { get; set; }
+    public bool IsLovedTrack { get; set; }
+    public bool Collaborative { get; set; }
+    public int NbTracks { get; set; }
+    public int Fans { get; set; }
+    public string Link { get; set; }
+    public string Share { get; set; }
+    public string Picture { get; set; }
+    public string PictureSmall { get; set; }
+    public string PictureMedium { get; set; }
+    public string PictureBig { get; set; }
+    public string PictureXl { get; set; }
+    public string Checksum { get; set; }
+    public string Tracklist { get; set; }
+    public string CreationDate { get; set; }
+    public string Md5Image { get; set; }
+    public string PictureType { get; set; }
+    public Creator Creator { get; set; }
+    public string Type { get; set; }
+    public Tracks Tracks { get; set; }
+}
+
+public class Creator
+{
+    public long Id { get; set; }
+    public string Name { get; set; }
+    public string Tracklist { get; set; }
+    public string Type { get; set; }
+}
+
+public class Tracks
+{
+    public List<Track> Data { get; set; }
+    public string Checksum { get; set; }
+}
+
+public class Track
+{
+    public long Id { get; set; }
+    public bool Readable { get; set; }
+    public string Title { get; set; }
+    public string TitleShort { get; set; }
+    public string TitleVersion { get; set; }
+    public string Link { get; set; }
+    public int Duration { get; set; }
+    public int Rank { get; set; }
+    public bool ExplicitLyrics { get; set; }
+    public int ExplicitContentLyrics { get; set; }
+    public int ExplicitContentCover { get; set; }
+    public string Preview { get; set; }
+    public string Md5Image { get; set; }
+    public long TimeAdd { get; set; }
+    public Artist Artist { get; set; }
+    public Album Album { get; set; }
+    public string Type { get; set; }
+}
+
+public class Artist
+{
+    public long Id { get; set; }
+    public string Name { get; set; }
+    public string Link { get; set; }
+    public string Tracklist { get; set; }
+    public string Type { get; set; }
+}
+
+public class Album
+{
+    public long Id { get; set; }
+    public string Title { get; set; }
+    public string Cover { get; set; }
+    public string CoverSmall { get; set; }
+    public string CoverMedium { get; set; }
+    public string CoverBig { get; set; }
+    public string CoverXl { get; set; }
+    public string Md5Image { get; set; }
+    public string Tracklist { get; set; }
+    public string Type { get; set; }
+}

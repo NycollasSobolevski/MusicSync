@@ -1,4 +1,4 @@
-namespace music_api.DTO;
+namespace music_api.DTO.all;
 
 public record LoginData
 {

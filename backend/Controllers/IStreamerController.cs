@@ -1,5 +1,6 @@
 using music_api;
-using music_api.DTO;
+using music_api.DTO.all;
+using music_api.DTO.spotify;
 using music_api.Model;
 using Microsoft.Extensions.Configuration;
 namespace music_api.Controllers;

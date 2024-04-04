@@ -5,15 +5,12 @@ using System.Net;
 using System.Text.Json;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
-using MongoDB.Bson.IO;
+using Swan.Formatters;
 using music_api;
 using music_api.Auxi;
-using music_api.DTO;
+using music_api.DTO.all;
+using music_api.DTO.spotify;
 using music_api.Model;
-using SpotifyAPI.Web;
-using Swan;
-using Swan.Formatters;
 
 [ApiController]
 [Route("[controller]")]
@@ -356,8 +353,7 @@ public class SpotifyController : ControllerBase
             if(response.StatusCode != HttpStatusCode.OK)
                 return BadRequest(await response.Content.ReadAsStringAsync());
             
-            PlaylistTracksData result = await response.Content.ReadFromJsonAsync<PlaylistTracksData>();
-            return Ok(await  response.Content.ReadAsStringAsync());
+            SpotifyPlaylistTracksResponse result = await response.Content.ReadFromJsonAsync<SpotifyPlaylistTracksResponse>();
             return Ok(result);
         }
         catch(Exception exp){
@@ -479,7 +475,7 @@ public class SpotifyController : ControllerBase
                 return BadRequest("Track not found");
 
             var bodyData = new {
-                uris = new string[] { obj.tracks.items[0].track.external_Urls.spotify }
+                uris = new string[] { obj.tracks.items[0].track.ExternalUrls.Spotify }
             };
 
 

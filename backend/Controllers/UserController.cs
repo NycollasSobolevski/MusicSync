@@ -1,7 +1,7 @@
 
 using Microsoft.AspNetCore.Identity;
 using music_api.Auxi;
-using music_api.DTO;
+using music_api.DTO.all;
 using music_api.Model;
 using music_api.Password;
 using Security_jwt;

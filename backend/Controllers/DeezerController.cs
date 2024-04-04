@@ -8,11 +8,14 @@ using Microsoft.Extensions.Configuration;
 using MongoDB.Bson.IO;
 using music_api;
 using music_api.Controllers;
-using music_api.DTO;
+using music_api.DTO.all;
+using music_api.DTO.deezer;
+using music_api.DTO.spotify;
 using music_api.Model;
 using SpotifyAPI.Web;
 using ZstdSharp.Unsafe;
 using Microsoft.Extensions.Configuration.UserSecrets;
+using Microsoft.AspNetCore.Authorization;
 
 #pragma warning disable
 [ApiController]
@@ -178,39 +181,39 @@ public class DeezerController : StreamerController
             var reqData = await req.Content.ReadFromJsonAsync<DeezerPlaylist>();
             
             var result = new PlaylistData(){
-                Name = reqData.title,
+                Name = reqData.Title,
                 Description = "",
-                Id = reqData.id.ToString(),
-                Href = reqData.link,
+                Id = reqData.Id.ToString(),
+                Href = reqData.Link,
                 Images = new List<Images>(){
                     new Images{
                         width=500,
                         height=500,
-                        url=reqData.picture_big
+                        url=reqData.PictureBig
                     },                    
                     new Images{
                         width=56,
                         height=56,
-                        url=reqData.picture_small
+                        url=reqData.PictureSmall
                     },
                     new Images{
                         width=120,
                         height=120,
-                        url=reqData.picture
+                        url=reqData.Picture
                     },
                     new Images{
                         width=250,
                         height=250,
-                        url=reqData.picture_medium
+                        url=reqData.PictureMedium
                     },
                 },
                 Owner = new PlaylistOwner(){
-                    display_name = reqData.creator.name,
-                    id = reqData.creator.id.ToString(),
+                    display_name = reqData.Creator.Name,
+                    id = reqData.Creator.Id.ToString(),
                 },
                 TracksTotal = new HrefTracks(){
-                    href = reqData.tracklist,
-                    total = reqData.nb_tracks
+                    href = reqData.Tracklist,
+                    total = reqData.NbTracks
                 }
             };
             return Ok(result);
@@ -237,15 +240,43 @@ public class DeezerController : StreamerController
 
             string url = $"https://api.deezer.com/playlist/{id}?access_token={token.ServiceToken}";
             var res = await client.GetAsync(url);
-            var playlist = await res.Content.ReadFromJsonAsync<DeezerPlaylistsData>();
+            var playlist = await res.Content.ReadFromJsonAsync<DeezerPlaylist>();
             
+            
+            var playlistTracks = playlist.Tracks.Data.Select( t => new Item(){
+                Track = new music_api.DTO.all.Track(){
+                    Id = t.Id.ToString(),
+                    Name = t.Title,
+                    Artists = new List<music_api.DTO.all.Artist>(){
+                        new music_api.DTO.all.Artist(){
+                            Name = t.Artist.Name,
+                            Id = t.Artist.Id.ToString(),
+                            Href = t.Artist.Link
+                        }
+                    },
+                    Album = new music_api.DTO.all.Album(){
+                        Id = t.Album.Id.ToString(),
+                        Name = t.Album.Title,
+                    },
+                    Href = t.Link
+                }
+            } );
+            
+            
+            
+            SpotifyPlaylistTracksResponse returned = new SpotifyPlaylistTracksResponse(){
+                Items = playlistTracks,
+                Href = playlist.Link,
+
+            };
+
             if(debug){
-                System.Console.WriteLine(playlist.data);
+                // System.Console.WriteLine(playlist.data);
                 string stt= await res.Content.ReadAsStringAsync();
                 System.Console.WriteLine(stt);
             }
             
-            return Ok(await res.Content.ReadAsStringAsync());
+            return Ok( returned);
         }
         catch (System.Exception e)
         {   
@@ -282,32 +313,32 @@ public class DeezerController : StreamerController
             foreach (var item in playlists.data)
             {
                 PlaylistData _playlist = new PlaylistData(){
-                    Id = item.id.ToString(),
-                    Name = item.title,
+                    Id = item.Id.ToString(),
+                    Name = item.Title,
                     Description = "",
                     Owner = new PlaylistOwner{
-                        id = item.creator.id.ToString(),
-                        display_name = item.creator.name,
+                        id = item.Creator.Id.ToString(),
+                        display_name = item.Creator.Name,
                     }
                 };
                 _playlist.Images = new List<Images>();
                 _playlist.Images.Add(new Images{
-                    url = item.picture_small,
+                    url = item.PictureSmall,
                     height = 56,
                     width = 56
                 });
                 _playlist.Images.Add(new Images{
-                    url = item.picture_medium,
+                    url = item.PictureMedium,
                     height = 250,
                     width = 250
                 });
                 _playlist.Images.Add(new Images{
-                    url = item.picture_big,
+                    url = item.PictureBig,
                     height = 500,
                     width = 500
                 });
                 _playlist.Images.Add(new Images{
-                    url = item.picture_xl,
+                    url = item.PictureXl,
                     height = 1000,
                     width = 1000
                 });
